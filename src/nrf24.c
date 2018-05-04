@@ -12,7 +12,7 @@
  * -----------------------------------------------------------------------------
  */
 #include "nrf24.h"
-
+#include <string.h>
 uint8_t payload_len;
 
 
@@ -28,62 +28,105 @@ void _delay_ms(int n) {
 
 
 
-
-
-
 void l3_send_packet (uint8_t addr, uint8_t * data, uint8_t len){
-	uint8_t i=0, pos=0;
-	uint8_t buff[L3_PACKET_SIZE];
-	uint8_t max_packet_number = len / L3_DATA_SIZE ;
+	uint8_t pos=0;
+	uint8_t frame[FRAME_SIZE];
+	uint8_t frm_nb = 0;
+	uint8_t total_frames_nb;
 	uint8_t remaining_len = len;
 	uint8_t size_to_send;
 
-	while (i <= max_packet_number){
-		memset(&buff[0], 0, size_to_send);
+	total_frames_nb = (len + (L2_DATA_SIZE - 1)) / L2_DATA_SIZE;
 
-		if(i == max_packet_number ){
-			buff[0] = 0xCC;
-		}
-		else if (i == 0){
-			buff[0] = 0xAA;
-		}
+	while (frm_nb < total_frames_nb){
+		memset(&frame[0], 0, FRAME_SIZE);
 
-		else{
-			buff[0] = 0xBB;
-		}
+		frame[H_FRM] = frm_nb;
+		frame[H_TOTAL] = total_frames_nb;
 
-		buff[1] = i;
+		size_to_send = (remaining_len > L2_DATA_SIZE)? L2_DATA_SIZE : remaining_len;
+		memcpy(&frame[0 + L2_HEAD_SIZE], &data[pos], size_to_send);
+		nrf24_send(frame);
 
-
-		size_to_send = (remaining_len > L3_DATA_SIZE)? L3_DATA_SIZE : remaining_len;
-		memcpy(&buff[0+L3_HEAD_SIZE], &data[pos], size_to_send);
-		nrf24_send(buff);
-		_delay_ms(200);
 		remaining_len -= size_to_send;
-		pos += L3_DATA_SIZE;
-		i++;
+		pos += L2_DATA_SIZE;
+		frm_nb++;
 	}
-
 }
+
+
+
 
 
 
 bool l3_receive_packet(uint8_t *data, uint8_t * packet_buff){
-	if (data[0] == 0xAA){
-		memcpy(&packet_buff[0], &data[0+L3_HEAD_SIZE], L3_DATA_SIZE);
-	}
-	if (data[0] == 0xBB){
-		uint8_t pck_nb = data[1];
-		memcpy(&packet_buff[L3_DATA_SIZE * pck_nb], &data[0+L3_HEAD_SIZE], L3_DATA_SIZE);
-	}
-	if (data[0] == 0xCC){
-		uint8_t pck_nb = data[1];
-		memcpy(&packet_buff[L3_DATA_SIZE * pck_nb], &data[0+L3_HEAD_SIZE], L3_DATA_SIZE);
-		return true;
+	if (data[H_FRM] < data[H_TOTAL]){
+		uint8_t frm_nb = data[H_FRM];
+		memcpy(&packet_buff[L2_DATA_SIZE * frm_nb], &data[0+ L2_HEAD_SIZE], L2_DATA_SIZE);
+		if ((data[H_FRM]+1) == data[H_TOTAL]){
+			return true;
+		}
 	}
 	return false;
 }
 
+
+
+//
+//
+//void l3_send_packet (uint8_t addr, uint8_t * data, uint8_t len){
+//	uint8_t i=0, pos=0;
+//	uint8_t buff[FRAME_SIZE];
+//	uint8_t max_packet_number = len / L3_DATA_SIZE ;
+//	uint8_t remaining_len = len;
+//	uint8_t size_to_send;
+//
+//	while (i <= max_packet_number){
+//		memset(&buff[0], 0, size_to_send);
+//
+//		if(i == max_packet_number ){
+//			buff[0] = 0xCC;
+//		}
+//		else if (i == 0){
+//			buff[0] = 0xAA;
+//		}
+//
+//		else{
+//			buff[0] = 0xBB;
+//		}
+//
+//		buff[1] = i;
+//
+//
+//		size_to_send = (remaining_len > L3_DATA_SIZE)? L3_DATA_SIZE : remaining_len;
+//		memcpy(&buff[0+L3_HEAD_SIZE], &data[pos], size_to_send);
+//		nrf24_send(buff);
+//		_delay_ms(200);
+//		remaining_len -= size_to_send;
+//		pos += L3_DATA_SIZE;
+//		i++;
+//	}
+//
+//}
+//
+//
+//
+//bool l3_receive_packet(uint8_t *data, uint8_t * packet_buff){
+//	if (data[0] == 0xAA){
+//		memcpy(&packet_buff[0], &data[0+L3_HEAD_SIZE], L3_DATA_SIZE);
+//	}
+//	if (data[0] == 0xBB){
+//		uint8_t pck_nb = data[1];
+//		memcpy(&packet_buff[L3_DATA_SIZE * pck_nb], &data[0+L3_HEAD_SIZE], L3_DATA_SIZE);
+//	}
+//	if (data[0] == 0xCC){
+//		uint8_t pck_nb = data[1];
+//		memcpy(&packet_buff[L3_DATA_SIZE * pck_nb], &data[0+L3_HEAD_SIZE], L3_DATA_SIZE);
+//		return true;
+//	}
+//	return false;
+//}
+//
 
 
 

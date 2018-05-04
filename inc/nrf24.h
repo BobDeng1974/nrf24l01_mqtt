@@ -27,6 +27,16 @@
 #define NRF24_TRANSMISSON_OK 0
 #define NRF24_MESSAGE_LOST   1
 
+
+
+
+#define FRAME_SIZE 		32
+#define L2_HEAD_SIZE 	2
+#define L2_DATA_SIZE 	(FRAME_SIZE - L2_HEAD_SIZE)
+#define H_FRM           0
+#define H_TOTAL         1
+
+
 /* adjustment functions */
 void    nrf24_init();
 void    nrf24_rx_address(uint8_t* adr);
@@ -70,9 +80,7 @@ void nRF24_restore_defaults(void);
 
 
 
-#define L3_HEAD_SIZE 	2
-#define L3_DATA_SIZE 	30
-#define L3_PACKET_SIZE 	32
+
 
 void l3_send_packet (uint8_t addr, uint8_t * data, uint8_t len);
 bool l3_receive_packet(uint8_t *data, uint8_t * packet_buff);
