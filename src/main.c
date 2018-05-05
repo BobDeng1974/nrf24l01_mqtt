@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include "nrf24.h"
 #include "stm32f10x_gpio.h"
-
+#include "mqtt_client.h"
 
 
 volatile static int debug_var;
@@ -16,6 +16,16 @@ uint8_t tx_address[5] = {0xD7,0xD7,0xD7,0xD7,0xD7};
 uint8_t rx_address[5] = {0xE7,0xE7,0xE7,0xE7,0xE7};
 /* ----------------------------------------------------------- */
 
+
+
+//int mqtt_send(void* socket_info, const void* buf, unsigned int count){
+//	l3_send_packet(tx_address, buf, count);
+//}
+//
+
+	int mqtt_message_cb(struct _MqttClient *client, MqttMessage *message, byte msg_new, byte msg_done){
+		;
+	}
 
 
 int main()
@@ -52,7 +62,16 @@ int main()
 	GPIOC->ODR |= GPIO_Pin_13;
 
 
-	uint8_t i=0;
+	MqttClient client;
+	MqttNet net;
+
+	uint8_t tx_buf[64];
+	uint8_t tx_buf_len = 64;
+	byte rx_buf[64];
+	int rx_buf_len;
+	int cmd_timeout_ms =500;
+	MqttClient_Init(&client, &net, mqtt_message_cb, tx_buf, tx_buf_len, rx_buf, rx_buf_len, cmd_timeout_ms);
+
 
     while(1)
     {    
@@ -64,7 +83,7 @@ int main()
 //         data_array[2] = 's';
 //         data_array[3] = 'w';
 //
-//        if ((GPIOB->IDR  & GPIO_IDR_IDR11) == 0){
+//        if ((GPIOB->MqttEncode_PublishIDR  & GPIO_IDR_IDR11) == 0){
 //        	/* Automatically goes to TX mode */
 //        	nrf24_send(data_array);
 //

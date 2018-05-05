@@ -82,6 +82,7 @@ void nRF24_restore_defaults(void);
 
 
 
+void _delay_ms(int n);
 void l3_send_packet (uint8_t addr, uint8_t * data, uint8_t len);
 bool l3_receive_packet(uint8_t *data, uint8_t * packet_buff);
 
