@@ -28,6 +28,26 @@ uint8_t rx_address[5] = {0xE7,0xE7,0xE7,0xE7,0xE7};
 	}
 
 
+	int mqt_net_connect_cb (void *context, const char* host, word16 port, int timeout_ms){
+		;
+	}
+
+	int mqtt_net_read_cb(void *context, byte* buf, int buf_len, int timeout_ms){
+		;
+	}
+
+
+	int mqtt_net_write_cb(void *context, const byte* buf, int buf_len, int timeout_ms){
+		uint8_t * broker_address = (uint8_t*) context;
+		l3_send_packet(broker_address, buf, buf_len);
+		return buf_len;
+	}
+
+	int mqtt_net_disconnect_cb(void *context){
+		;
+	}
+
+
 int main()
 {
   
@@ -64,15 +84,29 @@ int main()
 
 	MqttClient client;
 	MqttNet net;
+	net.connect = mqt_net_connect_cb;
+	net.read = mqtt_net_read_cb;
+	net.write = mqtt_net_write_cb;
+	net.disconnect = mqtt_net_disconnect_cb;
+
 
 	uint8_t tx_buf[64];
 	uint8_t tx_buf_len = 64;
 	byte rx_buf[64];
-	int rx_buf_len;
+	int rx_buf_len =64;
 	int cmd_timeout_ms =500;
 	MqttClient_Init(&client, &net, mqtt_message_cb, tx_buf, tx_buf_len, rx_buf, rx_buf_len, cmd_timeout_ms);
 
-
+	MqttConnect mqtt_con;
+	mqtt_con.clean_session =0;
+	mqtt_con.client_id = "rt1";
+	mqtt_con.enable_lwt = 0;
+	mqtt_con.keep_alive_sec =30;
+	mqtt_con.stat = MQTT_MSG_BEGIN;
+	mqtt_con.username ="bedroomTMP1";
+	mqtt_con.password = "passw0rd";
+	MqttClient_Connect(&client, &mqtt_con);
+//
     while(1)
     {    
 
