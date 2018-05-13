@@ -18,14 +18,14 @@
 #define MAX_TOPIC_NAME_SIZE 		32
 #define NOT_FOUND					255
 #define MAX_CONN_CLIENTS			8
-
+#define ADDR_SIZE					4
 
 
 
 
 
 typedef struct {
-	uint8_t net_address[4];
+	uint8_t net_address[ADDR_SIZE];
 	char*  client_id;
 	bool keepalive;
 	char*  username;
@@ -38,15 +38,6 @@ typedef struct {
 
 
 typedef struct{
-	char*  topic_name;
-	uint8_t qos_level;
-	char*  clients_id[MAX_CONN_CLIENTS];
-	uint8_t sub_client_nb;
-}topic_subs_t;
-
-
-typedef struct{
-	topic_subs_t topics[MAX_SUBS_TOPIC];
 	conn_client_t clients[MAX_CONN_CLIENTS];
 	MqttNet * net;
 }broker_t;

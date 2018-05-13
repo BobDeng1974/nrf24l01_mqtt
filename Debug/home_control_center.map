@@ -1522,21 +1522,27 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 src/tiny_broker.o
  .text.broker_init
                 0x0000000000000000       0x26 src/tiny_broker.o
- .text.create_new_subsrcibtion
-                0x0000000000000000       0x80 src/tiny_broker.o
- .text.find_topic_pos
-                0x0000000000000000       0x68 src/tiny_broker.o
- .text.put_message_in_topic
-                0x0000000000000000       0x54 src/tiny_broker.o
- .debug_info    0x0000000000000000      0xc9b src/tiny_broker.o
- .debug_abbrev  0x0000000000000000      0x1f9 src/tiny_broker.o
+ .text.m_malloc
+                0x0000000000000000       0x50 src/tiny_broker.o
+ .text.publish_msg_to_subscribers
+                0x0000000000000000       0x8a src/tiny_broker.o
+ .text.add_subscribtion
+                0x0000000000000000       0xa6 src/tiny_broker.o
+ .bss.new_used_bytes_nb.5796
+                0x0000000000000000        0x2 src/tiny_broker.o
+ .bss.prev_used_bytes_nb.5795
+                0x0000000000000000        0x2 src/tiny_broker.o
+ .bss.m_heap.5794
+                0x0000000000000000      0x200 src/tiny_broker.o
+ .debug_info    0x0000000000000000      0xcab src/tiny_broker.o
+ .debug_abbrev  0x0000000000000000      0x211 src/tiny_broker.o
  .debug_aranges
                 0x0000000000000000       0x38 src/tiny_broker.o
  .debug_ranges  0x0000000000000000       0x28 src/tiny_broker.o
- .debug_line    0x0000000000000000      0x2d9 src/tiny_broker.o
- .debug_str     0x0000000000000000      0x784 src/tiny_broker.o
+ .debug_line    0x0000000000000000      0x2ea src/tiny_broker.o
+ .debug_str     0x0000000000000000      0x7a4 src/tiny_broker.o
  .comment       0x0000000000000000       0x7d src/tiny_broker.o
- .debug_frame   0x0000000000000000       0xa4 src/tiny_broker.o
+ .debug_frame   0x0000000000000000       0xac src/tiny_broker.o
  .ARM.attributes
                 0x0000000000000000       0x33 src/tiny_broker.o
  .text          0x0000000000000000        0x0 src/tiny_printf.o
@@ -3221,6 +3227,7 @@ _sdata                                            src/startup_stm32f10x_md.o
 _sidata                                           src/startup_stm32f10x_md.o
 _write                                            /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libnosys.a(write.o)
                                                   src/tiny_printf.o
+add_subscribtion                                  src/tiny_broker.o
 big_array                                         src/main.o
 bme280_get_regs                                   src/bme280.o
 bme280_get_sensor_data                            src/bme280.o
@@ -3265,11 +3272,9 @@ bmp280_set_standby_durn                           src/bmp280.o
 bmp280_set_work_mode                              src/bmp280.o
 bmp280_write_register                             src/bmp280.o
 broker_init                                       src/tiny_broker.o
-create_new_subsrcibtion                           src/tiny_broker.o
 data_array                                        src/main.o
 errno                                             /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libnosys.a(errno.o)
                                                   /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libnosys.a(write.o)
-find_topic_pos                                    src/tiny_broker.o
 fiprintf                                          src/tiny_printf.o
 fprintf                                           src/tiny_printf.o
 fputs                                             src/tiny_printf.o
@@ -3284,6 +3289,7 @@ l3_receive_packet                                 src/nrf24.o
 l3_send_packet                                    src/nrf24.o
                                                   src/main.o
 layer3_buff                                       src/main.o
+m_malloc                                          src/tiny_broker.o
 main                                              src/main.o
                                                   src/startup_stm32f10x_md.o
 memcmp                                            /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memcmp.o)
@@ -3346,7 +3352,7 @@ nrf24_tx_address                                  src/nrf24.o
 nrf24_writeRegister                               src/nrf24.o
 payload_len                                       src/nrf24.o
 printf                                            src/tiny_printf.o
-put_message_in_topic                              src/tiny_broker.o
+publish_msg_to_subscribers                        src/tiny_broker.o
 puts                                              src/tiny_printf.o
 q                                                 src/main.o
 rx_address                                        src/main.o
