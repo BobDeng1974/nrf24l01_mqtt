@@ -21,7 +21,10 @@
 #define ADDR_SIZE					4
 
 
-
+typedef struct{
+uint8_t data[256];
+uint8_t len;
+}local_host_t;
 
 
 typedef struct {
@@ -42,6 +45,6 @@ typedef struct{
 	MqttNet * net;
 }broker_t;
 
-
+void * m_malloc(size_t size);
 
 #endif /* INC_TINY_BROKER_H_ */

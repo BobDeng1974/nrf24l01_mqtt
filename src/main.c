@@ -4,7 +4,7 @@
 #include "nrf24.h"
 #include "stm32f10x_gpio.h"
 #include "mqtt_client.h"
-
+#include "tiny_broker.h"
 
 volatile static int debug_var;
 uint8_t temp;
@@ -16,6 +16,15 @@ uint8_t tx_address[5] = {0xD7,0xD7,0xD7,0xD7,0xD7};
 uint8_t rx_address[5] = {0xE7,0xE7,0xE7,0xE7,0xE7};
 /* ----------------------------------------------------------- */
 
+
+
+
+local_host_t local_host;
+
+void packet_send_localhost(uint8_t * data, uint8_t size){
+	memcpy(local_host.data, data, size);
+	local_host.len = size;
+}
 
 
 //int mqtt_send(void* socket_info, const void* buf, unsigned int count){
@@ -33,15 +42,22 @@ uint8_t rx_address[5] = {0xE7,0xE7,0xE7,0xE7,0xE7};
 	}
 
 	int mqtt_net_read_cb(void *context, byte* buf, int buf_len, int timeout_ms){
+		memcpy(buf, local_host.data, buf_len);
 		;
 	}
 
 
+//	int mqtt_net_write_cb(void *context, const byte* buf, int buf_len, int timeout_ms){
+//		uint8_t * broker_address = (uint8_t*) context;
+//		l3_send_packet(broker_address, buf, buf_len);
+//		return buf_len;
+//	}
+
+
 	int mqtt_net_write_cb(void *context, const byte* buf, int buf_len, int timeout_ms){
-		uint8_t * broker_address = (uint8_t*) context;
-		l3_send_packet(broker_address, buf, buf_len);
-		return buf_len;
+		packet_send_localhost(buf, buf_len);
 	}
+
 
 	int mqtt_net_disconnect_cb(void *context){
 		;
@@ -51,6 +67,9 @@ uint8_t rx_address[5] = {0xE7,0xE7,0xE7,0xE7,0xE7};
 int main()
 {
   
+
+	memset(&local_host, 0, 256);
+
     nrf24_init();
 	nRF24_restore_defaults();
 
@@ -91,6 +110,7 @@ int main()
 
 
 	uint8_t tx_buf[64];
+	memset(tx_buf, 0, 64);
 	uint8_t tx_buf_len = 64;
 	byte rx_buf[64];
 	int rx_buf_len =64;
@@ -106,6 +126,11 @@ int main()
 	mqtt_con.username ="bedroomTMP1";
 	mqtt_con.password = "passw0rd";
 	MqttClient_Connect(&client, &mqtt_con);
+
+	broker_t broker;
+	broker_init(&broker);
+	acccept_connection(&broker, local_host.data);
+
 //
     while(1)
     {    
