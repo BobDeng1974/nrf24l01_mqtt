@@ -8,6 +8,10 @@ Archive member included to satisfy reference by file (symbol)
                               src/main.o (memcpy)
 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
                               src/bmp280_hal.o (memset)
+/opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcmp.o)
+                              src/tiny_broker.o (strcmp)
+/opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcpy.o)
+                              src/tiny_broker.o (strcpy)
 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strlen.o)
                               src/mqtt_packet.o (strlen)
 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
@@ -1526,9 +1530,9 @@ Discarded input sections
  .data          0x0000000000000000        0x0 src/tiny_broker.o
  .bss           0x0000000000000000        0x0 src/tiny_broker.o
  .text.publish_msg_to_subscribers
-                0x0000000000000000       0x96 src/tiny_broker.o
+                0x0000000000000000       0x98 src/tiny_broker.o
  .text.add_subscribtion
-                0x0000000000000000       0xbe src/tiny_broker.o
+                0x0000000000000000       0xc4 src/tiny_broker.o
  .text          0x0000000000000000        0x0 src/tiny_printf.o
  .data          0x0000000000000000        0x0 src/tiny_printf.o
  .bss           0x0000000000000000        0x0 src/tiny_printf.o
@@ -1672,6 +1676,11 @@ Discarded input sections
  .text          0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
  .data          0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
  .bss           0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
+ .data          0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcmp.o)
+ .bss           0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcmp.o)
+ .text          0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcpy.o)
+ .data          0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcpy.o)
+ .bss           0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcpy.o)
  .data          0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strlen.o)
  .bss           0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strlen.o)
  .text          0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
@@ -1828,398 +1837,410 @@ LOAD /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-
                 0x0000000008000000                g_pfnVectors
                 0x000000000800010c                . = ALIGN (0x4)
 
-.text           0x000000000800010c     0x23e8
+.text           0x000000000800010c     0x2454
                 0x000000000800010c                . = ALIGN (0x4)
  *(.text)
  .text          0x000000000800010c       0x40 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
- .text          0x000000000800014c       0x10 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strlen.o)
-                0x000000000800014c                strlen
+ .text          0x000000000800014c       0x14 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcmp.o)
+                0x000000000800014c                strcmp
+ .text          0x0000000008000160       0x10 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strlen.o)
+                0x0000000008000160                strlen
  *(.text*)
  .text.GPIO_Init
-                0x000000000800015c      0x178 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
-                0x000000000800015c                GPIO_Init
+                0x0000000008000170      0x178 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
+                0x0000000008000170                GPIO_Init
  .text.GPIO_SetBits
-                0x00000000080002d4       0x1c Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
-                0x00000000080002d4                GPIO_SetBits
+                0x00000000080002e8       0x1c Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
+                0x00000000080002e8                GPIO_SetBits
  .text.GPIO_ResetBits
-                0x00000000080002f0       0x1c Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
-                0x00000000080002f0                GPIO_ResetBits
+                0x0000000008000304       0x1c Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
+                0x0000000008000304                GPIO_ResetBits
  .text.RCC_APB2PeriphClockCmd
-                0x000000000800030c       0x3c Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
-                0x000000000800030c                RCC_APB2PeriphClockCmd
+                0x0000000008000320       0x3c Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
+                0x0000000008000320                RCC_APB2PeriphClockCmd
  .text.SPI_Init
-                0x0000000008000348       0x86 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
-                0x0000000008000348                SPI_Init
- .text.SPI_Cmd  0x00000000080003ce       0x3e Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
-                0x00000000080003ce                SPI_Cmd
+                0x000000000800035c       0x86 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
+                0x000000000800035c                SPI_Init
+ .text.SPI_Cmd  0x00000000080003e2       0x3e Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
+                0x00000000080003e2                SPI_Cmd
  .text.SPI_I2S_SendData
-                0x000000000800040c       0x1c Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
-                0x000000000800040c                SPI_I2S_SendData
+                0x0000000008000420       0x1c Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
+                0x0000000008000420                SPI_I2S_SendData
  .text.SPI_I2S_ReceiveData
-                0x0000000008000428       0x18 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
-                0x0000000008000428                SPI_I2S_ReceiveData
+                0x000000000800043c       0x18 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
+                0x000000000800043c                SPI_I2S_ReceiveData
  .text.SPI_SSOutputCmd
-                0x0000000008000440       0x3e Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
-                0x0000000008000440                SPI_SSOutputCmd
+                0x0000000008000454       0x3e Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
+                0x0000000008000454                SPI_SSOutputCmd
  .text.SPI_I2S_GetFlagStatus
-                0x000000000800047e       0x36 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
-                0x000000000800047e                SPI_I2S_GetFlagStatus
+                0x0000000008000492       0x36 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
+                0x0000000008000492                SPI_I2S_GetFlagStatus
  .text.packet_send_localhost
-                0x00000000080004b4       0x2c src/main.o
-                0x00000000080004b4                packet_send_localhost
+                0x00000000080004c8       0x2c src/main.o
+                0x00000000080004c8                packet_send_localhost
  .text.mqtt_message_cb
-                0x00000000080004e0       0x22 src/main.o
-                0x00000000080004e0                mqtt_message_cb
+                0x00000000080004f4       0x22 src/main.o
+                0x00000000080004f4                mqtt_message_cb
  .text.mqt_net_connect_cb
-                0x0000000008000502       0x1c src/main.o
-                0x0000000008000502                mqt_net_connect_cb
- *fill*         0x000000000800051e        0x2 
+                0x0000000008000516       0x1c src/main.o
+                0x0000000008000516                mqt_net_connect_cb
+ *fill*         0x0000000008000532        0x2 
  .text.mqtt_net_read_cb
-                0x0000000008000520       0x28 src/main.o
-                0x0000000008000520                mqtt_net_read_cb
+                0x0000000008000534       0x28 src/main.o
+                0x0000000008000534                mqtt_net_read_cb
  .text.mqtt_net_write_cb
-                0x0000000008000548       0x24 src/main.o
-                0x0000000008000548                mqtt_net_write_cb
+                0x000000000800055c       0x24 src/main.o
+                0x000000000800055c                mqtt_net_write_cb
  .text.mqtt_net_disconnect_cb
-                0x000000000800056c       0x14 src/main.o
-                0x000000000800056c                mqtt_net_disconnect_cb
- .text.main     0x0000000008000580      0x1c8 src/main.o
-                0x0000000008000580                main
+                0x0000000008000580       0x14 src/main.o
+                0x0000000008000580                mqtt_net_disconnect_cb
+ .text.main     0x0000000008000594      0x1c8 src/main.o
+                0x0000000008000594                main
  .text.MqttClient_HandlePayload
-                0x0000000008000748      0x330 src/mqtt_client.o
+                0x000000000800075c      0x330 src/mqtt_client.o
  .text.MqttClient_WaitType
-                0x0000000008000a78       0xf4 src/mqtt_client.o
+                0x0000000008000a8c       0xf4 src/mqtt_client.o
  .text.MqttClient_Init
-                0x0000000008000b6c       0x78 src/mqtt_client.o
-                0x0000000008000b6c                MqttClient_Init
+                0x0000000008000b80       0x78 src/mqtt_client.o
+                0x0000000008000b80                MqttClient_Init
  .text.MqttClient_Connect
-                0x0000000008000be4       0x8e src/mqtt_client.o
-                0x0000000008000be4                MqttClient_Connect
+                0x0000000008000bf8       0x8e src/mqtt_client.o
+                0x0000000008000bf8                MqttClient_Connect
  .text.MqttEncode_FixedHeader
-                0x0000000008000c72       0x8e src/mqtt_packet.o
+                0x0000000008000c86       0x8e src/mqtt_packet.o
  .text.MqttDecode_FixedHeader
-                0x0000000008000d00       0x9c src/mqtt_packet.o
+                0x0000000008000d14       0x9c src/mqtt_packet.o
  .text.MqttDecode_RemainLen
-                0x0000000008000d9c       0x8c src/mqtt_packet.o
-                0x0000000008000d9c                MqttDecode_RemainLen
+                0x0000000008000db0       0x8c src/mqtt_packet.o
+                0x0000000008000db0                MqttDecode_RemainLen
  .text.MqttEncode_RemainLen
-                0x0000000008000e28       0x8a src/mqtt_packet.o
-                0x0000000008000e28                MqttEncode_RemainLen
+                0x0000000008000e3c       0x8a src/mqtt_packet.o
+                0x0000000008000e3c                MqttEncode_RemainLen
  .text.MqttDecode_Num
-                0x0000000008000eb2       0x40 src/mqtt_packet.o
-                0x0000000008000eb2                MqttDecode_Num
+                0x0000000008000ec6       0x40 src/mqtt_packet.o
+                0x0000000008000ec6                MqttDecode_Num
  .text.MqttEncode_Num
-                0x0000000008000ef2       0x2e src/mqtt_packet.o
-                0x0000000008000ef2                MqttEncode_Num
+                0x0000000008000f06       0x2e src/mqtt_packet.o
+                0x0000000008000f06                MqttEncode_Num
  .text.MqttDecode_String
-                0x0000000008000f20       0x4a src/mqtt_packet.o
-                0x0000000008000f20                MqttDecode_String
+                0x0000000008000f34       0x4a src/mqtt_packet.o
+                0x0000000008000f34                MqttDecode_String
  .text.MqttEncode_String
-                0x0000000008000f6a       0x44 src/mqtt_packet.o
-                0x0000000008000f6a                MqttEncode_String
+                0x0000000008000f7e       0x44 src/mqtt_packet.o
+                0x0000000008000f7e                MqttEncode_String
  .text.MqttEncode_Data
-                0x0000000008000fae       0x3c src/mqtt_packet.o
-                0x0000000008000fae                MqttEncode_Data
- *fill*         0x0000000008000fea        0x2 
+                0x0000000008000fc2       0x3c src/mqtt_packet.o
+                0x0000000008000fc2                MqttEncode_Data
+ *fill*         0x0000000008000ffe        0x2 
  .text.MqttEncode_Connect
-                0x0000000008000fec      0x260 src/mqtt_packet.o
-                0x0000000008000fec                MqttEncode_Connect
+                0x0000000008001000      0x260 src/mqtt_packet.o
+                0x0000000008001000                MqttEncode_Connect
  .text.MqttDecode_ConnectAck
-                0x000000000800124c       0x70 src/mqtt_packet.o
-                0x000000000800124c                MqttDecode_ConnectAck
+                0x0000000008001260       0x70 src/mqtt_packet.o
+                0x0000000008001260                MqttDecode_ConnectAck
  .text.MqttDecode_Publish
-                0x00000000080012bc       0xee src/mqtt_packet.o
-                0x00000000080012bc                MqttDecode_Publish
+                0x00000000080012d0       0xee src/mqtt_packet.o
+                0x00000000080012d0                MqttDecode_Publish
  .text.MqttEncode_PublishResp
-                0x00000000080013aa       0x8c src/mqtt_packet.o
-                0x00000000080013aa                MqttEncode_PublishResp
+                0x00000000080013be       0x8c src/mqtt_packet.o
+                0x00000000080013be                MqttEncode_PublishResp
  .text.MqttDecode_PublishResp
-                0x0000000008001436       0x7a src/mqtt_packet.o
-                0x0000000008001436                MqttDecode_PublishResp
+                0x000000000800144a       0x7a src/mqtt_packet.o
+                0x000000000800144a                MqttDecode_PublishResp
  .text.MqttDecode_SubscribeAck
-                0x00000000080014b0       0x80 src/mqtt_packet.o
-                0x00000000080014b0                MqttDecode_SubscribeAck
+                0x00000000080014c4       0x80 src/mqtt_packet.o
+                0x00000000080014c4                MqttDecode_SubscribeAck
  .text.MqttDecode_UnsubscribeAck
-                0x0000000008001530       0x7a src/mqtt_packet.o
-                0x0000000008001530                MqttDecode_UnsubscribeAck
+                0x0000000008001544       0x7a src/mqtt_packet.o
+                0x0000000008001544                MqttDecode_UnsubscribeAck
  .text.MqttDecode_Ping
-                0x00000000080015aa       0x50 src/mqtt_packet.o
-                0x00000000080015aa                MqttDecode_Ping
+                0x00000000080015be       0x50 src/mqtt_packet.o
+                0x00000000080015be                MqttDecode_Ping
  .text.MqttPacket_Write
-                0x00000000080015fa       0x26 src/mqtt_packet.o
-                0x00000000080015fa                MqttPacket_Write
+                0x000000000800160e       0x26 src/mqtt_packet.o
+                0x000000000800160e                MqttPacket_Write
  .text.MqttPacket_Read
-                0x0000000008001620      0x13a src/mqtt_packet.o
-                0x0000000008001620                MqttPacket_Read
+                0x0000000008001634      0x13a src/mqtt_packet.o
+                0x0000000008001634                MqttPacket_Read
  .text.MqttSocket_Init
-                0x000000000800175a       0x5e src/mqtt_socket.o
-                0x000000000800175a                MqttSocket_Init
+                0x000000000800176e       0x5e src/mqtt_socket.o
+                0x000000000800176e                MqttSocket_Init
  .text.MqttSocket_WriteDo
-                0x00000000080017b8       0x2e src/mqtt_socket.o
+                0x00000000080017cc       0x2e src/mqtt_socket.o
  .text.MqttSocket_Write
-                0x00000000080017e6       0xa0 src/mqtt_socket.o
-                0x00000000080017e6                MqttSocket_Write
+                0x00000000080017fa       0xa0 src/mqtt_socket.o
+                0x00000000080017fa                MqttSocket_Write
  .text.MqttSocket_ReadDo
-                0x0000000008001886       0x2e src/mqtt_socket.o
+                0x000000000800189a       0x2e src/mqtt_socket.o
  .text.MqttSocket_Read
-                0x00000000080018b4       0xa0 src/mqtt_socket.o
-                0x00000000080018b4                MqttSocket_Read
+                0x00000000080018c8       0xa0 src/mqtt_socket.o
+                0x00000000080018c8                MqttSocket_Read
  .text._delay_ms
-                0x0000000008001954       0x3a src/nrf24.o
-                0x0000000008001954                _delay_ms
+                0x0000000008001968       0x3a src/nrf24.o
+                0x0000000008001968                _delay_ms
  .text.l3_receive_packet
-                0x000000000800198e       0x58 src/nrf24.o
-                0x000000000800198e                l3_receive_packet
+                0x00000000080019a2       0x58 src/nrf24.o
+                0x00000000080019a2                l3_receive_packet
  .text.nrf24_init
-                0x00000000080019e6       0x18 src/nrf24.o
-                0x00000000080019e6                nrf24_init
+                0x00000000080019fa       0x18 src/nrf24.o
+                0x00000000080019fa                nrf24_init
  .text.nRF24_restore_defaults
-                0x00000000080019fe       0xba src/nrf24.o
-                0x00000000080019fe                nRF24_restore_defaults
+                0x0000000008001a12       0xba src/nrf24.o
+                0x0000000008001a12                nRF24_restore_defaults
  .text.nrf24_config
-                0x0000000008001ab8       0x94 src/nrf24.o
-                0x0000000008001ab8                nrf24_config
+                0x0000000008001acc       0x94 src/nrf24.o
+                0x0000000008001acc                nrf24_config
  .text.nrf24_rx_address
-                0x0000000008001b4c       0x26 src/nrf24.o
-                0x0000000008001b4c                nrf24_rx_address
+                0x0000000008001b60       0x26 src/nrf24.o
+                0x0000000008001b60                nrf24_rx_address
  .text.nrf24_tx_address
-                0x0000000008001b72       0x24 src/nrf24.o
-                0x0000000008001b72                nrf24_tx_address
+                0x0000000008001b86       0x24 src/nrf24.o
+                0x0000000008001b86                nrf24_tx_address
  .text.nrf24_dataReady
-                0x0000000008001b96       0x34 src/nrf24.o
-                0x0000000008001b96                nrf24_dataReady
+                0x0000000008001baa       0x34 src/nrf24.o
+                0x0000000008001baa                nrf24_dataReady
  .text.nrf24_rxFifoEmpty
-                0x0000000008001bca       0x22 src/nrf24.o
-                0x0000000008001bca                nrf24_rxFifoEmpty
+                0x0000000008001bde       0x22 src/nrf24.o
+                0x0000000008001bde                nrf24_rxFifoEmpty
  .text.nrf24_getData
-                0x0000000008001bec       0x3c src/nrf24.o
-                0x0000000008001bec                nrf24_getData
+                0x0000000008001c00       0x3c src/nrf24.o
+                0x0000000008001c00                nrf24_getData
  .text.nrf24_send
-                0x0000000008001c28       0x54 src/nrf24.o
-                0x0000000008001c28                nrf24_send
+                0x0000000008001c3c       0x54 src/nrf24.o
+                0x0000000008001c3c                nrf24_send
  .text.nrf24_isSending
-                0x0000000008001c7c       0x26 src/nrf24.o
-                0x0000000008001c7c                nrf24_isSending
+                0x0000000008001c90       0x26 src/nrf24.o
+                0x0000000008001c90                nrf24_isSending
  .text.nrf24_getStatus
-                0x0000000008001ca2       0x26 src/nrf24.o
-                0x0000000008001ca2                nrf24_getStatus
+                0x0000000008001cb6       0x26 src/nrf24.o
+                0x0000000008001cb6                nrf24_getStatus
  .text.nrf24_powerUpRx
-                0x0000000008001cc8       0x36 src/nrf24.o
-                0x0000000008001cc8                nrf24_powerUpRx
+                0x0000000008001cdc       0x36 src/nrf24.o
+                0x0000000008001cdc                nrf24_powerUpRx
  .text.nrf24_powerUpTx
-                0x0000000008001cfe       0x18 src/nrf24.o
-                0x0000000008001cfe                nrf24_powerUpTx
+                0x0000000008001d12       0x18 src/nrf24.o
+                0x0000000008001d12                nrf24_powerUpTx
  .text.spi_transfer
-                0x0000000008001d16       0x24 src/nrf24.o
-                0x0000000008001d16                spi_transfer
+                0x0000000008001d2a       0x24 src/nrf24.o
+                0x0000000008001d2a                spi_transfer
  .text.nrf24_transferSync
-                0x0000000008001d3a       0x42 src/nrf24.o
-                0x0000000008001d3a                nrf24_transferSync
+                0x0000000008001d4e       0x42 src/nrf24.o
+                0x0000000008001d4e                nrf24_transferSync
  .text.nrf24_transmitSync
-                0x0000000008001d7c       0x36 src/nrf24.o
-                0x0000000008001d7c                nrf24_transmitSync
+                0x0000000008001d90       0x36 src/nrf24.o
+                0x0000000008001d90                nrf24_transmitSync
  .text.nrf24_configRegister
-                0x0000000008001db2       0x40 src/nrf24.o
-                0x0000000008001db2                nrf24_configRegister
+                0x0000000008001dc6       0x40 src/nrf24.o
+                0x0000000008001dc6                nrf24_configRegister
  .text.nrf24_readRegister
-                0x0000000008001df2       0x3e src/nrf24.o
-                0x0000000008001df2                nrf24_readRegister
+                0x0000000008001e06       0x3e src/nrf24.o
+                0x0000000008001e06                nrf24_readRegister
  .text.nrf24_writeRegister
-                0x0000000008001e30       0x42 src/nrf24.o
-                0x0000000008001e30                nrf24_writeRegister
- *fill*         0x0000000008001e72        0x2 
+                0x0000000008001e44       0x42 src/nrf24.o
+                0x0000000008001e44                nrf24_writeRegister
+ *fill*         0x0000000008001e86        0x2 
  .text.nRF24_GPIO_Init
-                0x0000000008001e74       0xec src/nrf24_hal.o
-                0x0000000008001e74                nRF24_GPIO_Init
+                0x0000000008001e88       0xec src/nrf24_hal.o
+                0x0000000008001e88                nRF24_GPIO_Init
  .text.nRF24_LL_RW
-                0x0000000008001f60       0x4c src/nrf24_hal.o
-                0x0000000008001f60                nRF24_LL_RW
+                0x0000000008001f74       0x4c src/nrf24_hal.o
+                0x0000000008001f74                nRF24_LL_RW
  .text.nrf24_setupPins
-                0x0000000008001fac        0xc src/radioPinFunctions.o
-                0x0000000008001fac                nrf24_setupPins
+                0x0000000008001fc0        0xc src/radioPinFunctions.o
+                0x0000000008001fc0                nrf24_setupPins
  .text.nrf24_ce_digitalWrite
-                0x0000000008001fb8       0x30 src/radioPinFunctions.o
-                0x0000000008001fb8                nrf24_ce_digitalWrite
+                0x0000000008001fcc       0x30 src/radioPinFunctions.o
+                0x0000000008001fcc                nrf24_ce_digitalWrite
  .text.nrf24_csn_digitalWrite
-                0x0000000008001fe8       0x30 src/radioPinFunctions.o
-                0x0000000008001fe8                nrf24_csn_digitalWrite
+                0x0000000008001ffc       0x30 src/radioPinFunctions.o
+                0x0000000008001ffc                nrf24_csn_digitalWrite
  .text.Reset_Handler
-                0x0000000008002018       0x50 src/startup_stm32f10x_md.o
-                0x0000000008002018                Reset_Handler
+                0x000000000800202c       0x50 src/startup_stm32f10x_md.o
+                0x000000000800202c                Reset_Handler
  .text.Default_Handler
-                0x0000000008002068        0x2 src/startup_stm32f10x_md.o
-                0x0000000008002068                EXTI2_IRQHandler
-                0x0000000008002068                TIM1_CC_IRQHandler
-                0x0000000008002068                PVD_IRQHandler
-                0x0000000008002068                EXTI3_IRQHandler
-                0x0000000008002068                EXTI0_IRQHandler
-                0x0000000008002068                I2C2_EV_IRQHandler
-                0x0000000008002068                ADC1_2_IRQHandler
-                0x0000000008002068                SPI1_IRQHandler
-                0x0000000008002068                TAMPER_IRQHandler
-                0x0000000008002068                DMA1_Channel4_IRQHandler
-                0x0000000008002068                USART3_IRQHandler
-                0x0000000008002068                RTC_IRQHandler
-                0x0000000008002068                DMA1_Channel7_IRQHandler
-                0x0000000008002068                CAN1_RX1_IRQHandler
-                0x0000000008002068                TIM4_IRQHandler
-                0x0000000008002068                I2C1_EV_IRQHandler
-                0x0000000008002068                DMA1_Channel6_IRQHandler
-                0x0000000008002068                TIM3_IRQHandler
-                0x0000000008002068                RCC_IRQHandler
-                0x0000000008002068                TIM1_TRG_COM_IRQHandler
-                0x0000000008002068                DMA1_Channel1_IRQHandler
-                0x0000000008002068                Default_Handler
-                0x0000000008002068                EXTI15_10_IRQHandler
-                0x0000000008002068                EXTI9_5_IRQHandler
-                0x0000000008002068                SPI2_IRQHandler
-                0x0000000008002068                DMA1_Channel5_IRQHandler
-                0x0000000008002068                EXTI4_IRQHandler
-                0x0000000008002068                USB_LP_CAN1_RX0_IRQHandler
-                0x0000000008002068                USB_HP_CAN1_TX_IRQHandler
-                0x0000000008002068                DMA1_Channel3_IRQHandler
-                0x0000000008002068                TIM1_UP_IRQHandler
-                0x0000000008002068                WWDG_IRQHandler
-                0x0000000008002068                TIM2_IRQHandler
-                0x0000000008002068                TIM1_BRK_IRQHandler
-                0x0000000008002068                EXTI1_IRQHandler
-                0x0000000008002068                RTCAlarm_IRQHandler
-                0x0000000008002068                USART2_IRQHandler
-                0x0000000008002068                I2C2_ER_IRQHandler
-                0x0000000008002068                DMA1_Channel2_IRQHandler
-                0x0000000008002068                CAN1_SCE_IRQHandler
-                0x0000000008002068                FLASH_IRQHandler
-                0x0000000008002068                USART1_IRQHandler
-                0x0000000008002068                I2C1_ER_IRQHandler
-                0x0000000008002068                USBWakeUp_IRQHandler
+                0x000000000800207c        0x2 src/startup_stm32f10x_md.o
+                0x000000000800207c                EXTI2_IRQHandler
+                0x000000000800207c                TIM1_CC_IRQHandler
+                0x000000000800207c                PVD_IRQHandler
+                0x000000000800207c                EXTI3_IRQHandler
+                0x000000000800207c                EXTI0_IRQHandler
+                0x000000000800207c                I2C2_EV_IRQHandler
+                0x000000000800207c                ADC1_2_IRQHandler
+                0x000000000800207c                SPI1_IRQHandler
+                0x000000000800207c                TAMPER_IRQHandler
+                0x000000000800207c                DMA1_Channel4_IRQHandler
+                0x000000000800207c                USART3_IRQHandler
+                0x000000000800207c                RTC_IRQHandler
+                0x000000000800207c                DMA1_Channel7_IRQHandler
+                0x000000000800207c                CAN1_RX1_IRQHandler
+                0x000000000800207c                TIM4_IRQHandler
+                0x000000000800207c                I2C1_EV_IRQHandler
+                0x000000000800207c                DMA1_Channel6_IRQHandler
+                0x000000000800207c                TIM3_IRQHandler
+                0x000000000800207c                RCC_IRQHandler
+                0x000000000800207c                TIM1_TRG_COM_IRQHandler
+                0x000000000800207c                DMA1_Channel1_IRQHandler
+                0x000000000800207c                Default_Handler
+                0x000000000800207c                EXTI15_10_IRQHandler
+                0x000000000800207c                EXTI9_5_IRQHandler
+                0x000000000800207c                SPI2_IRQHandler
+                0x000000000800207c                DMA1_Channel5_IRQHandler
+                0x000000000800207c                EXTI4_IRQHandler
+                0x000000000800207c                USB_LP_CAN1_RX0_IRQHandler
+                0x000000000800207c                USB_HP_CAN1_TX_IRQHandler
+                0x000000000800207c                DMA1_Channel3_IRQHandler
+                0x000000000800207c                TIM1_UP_IRQHandler
+                0x000000000800207c                WWDG_IRQHandler
+                0x000000000800207c                TIM2_IRQHandler
+                0x000000000800207c                TIM1_BRK_IRQHandler
+                0x000000000800207c                EXTI1_IRQHandler
+                0x000000000800207c                RTCAlarm_IRQHandler
+                0x000000000800207c                USART2_IRQHandler
+                0x000000000800207c                I2C2_ER_IRQHandler
+                0x000000000800207c                DMA1_Channel2_IRQHandler
+                0x000000000800207c                CAN1_SCE_IRQHandler
+                0x000000000800207c                FLASH_IRQHandler
+                0x000000000800207c                USART1_IRQHandler
+                0x000000000800207c                I2C1_ER_IRQHandler
+                0x000000000800207c                USBWakeUp_IRQHandler
  .text.NMI_Handler
-                0x000000000800206a        0xc src/stm32f1xx_it.o
-                0x000000000800206a                NMI_Handler
+                0x000000000800207e        0xc src/stm32f1xx_it.o
+                0x000000000800207e                NMI_Handler
  .text.HardFault_Handler
-                0x0000000008002076        0x6 src/stm32f1xx_it.o
-                0x0000000008002076                HardFault_Handler
+                0x000000000800208a        0x6 src/stm32f1xx_it.o
+                0x000000000800208a                HardFault_Handler
  .text.MemManage_Handler
-                0x000000000800207c        0x6 src/stm32f1xx_it.o
-                0x000000000800207c                MemManage_Handler
+                0x0000000008002090        0x6 src/stm32f1xx_it.o
+                0x0000000008002090                MemManage_Handler
  .text.BusFault_Handler
-                0x0000000008002082        0x6 src/stm32f1xx_it.o
-                0x0000000008002082                BusFault_Handler
+                0x0000000008002096        0x6 src/stm32f1xx_it.o
+                0x0000000008002096                BusFault_Handler
  .text.UsageFault_Handler
-                0x0000000008002088        0x6 src/stm32f1xx_it.o
-                0x0000000008002088                UsageFault_Handler
+                0x000000000800209c        0x6 src/stm32f1xx_it.o
+                0x000000000800209c                UsageFault_Handler
  .text.SVC_Handler
-                0x000000000800208e        0xc src/stm32f1xx_it.o
-                0x000000000800208e                SVC_Handler
+                0x00000000080020a2        0xc src/stm32f1xx_it.o
+                0x00000000080020a2                SVC_Handler
  .text.DebugMon_Handler
-                0x000000000800209a        0xc src/stm32f1xx_it.o
-                0x000000000800209a                DebugMon_Handler
+                0x00000000080020ae        0xc src/stm32f1xx_it.o
+                0x00000000080020ae                DebugMon_Handler
  .text.PendSV_Handler
-                0x00000000080020a6        0xc src/stm32f1xx_it.o
-                0x00000000080020a6                PendSV_Handler
+                0x00000000080020ba        0xc src/stm32f1xx_it.o
+                0x00000000080020ba                PendSV_Handler
  .text.SysTick_Handler
-                0x00000000080020b2        0xc src/stm32f1xx_it.o
-                0x00000000080020b2                SysTick_Handler
- *fill*         0x00000000080020be        0x2 
+                0x00000000080020c6        0xc src/stm32f1xx_it.o
+                0x00000000080020c6                SysTick_Handler
+ *fill*         0x00000000080020d2        0x2 
  .text.SystemInit
-                0x00000000080020c0       0x68 src/system_stm32f10x.o
-                0x00000000080020c0                SystemInit
+                0x00000000080020d4       0x68 src/system_stm32f10x.o
+                0x00000000080020d4                SystemInit
  .text.SetSysClock
-                0x0000000008002128        0xc src/system_stm32f10x.o
+                0x000000000800213c        0xc src/system_stm32f10x.o
  .text.SetSysClockTo72
-                0x0000000008002134      0x100 src/system_stm32f10x.o
+                0x0000000008002148      0x100 src/system_stm32f10x.o
  .text.broker_init
-                0x0000000008002234       0x26 src/tiny_broker.o
-                0x0000000008002234                broker_init
- *fill*         0x000000000800225a        0x2 
+                0x0000000008002248       0x26 src/tiny_broker.o
+                0x0000000008002248                broker_init
+ *fill*         0x000000000800226e        0x2 
  .text.m_malloc
-                0x000000000800225c       0x50 src/tiny_broker.o
-                0x000000000800225c                m_malloc
+                0x0000000008002270       0x50 src/tiny_broker.o
+                0x0000000008002270                m_malloc
  .text.is_client_connected
-                0x00000000080022ac       0x4a src/tiny_broker.o
-                0x00000000080022ac                is_client_connected
+                0x00000000080022c0       0x4a src/tiny_broker.o
+                0x00000000080022c0                is_client_connected
  .text.read_connection_flags
-                0x00000000080022f6       0x20 src/tiny_broker.o
+                0x000000000800230a       0x20 src/tiny_broker.o
+ .text.get_id_size
+                0x000000000800232a       0x2a src/tiny_broker.o
+ .text.has_broker_space_for_next_client
+                0x0000000008002354       0x46 src/tiny_broker.o
+ .text.broker_find_client_pos
+                0x000000000800239a       0x4a src/tiny_broker.o
+ .text.broker_remove_client
+                0x00000000080023e4       0x38 src/tiny_broker.o
+                0x00000000080023e4                broker_remove_client
  .text.acccept_connection
-                0x0000000008002316      0x120 src/tiny_broker.o
-                0x0000000008002316                acccept_connection
- *fill*         0x0000000008002436        0x2 
+                0x000000000800241c       0x78 src/tiny_broker.o
+                0x000000000800241c                acccept_connection
  .text.__libc_init_array
-                0x0000000008002438       0x48 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-init.o)
-                0x0000000008002438                __libc_init_array
- .text.memcpy   0x0000000008002480       0x16 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memcpy-stub.o)
-                0x0000000008002480                memcpy
- .text.memset   0x0000000008002496       0x10 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
-                0x0000000008002496                memset
- .text.strstr   0x00000000080024a6       0x36 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
-                0x00000000080024a6                strstr
+                0x0000000008002494       0x48 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-init.o)
+                0x0000000008002494                __libc_init_array
+ .text.memcpy   0x00000000080024dc       0x16 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memcpy-stub.o)
+                0x00000000080024dc                memcpy
+ .text.memset   0x00000000080024f2       0x10 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
+                0x00000000080024f2                memset
+ .text.strcpy   0x0000000008002502       0x10 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcpy.o)
+                0x0000000008002502                strcpy
+ .text.strstr   0x0000000008002512       0x36 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
+                0x0000000008002512                strstr
  *(.glue_7)
- .glue_7        0x00000000080024dc        0x0 linker stubs
+ .glue_7        0x0000000008002548        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x00000000080024dc        0x0 linker stubs
+ .glue_7t       0x0000000008002548        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x00000000080024dc        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
+ .eh_frame      0x0000000008002548        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
  *(.init)
- .init          0x00000000080024dc        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crti.o
-                0x00000000080024dc                _init
- .init          0x00000000080024e0        0x8 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
+ .init          0x0000000008002548        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crti.o
+                0x0000000008002548                _init
+ .init          0x000000000800254c        0x8 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
  *(.fini)
- .fini          0x00000000080024e8        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crti.o
-                0x00000000080024e8                _fini
- .fini          0x00000000080024ec        0x8 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
-                0x00000000080024f4                . = ALIGN (0x4)
-                0x00000000080024f4                _etext = .
+ .fini          0x0000000008002554        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crti.o
+                0x0000000008002554                _fini
+ .fini          0x0000000008002558        0x8 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
+                0x0000000008002560                . = ALIGN (0x4)
+                0x0000000008002560                _etext = .
 
-.vfp11_veneer   0x00000000080024f4        0x0
- .vfp11_veneer  0x00000000080024f4        0x0 linker stubs
+.vfp11_veneer   0x0000000008002560        0x0
+ .vfp11_veneer  0x0000000008002560        0x0 linker stubs
 
-.v4_bx          0x00000000080024f4        0x0
- .v4_bx         0x00000000080024f4        0x0 linker stubs
+.v4_bx          0x0000000008002560        0x0
+ .v4_bx         0x0000000008002560        0x0 linker stubs
 
-.iplt           0x00000000080024f4        0x0
- .iplt          0x00000000080024f4        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
+.iplt           0x0000000008002560        0x0
+ .iplt          0x0000000008002560        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
 
-.rodata         0x00000000080024f4       0x28
-                0x00000000080024f4                . = ALIGN (0x4)
+.rodata         0x0000000008002560       0x28
+                0x0000000008002560                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x00000000080024f4       0x19 src/main.o
- *fill*         0x000000000800250d        0x3 
- .rodata        0x0000000008002510        0xa src/mqtt_packet.o
+ .rodata        0x0000000008002560       0x19 src/main.o
+ *fill*         0x0000000008002579        0x3 
+ .rodata        0x000000000800257c        0xa src/mqtt_packet.o
  *(.rodata*)
-                0x000000000800251c                . = ALIGN (0x4)
- *fill*         0x000000000800251a        0x2 
+                0x0000000008002588                . = ALIGN (0x4)
+ *fill*         0x0000000008002586        0x2 
 
-.rel.dyn        0x000000000800251c        0x0
- .rel.iplt      0x000000000800251c        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
+.rel.dyn        0x0000000008002588        0x0
+ .rel.iplt      0x0000000008002588        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x000000000800251c        0x0
-                0x000000000800251c                __exidx_start = .
+.ARM            0x0000000008002588        0x0
+                0x0000000008002588                __exidx_start = .
  *(.ARM.exidx*)
-                0x000000000800251c                __exidx_end = .
+                0x0000000008002588                __exidx_end = .
 
-.preinit_array  0x000000000800251c        0x0
-                0x000000000800251c                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x0000000008002588        0x0
+                0x0000000008002588                PROVIDE (__preinit_array_start, .)
  *(.preinit_array*)
-                0x000000000800251c                PROVIDE (__preinit_array_end, .)
+                0x0000000008002588                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x000000000800251c        0x4
-                0x000000000800251c                PROVIDE (__init_array_start, .)
+.init_array     0x0000000008002588        0x4
+                0x0000000008002588                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  *(.init_array*)
- .init_array    0x000000000800251c        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
-                0x0000000008002520                PROVIDE (__init_array_end, .)
+ .init_array    0x0000000008002588        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
+                0x000000000800258c                PROVIDE (__init_array_end, .)
 
-.fini_array     0x0000000008002520        0x4
+.fini_array     0x000000000800258c        0x4
                 [!provide]                        PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x0000000008002520        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
+ .fini_array    0x000000000800258c        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end, .)
-                0x0000000008002524                _sidata = LOADADDR (.data)
+                0x0000000008002590                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000       0x10 load address 0x0000000008002524
+.data           0x0000000020000000       0x10 load address 0x0000000008002590
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -2235,21 +2256,21 @@ LOAD /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-
  *fill*         0x000000002000000d        0x3 
                 0x0000000020000010                _edata = .
 
-.igot.plt       0x0000000020000010        0x0 load address 0x0000000008002534
+.igot.plt       0x0000000020000010        0x0 load address 0x00000000080025a0
  .igot.plt      0x0000000020000010        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
                 0x0000000020000010                . = ALIGN (0x4)
 
-.bss            0x0000000020000010      0xa08 load address 0x0000000008002534
+.bss            0x0000000020000010      0xa08 load address 0x00000000080025a0
                 0x0000000020000010                _sbss = .
                 0x0000000020000010                __bss_start__ = _sbss
  *(.bss)
  .bss           0x0000000020000010       0x1c /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
  *(.bss*)
- .bss.new_used_bytes_nb.5805
+ .bss.new_used_bytes_nb.5806
                 0x000000002000002c        0x2 src/tiny_broker.o
- .bss.prev_used_bytes_nb.5804
+ .bss.prev_used_bytes_nb.5805
                 0x000000002000002e        0x2 src/tiny_broker.o
- .bss.m_heap.5803
+ .bss.m_heap.5804
                 0x0000000020000030      0x200 src/tiny_broker.o
  *(COMMON)
  COMMON         0x0000000020000230      0x7e6 src/main.o
@@ -2266,7 +2287,7 @@ LOAD /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-
                 0x0000000020000a18                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x0000000020000a18      0x100 load address 0x0000000008002534
+                0x0000000020000a18      0x100 load address 0x00000000080025a0
                 0x0000000020000a18                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (end, .)
                 [!provide]                        PROVIDE (_end, .)
@@ -2328,30 +2349,34 @@ LOAD /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-
  .ARM.attributes
                 0x000000000000035c       0x2d /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
  .ARM.attributes
-                0x0000000000000389       0x17 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strlen.o)
+                0x0000000000000389       0x1b /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcmp.o)
  .ARM.attributes
-                0x00000000000003a0       0x2d /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
+                0x00000000000003a4       0x2d /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcpy.o)
  .ARM.attributes
-                0x00000000000003cd       0x1d /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
+                0x00000000000003d1       0x17 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strlen.o)
+ .ARM.attributes
+                0x00000000000003e8       0x2d /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
+ .ARM.attributes
+                0x0000000000000415       0x1d /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
 OUTPUT(home_control_center.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000     0x96d3
+.debug_info     0x0000000000000000     0x97bf
  .debug_info    0x0000000000000000      0x701 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_info    0x0000000000000701      0x8b2 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_info    0x0000000000000fb3      0x906 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
- .debug_info    0x00000000000018b9     0x13bd src/main.o
- .debug_info    0x0000000000002c76     0x15ff src/mqtt_client.o
- .debug_info    0x0000000000004275     0x1b2a src/mqtt_packet.o
- .debug_info    0x0000000000005d9f      0xfac src/mqtt_socket.o
- .debug_info    0x0000000000006d4b      0xde5 src/nrf24.o
- .debug_info    0x0000000000007b30      0x4b9 src/nrf24_hal.o
- .debug_info    0x0000000000007fe9      0x1b6 src/radioPinFunctions.o
- .debug_info    0x000000000000819f       0x85 src/startup_stm32f10x_md.o
- .debug_info    0x0000000000008224      0x154 src/stm32f1xx_it.o
- .debug_info    0x0000000000008378      0x4a7 src/system_stm32f10x.o
- .debug_info    0x000000000000881f      0xeb4 src/tiny_broker.o
+ .debug_info    0x00000000000018b9     0x13c8 src/main.o
+ .debug_info    0x0000000000002c81     0x15ff src/mqtt_client.o
+ .debug_info    0x0000000000004280     0x1b2a src/mqtt_packet.o
+ .debug_info    0x0000000000005daa      0xfac src/mqtt_socket.o
+ .debug_info    0x0000000000006d56      0xde5 src/nrf24.o
+ .debug_info    0x0000000000007b3b      0x4b9 src/nrf24_hal.o
+ .debug_info    0x0000000000007ff4      0x1b6 src/radioPinFunctions.o
+ .debug_info    0x00000000000081aa       0x85 src/startup_stm32f10x_md.o
+ .debug_info    0x000000000000822f      0x154 src/stm32f1xx_it.o
+ .debug_info    0x0000000000008383      0x4a7 src/system_stm32f10x.o
+ .debug_info    0x000000000000882a      0xf95 src/tiny_broker.o
 
-.debug_abbrev   0x0000000000000000     0x188d
+.debug_abbrev   0x0000000000000000     0x18a8
  .debug_abbrev  0x0000000000000000      0x1dd Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_abbrev  0x00000000000001dd      0x1cf Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_abbrev  0x00000000000003ac      0x1ab Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
@@ -2365,9 +2390,9 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_abbrev  0x0000000000001422       0x12 src/startup_stm32f10x_md.o
  .debug_abbrev  0x0000000000001434       0x78 src/stm32f1xx_it.o
  .debug_abbrev  0x00000000000014ac      0x16e src/system_stm32f10x.o
- .debug_abbrev  0x000000000000161a      0x273 src/tiny_broker.o
+ .debug_abbrev  0x000000000000161a      0x28e src/tiny_broker.o
 
-.debug_aranges  0x0000000000000000      0x6e0
+.debug_aranges  0x0000000000000000      0x700
  .debug_aranges
                 0x0000000000000000       0xa8 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_aranges
@@ -2395,9 +2420,9 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_aranges
                 0x0000000000000658       0x38 src/system_stm32f10x.o
  .debug_aranges
-                0x0000000000000690       0x50 src/tiny_broker.o
+                0x0000000000000690       0x70 src/tiny_broker.o
 
-.debug_ranges   0x0000000000000000      0x650
+.debug_ranges   0x0000000000000000      0x658
  .debug_ranges  0x0000000000000000       0x98 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_ranges  0x0000000000000098      0x108 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_ranges  0x00000000000001a0       0xc0 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
@@ -2411,9 +2436,9 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_ranges  0x0000000000000560       0x20 src/startup_stm32f10x_md.o
  .debug_ranges  0x0000000000000580       0x50 src/stm32f1xx_it.o
  .debug_ranges  0x00000000000005d0       0x28 src/system_stm32f10x.o
- .debug_ranges  0x00000000000005f8       0x58 src/tiny_broker.o
+ .debug_ranges  0x00000000000005f8       0x60 src/tiny_broker.o
 
-.debug_line     0x0000000000000000     0x2e47
+.debug_line     0x0000000000000000     0x2e99
  .debug_line    0x0000000000000000      0x3d3 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_line    0x00000000000003d3      0x4ce Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_line    0x00000000000008a1      0x430 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
@@ -2427,9 +2452,9 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_line    0x0000000000002623       0x7c src/startup_stm32f10x_md.o
  .debug_line    0x000000000000269f      0x21a src/stm32f1xx_it.o
  .debug_line    0x00000000000028b9      0x234 src/system_stm32f10x.o
- .debug_line    0x0000000000002aed      0x35a src/tiny_broker.o
+ .debug_line    0x0000000000002aed      0x3ac src/tiny_broker.o
 
-.debug_str      0x0000000000000000     0x25bd
+.debug_str      0x0000000000000000     0x2608
  .debug_str     0x0000000000000000      0x537 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
                                         0x597 (size before relaxing)
  .debug_str     0x0000000000000537      0x440 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
@@ -2437,7 +2462,7 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_str     0x0000000000000977      0x3ce Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
                                         0x67b (size before relaxing)
  .debug_str     0x0000000000000d45      0x80f src/main.o
-                                        0xc50 (size before relaxing)
+                                        0xc57 (size before relaxing)
  .debug_str     0x0000000000001554      0x619 src/mqtt_client.o
                                         0xfd2 (size before relaxing)
  .debug_str     0x0000000000001b6d      0x3d0 src/mqtt_packet.o
@@ -2454,8 +2479,8 @@ OUTPUT(home_control_center.elf elf32-littlearm)
                                         0x25d (size before relaxing)
  .debug_str     0x00000000000023ba       0xc6 src/system_stm32f10x.o
                                         0x339 (size before relaxing)
- .debug_str     0x0000000000002480      0x13d src/tiny_broker.o
-                                        0x87a (size before relaxing)
+ .debug_str     0x0000000000002480      0x188 src/tiny_broker.o
+                                        0x8d3 (size before relaxing)
 
 .comment        0x0000000000000000       0x7c
  .comment       0x0000000000000000       0x7c Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
@@ -2473,7 +2498,7 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .comment       0x000000000000007c       0x7d src/system_stm32f10x.o
  .comment       0x000000000000007c       0x7d src/tiny_broker.o
 
-.debug_frame    0x0000000000000000     0x1b28
+.debug_frame    0x0000000000000000     0x1bfc
  .debug_frame   0x0000000000000000      0x2d0 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_frame   0x00000000000002d0      0x4f4 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_frame   0x00000000000007c4      0x3a0 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
@@ -2486,11 +2511,13 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_frame   0x0000000000001748       0x74 src/radioPinFunctions.o
  .debug_frame   0x00000000000017bc      0x110 src/stm32f1xx_it.o
  .debug_frame   0x00000000000018cc       0x98 src/system_stm32f10x.o
- .debug_frame   0x0000000000001964      0x120 src/tiny_broker.o
- .debug_frame   0x0000000000001a84       0x2c /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-init.o)
- .debug_frame   0x0000000000001ab0       0x28 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memcpy-stub.o)
- .debug_frame   0x0000000000001ad8       0x20 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
- .debug_frame   0x0000000000001af8       0x30 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
+ .debug_frame   0x0000000000001964      0x1b4 src/tiny_broker.o
+ .debug_frame   0x0000000000001b18       0x2c /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-init.o)
+ .debug_frame   0x0000000000001b44       0x28 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x0000000000001b6c       0x20 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x0000000000001b8c       0x20 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcmp.o)
+ .debug_frame   0x0000000000001bac       0x20 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcpy.o)
+ .debug_frame   0x0000000000001bcc       0x30 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
 
 .stabstr        0x0000000000000000       0x3f
  .stabstr       0x0000000000000000       0x3f /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libnosys.a(write.o)
@@ -3300,6 +3327,7 @@ bmp280_set_work_mode                              src/bmp280.o
 bmp280_write_register                             src/bmp280.o
 broker_init                                       src/tiny_broker.o
                                                   src/main.o
+broker_remove_client                              src/tiny_broker.o
 data_array                                        src/main.o
 errno                                             /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libnosys.a(errno.o)
                                                   /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libnosys.a(write.o)
@@ -3394,6 +3422,10 @@ spi2_init_lcd                                     src/tm_stm32_ili9341.o
 spi_read_write_string                             src/bmp280_hal.o
 spi_transfer                                      src/nrf24.o
 sprintf                                           src/tiny_printf.o
+strcmp                                            /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcmp.o)
+                                                  src/tiny_broker.o
+strcpy                                            /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strcpy.o)
+                                                  src/tiny_broker.o
 strlen                                            /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strlen.o)
                                                   src/tm_stm32_fonts.o
                                                   src/tiny_printf.o

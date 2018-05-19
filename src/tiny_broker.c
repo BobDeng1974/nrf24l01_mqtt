@@ -65,15 +65,6 @@ void * m_malloc(size_t size){
 //broker->clients[i].
 
 
-bool is_client_connected(broker_t * broker, char* client_id){
-	for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
-		if (strstr(broker->clients[i].client_id, client_id)){
-			return true;
-		}
-	}
-	return false;
-}
-
 typedef struct{
 	uint8_t reserved 	   :1;
 	uint8_t cleans_session :1;
@@ -82,16 +73,57 @@ typedef struct{
 	uint8_t will_retain    :1;
 	uint8_t psswd          :1;
 	uint8_t user_name      :1;
-
-
-
 }conn_flags_t;
 
 
 
+bool is_client_connected(broker_t * broker, char* client_id){
+	for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
+		if (strstr(broker->clients[i].username, client_id)){
+			return true;
+		}
+	}
+	return false;
+}
+
 static inline void read_connection_flags(conn_flags_t ** conn_flags, uint8_t * frame){
 	uint8_t * flag_byte = &frame[9];
 	*conn_flags =  (conn_flags_t*) flag_byte;
+	//zwracac wskaznik
+}
+
+static inline uint16_t get_id_size(uint8_t *frame){
+	return (frame[CLNT_ID_SIZE_LSB_POS] +  (frame[CLNT_ID_SIZE_MSB_POS]<<8));
+}
+
+
+
+static bool has_broker_space_for_next_client(broker_t * broker){
+	for (uint8_t i = 0; i < MAX_CONN_CLIENTS; i++){
+		if (!(broker->clients[i].active)){
+			return true;
+		}
+	}
+	return false;
+}
+
+static inline uint8_t broker_find_client_pos(broker_t * broker, char* client_id){
+	for (uint8_t i = 0; i < MAX_CONN_CLIENTS; i++){
+		if (strcmp(broker->clients[i].id, client_id) ==0 ) {
+			return i;
+		}
+	}
+
+	return NOT_FOUND;
+
+}
+
+void broker_remove_client(broker_t * broker, char* client_id){
+	uint8_t pos = broker_find_client_pos(broker, client_id);
+	if (pos != NOT_FOUND){
+		broker->clients[pos].active = false;
+	}
+
 }
 
 
@@ -100,53 +132,54 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 	conn_flags_t * conn_flags;
 	read_connection_flags(&conn_flags, frame);
 
+	uint16_t client_id_size = get_id_size(frame);
+	char* client_id =  &frame[CLNT_ID_POS];
 
-	uint8_t flag_byte;
-	char* client_id =  frame[CLNT_ID_POS];
-	if (flag_byte & CLEAN_S_FLAG){
-		if (is_client_connected(broker, client_id)){
-			return;
-		}
+	if (conn_flags->cleans_session){
+		broker_remove_client(broker, client_id);
 	}
-	else{
-	 for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
-		 if (!(broker->clients[i].client_id)){
-			 uint8_t client_id_size = frame[CLNT_ID_SIZE_POS];
-			 broker->clients[i].client_id = XMALLOC(client_id_size+1);
-			 memcpy(broker->clients[i].client_id, client_id, client_id_size);
-			 broker->clients[i].client_id[client_id_size+1] = 0;
-			 if (flag_byte & WILL_FLAG){
-				 broker->clients[i].will_qos = (flag_byte & WILL_QOS_FLAG);
-				 /*will message not implemented yet*/
-				 if (flag_byte & WILL_RETAIN_FLAG){
-					 broker->clients[i].will_retain = 1;
-				 }
-			 }
-			 else{
-				 broker->clients[i].will_retain = 0;
-			 }
-			 if (flag_byte & USR_NAME_FLAG){
-				 uint8_t usr_name_size;
-			 }
-
-			 if (flag_byte & PSWD_FLAG){
-
-			 }
-
-
-
-			 return;
-		 }
-	 }
+	if (is_client_connected(broker, client_id)){
+		return;
 	}
+	if (has_broker_space_for_next_client(broker));
+	{
+		conn_client_t client;
+		client.id = XMALLOC(client_id_size+1);
+		strcpy(client.id, client_id);
+
+
+		//
+		//				}
+		//				/*will message not implemented yet*/
+		//				if (conn_flags->will_retain){
+		//					broker->clients[i].will_retain = 1;
+		//				}
+		//				// }
+		//				//	 else{
+		//				broker->clients[i].will_retain = 0;
+		//				// }
+		//				//			 if (flag_byte & USR_NAME_FLAG){
+		//				//				 uint8_t usr_name_size;
+		//				//			 }
+		//				//
+		//				//			 if (flag_byte & PSWD_FLAG){
+		//				//
+		//			 }
+
+
+
+		return;
+	}
+
 }
+
 
 
 
 
  void publish_msg_to_subscribers(broker_t * broker, uint8_t * frame, uint8_t len){
 	 for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
-		 if ((broker->clients->client_id)){
+		 if ((broker->clients->id)){
 			 for (uint8_t j =0; j < MAX_CONN_CLIENTS; j++){
 				 char * topic_name = (char *) &frame[5];
 				 uint8_t topic_len = frame[3] + (frame[4]<<8);

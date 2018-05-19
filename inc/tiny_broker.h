@@ -21,7 +21,8 @@
 #define ADDR_SIZE					4
 
 #define CLNT_ID_POS					14
-#define CLNT_ID_SIZE_POS			13
+#define CLNT_ID_SIZE_MSB_POS		12
+#define CLNT_ID_SIZE_LSB_POS		13
 
 
 #define CLEAN_S_FLAG			(1<<1)
@@ -31,6 +32,8 @@
 #define USR_NAME_FLAG			(1<<6)
 #define PSWD_FLAG				(1<<7)
 
+#define STRINGS_EQUAL			(0)
+
 typedef struct{
 uint8_t data[256];
 uint8_t len;
@@ -39,7 +42,7 @@ uint8_t len;
 
 typedef struct {
 	uint8_t net_address[ADDR_SIZE];
-	char*  client_id;
+	char*  id;
 	bool keepalive;
 	char*  username;
 	char*  password;
@@ -49,8 +52,8 @@ typedef struct {
 	uint8_t will_qos;
 	uint8_t will_retain;
 	char* subs_topic[MAX_SUBS_TOPIC];
+	bool active;
 }  conn_client_t;
-
 
 typedef struct{
 	conn_client_t clients[MAX_CONN_CLIENTS];
