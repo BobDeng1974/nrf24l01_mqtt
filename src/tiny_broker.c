@@ -38,44 +38,105 @@ void * m_malloc(size_t size){
 	}
 }
 
+//
+//
+//
+//
+//9 bajt z ramki to bajt z flagami: (tu 192, czy 11000000)
+//User Name Flag (1)
+//
+//Password Flag (1)
+//
+//Will Retain (0)
+//
+//Will QoS (01)
+//
+//Will Flag (1)
+//
+//Clean Session (1)
+//
+//Reserved (0)
+//mozna go sparsowac, np
+//
+//uint8_t byte = frame[9];
+//broker->clients[i].last_will = byte_flag & 1<<LAST_WILL_FLAG;
+//
+//
+//broker->clients[i].
+
+
+bool is_client_connected(broker_t * broker, char* client_id){
+	for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
+		if (strstr(broker->clients[i].client_id, client_id)){
+			return true;
+		}
+	}
+	return false;
+}
+
+typedef struct{
+	uint8_t reserved 	   :1;
+	uint8_t cleans_session :1;
+	uint8_t last_will      :1;
+	uint8_t will_qos       :2;
+	uint8_t will_retain    :1;
+	uint8_t psswd          :1;
+	uint8_t user_name      :1;
 
 
 
-
-9 bajt z ramki to bajt z flagami: (tu 192, czy 11000000)
-User Name Flag (1)
-
-Password Flag (1)
-
-Will Retain (0)
-
-Will QoS (01)
-
-Will Flag (1)
-
-Clean Session (1)
-
-Reserved (0)
-mozna go sparsowac, np
-
-uint8_t byte = frame[9];
-broker->clients[i].last_will = byte_flag & 1<<LAST_WILL_FLAG;
+}conn_flags_t;
 
 
-broker->clients[i].
+
+static read_connection_flags(uint8_t * frame, conn_flags_t * conn_flags){
+
+}
 
 
 void acccept_connection (broker_t * broker, uint8_t * frame){
+	uint8_t flag_byte = frame[9];
+	frame[9] |= (1<<4);
+	conn_flags_t * conn_flags =  (conn_flags_t*) &flag_byte;
+
+
+	char* client_id =  frame[CLNT_ID_POS];
+	if (flag_byte & CLEAN_S_FLAG){
+		if (is_client_connected(broker, client_id)){
+			return;
+		}
+	}
+	else{
 	 for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
 		 if (!(broker->clients[i].client_id)){
-			 uint8_t client_id_size = frame[13];
+			 uint8_t client_id_size = frame[CLNT_ID_SIZE_POS];
 			 broker->clients[i].client_id = XMALLOC(client_id_size+1);
-			 char * client_id =  frame[14];
-			 memcpy(broker->clients[i].client_id, &frame[14], client_id_size);
+			 memcpy(broker->clients[i].client_id, client_id, client_id_size);
 			 broker->clients[i].client_id[client_id_size+1] = 0;
+			 if (flag_byte & WILL_FLAG){
+				 broker->clients[i].will_qos = (flag_byte & WILL_QOS_FLAG);
+				 /*will message not implemented yet*/
+				 if (flag_byte & WILL_RETAIN_FLAG){
+					 broker->clients[i].will_retain = 1;
+				 }
+			 }
+			 else{
+				 broker->clients[i].will_retain = 0;
+			 }
+			 if (flag_byte & USR_NAME_FLAG){
+				 uint8_t usr_name_size;
+			 }
 
+			 if (flag_byte & PSWD_FLAG){
+
+			 }
+
+
+
+			 return;
 		 }
 	 }
+	}
 }
 
 

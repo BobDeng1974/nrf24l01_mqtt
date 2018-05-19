@@ -10,6 +10,8 @@ Archive member included to satisfy reference by file (symbol)
                               src/bmp280_hal.o (memset)
 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strlen.o)
                               src/mqtt_packet.o (strlen)
+/opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
+                              src/tiny_broker.o (strstr)
 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/libgcc.a(_arm_addsubdf3.o)
                               src/bmp280.o (__aeabi_dsub)
 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/libgcc.a(_arm_muldivdf3.o)
@@ -1523,10 +1525,12 @@ Discarded input sections
  .text          0x0000000000000000        0x0 src/tiny_broker.o
  .data          0x0000000000000000        0x0 src/tiny_broker.o
  .bss           0x0000000000000000        0x0 src/tiny_broker.o
+ .text.read_connection_flags
+                0x0000000000000000       0x16 src/tiny_broker.o
  .text.publish_msg_to_subscribers
-                0x0000000000000000       0x8a src/tiny_broker.o
+                0x0000000000000000       0x96 src/tiny_broker.o
  .text.add_subscribtion
-                0x0000000000000000       0xa6 src/tiny_broker.o
+                0x0000000000000000       0xbe src/tiny_broker.o
  .text          0x0000000000000000        0x0 src/tiny_printf.o
  .data          0x0000000000000000        0x0 src/tiny_printf.o
  .bss           0x0000000000000000        0x0 src/tiny_printf.o
@@ -1672,6 +1676,9 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
  .data          0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strlen.o)
  .bss           0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strlen.o)
+ .text          0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
+ .data          0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
+ .bss           0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
  .text          0x0000000000000000      0x370 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/libgcc.a(_arm_addsubdf3.o)
  .data          0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/libgcc.a(_arm_addsubdf3.o)
  .bss           0x0000000000000000        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/libgcc.a(_arm_addsubdf3.o)
@@ -1823,7 +1830,7 @@ LOAD /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-
                 0x0000000008000000                g_pfnVectors
                 0x000000000800010c                . = ALIGN (0x4)
 
-.text           0x000000000800010c     0x22b0
+.text           0x000000000800010c     0x23d8
                 0x000000000800010c                . = ALIGN (0x4)
  *(.text)
  .text          0x000000000800010c       0x40 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
@@ -2129,85 +2136,89 @@ LOAD /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-
  .text.m_malloc
                 0x000000000800225c       0x50 src/tiny_broker.o
                 0x000000000800225c                m_malloc
+ .text.is_client_connected
+                0x00000000080022ac       0x4a src/tiny_broker.o
+                0x00000000080022ac                is_client_connected
  .text.acccept_connection
-                0x00000000080022ac       0x88 src/tiny_broker.o
-                0x00000000080022ac                acccept_connection
+                0x00000000080022f6      0x132 src/tiny_broker.o
+                0x00000000080022f6                acccept_connection
  .text.__libc_init_array
-                0x0000000008002334       0x48 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-init.o)
-                0x0000000008002334                __libc_init_array
- .text.memcpy   0x000000000800237c       0x16 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memcpy-stub.o)
-                0x000000000800237c                memcpy
- .text.memset   0x0000000008002392       0x10 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
-                0x0000000008002392                memset
+                0x0000000008002428       0x48 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-init.o)
+                0x0000000008002428                __libc_init_array
+ .text.memcpy   0x0000000008002470       0x16 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memcpy-stub.o)
+                0x0000000008002470                memcpy
+ .text.memset   0x0000000008002486       0x10 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
+                0x0000000008002486                memset
+ .text.strstr   0x0000000008002496       0x36 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
+                0x0000000008002496                strstr
  *(.glue_7)
- .glue_7        0x00000000080023a2        0x0 linker stubs
+ .glue_7        0x00000000080024cc        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x00000000080023a2        0x0 linker stubs
+ .glue_7t       0x00000000080024cc        0x0 linker stubs
  *(.eh_frame)
- *fill*         0x00000000080023a2        0x2 
- .eh_frame      0x00000000080023a4        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
+ .eh_frame      0x00000000080024cc        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
  *(.init)
- .init          0x00000000080023a4        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crti.o
-                0x00000000080023a4                _init
- .init          0x00000000080023a8        0x8 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
+ .init          0x00000000080024cc        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crti.o
+                0x00000000080024cc                _init
+ .init          0x00000000080024d0        0x8 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
  *(.fini)
- .fini          0x00000000080023b0        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crti.o
-                0x00000000080023b0                _fini
- .fini          0x00000000080023b4        0x8 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
-                0x00000000080023bc                . = ALIGN (0x4)
-                0x00000000080023bc                _etext = .
+ .fini          0x00000000080024d8        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crti.o
+                0x00000000080024d8                _fini
+ .fini          0x00000000080024dc        0x8 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
+                0x00000000080024e4                . = ALIGN (0x4)
+                0x00000000080024e4                _etext = .
 
-.vfp11_veneer   0x00000000080023bc        0x0
- .vfp11_veneer  0x00000000080023bc        0x0 linker stubs
+.vfp11_veneer   0x00000000080024e4        0x0
+ .vfp11_veneer  0x00000000080024e4        0x0 linker stubs
 
-.v4_bx          0x00000000080023bc        0x0
- .v4_bx         0x00000000080023bc        0x0 linker stubs
+.v4_bx          0x00000000080024e4        0x0
+ .v4_bx         0x00000000080024e4        0x0 linker stubs
 
-.iplt           0x00000000080023bc        0x0
- .iplt          0x00000000080023bc        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
+.iplt           0x00000000080024e4        0x0
+ .iplt          0x00000000080024e4        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
 
-.rodata         0x00000000080023bc       0x28
-                0x00000000080023bc                . = ALIGN (0x4)
+.rodata         0x00000000080024e4       0x28
+                0x00000000080024e4                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x00000000080023bc       0x19 src/main.o
- *fill*         0x00000000080023d5        0x3 
- .rodata        0x00000000080023d8        0xa src/mqtt_packet.o
+ .rodata        0x00000000080024e4       0x19 src/main.o
+ *fill*         0x00000000080024fd        0x3 
+ .rodata        0x0000000008002500        0xa src/mqtt_packet.o
  *(.rodata*)
-                0x00000000080023e4                . = ALIGN (0x4)
- *fill*         0x00000000080023e2        0x2 
+                0x000000000800250c                . = ALIGN (0x4)
+ *fill*         0x000000000800250a        0x2 
 
-.rel.dyn        0x00000000080023e4        0x0
- .rel.iplt      0x00000000080023e4        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
+.rel.dyn        0x000000000800250c        0x0
+ .rel.iplt      0x000000000800250c        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x00000000080023e4        0x0
-                0x00000000080023e4                __exidx_start = .
+.ARM            0x000000000800250c        0x0
+                0x000000000800250c                __exidx_start = .
  *(.ARM.exidx*)
-                0x00000000080023e4                __exidx_end = .
+                0x000000000800250c                __exidx_end = .
 
-.preinit_array  0x00000000080023e4        0x0
-                0x00000000080023e4                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x000000000800250c        0x0
+                0x000000000800250c                PROVIDE (__preinit_array_start, .)
  *(.preinit_array*)
-                0x00000000080023e4                PROVIDE (__preinit_array_end, .)
+                0x000000000800250c                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x00000000080023e4        0x4
-                0x00000000080023e4                PROVIDE (__init_array_start, .)
+.init_array     0x000000000800250c        0x4
+                0x000000000800250c                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  *(.init_array*)
- .init_array    0x00000000080023e4        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
-                0x00000000080023e8                PROVIDE (__init_array_end, .)
+ .init_array    0x000000000800250c        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
+                0x0000000008002510                PROVIDE (__init_array_end, .)
 
-.fini_array     0x00000000080023e8        0x4
+.fini_array     0x0000000008002510        0x4
                 [!provide]                        PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x00000000080023e8        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
+ .fini_array    0x0000000008002510        0x4 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end, .)
-                0x00000000080023ec                _sidata = LOADADDR (.data)
+                0x0000000008002514                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000       0x10 load address 0x00000000080023ec
+.data           0x0000000020000000       0x10 load address 0x0000000008002514
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -2223,21 +2234,21 @@ LOAD /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-
  *fill*         0x000000002000000d        0x3 
                 0x0000000020000010                _edata = .
 
-.igot.plt       0x0000000020000010        0x0 load address 0x00000000080023fc
+.igot.plt       0x0000000020000010        0x0 load address 0x0000000008002524
  .igot.plt      0x0000000020000010        0x0 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
                 0x0000000020000010                . = ALIGN (0x4)
 
-.bss            0x0000000020000010      0xa08 load address 0x00000000080023fc
+.bss            0x0000000020000010      0xa08 load address 0x0000000008002524
                 0x0000000020000010                _sbss = .
                 0x0000000020000010                __bss_start__ = _sbss
  *(.bss)
  .bss           0x0000000020000010       0x1c /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtbegin.o
  *(.bss*)
- .bss.new_used_bytes_nb.5803
+ .bss.new_used_bytes_nb.5805
                 0x000000002000002c        0x2 src/tiny_broker.o
- .bss.prev_used_bytes_nb.5802
+ .bss.prev_used_bytes_nb.5804
                 0x000000002000002e        0x2 src/tiny_broker.o
- .bss.m_heap.5801
+ .bss.m_heap.5803
                 0x0000000020000030      0x200 src/tiny_broker.o
  *(COMMON)
  COMMON         0x0000000020000230      0x7e6 src/main.o
@@ -2254,7 +2265,7 @@ LOAD /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-
                 0x0000000020000a18                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x0000000020000a18      0x100 load address 0x00000000080023fc
+                0x0000000020000a18      0x100 load address 0x0000000008002524
                 0x0000000020000a18                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (end, .)
                 [!provide]                        PROVIDE (_end, .)
@@ -2318,26 +2329,28 @@ LOAD /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-
  .ARM.attributes
                 0x0000000000000389       0x17 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strlen.o)
  .ARM.attributes
-                0x00000000000003a0       0x1d /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
+                0x00000000000003a0       0x2d /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
+ .ARM.attributes
+                0x00000000000003cd       0x1d /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
 OUTPUT(home_control_center.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000     0x9569
+.debug_info     0x0000000000000000     0x96c3
  .debug_info    0x0000000000000000      0x701 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_info    0x0000000000000701      0x8b2 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_info    0x0000000000000fb3      0x906 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
- .debug_info    0x00000000000018b9     0x13a5 src/main.o
- .debug_info    0x0000000000002c5e     0x15ff src/mqtt_client.o
- .debug_info    0x000000000000425d     0x1b2a src/mqtt_packet.o
- .debug_info    0x0000000000005d87      0xfac src/mqtt_socket.o
- .debug_info    0x0000000000006d33      0xde5 src/nrf24.o
- .debug_info    0x0000000000007b18      0x4b9 src/nrf24_hal.o
- .debug_info    0x0000000000007fd1      0x1b6 src/radioPinFunctions.o
- .debug_info    0x0000000000008187       0x85 src/startup_stm32f10x_md.o
- .debug_info    0x000000000000820c      0x154 src/stm32f1xx_it.o
- .debug_info    0x0000000000008360      0x4a7 src/system_stm32f10x.o
- .debug_info    0x0000000000008807      0xd62 src/tiny_broker.o
+ .debug_info    0x00000000000018b9     0x13bd src/main.o
+ .debug_info    0x0000000000002c76     0x15ff src/mqtt_client.o
+ .debug_info    0x0000000000004275     0x1b2a src/mqtt_packet.o
+ .debug_info    0x0000000000005d9f      0xfac src/mqtt_socket.o
+ .debug_info    0x0000000000006d4b      0xde5 src/nrf24.o
+ .debug_info    0x0000000000007b30      0x4b9 src/nrf24_hal.o
+ .debug_info    0x0000000000007fe9      0x1b6 src/radioPinFunctions.o
+ .debug_info    0x000000000000819f       0x85 src/startup_stm32f10x_md.o
+ .debug_info    0x0000000000008224      0x154 src/stm32f1xx_it.o
+ .debug_info    0x0000000000008378      0x4a7 src/system_stm32f10x.o
+ .debug_info    0x000000000000881f      0xea4 src/tiny_broker.o
 
-.debug_abbrev   0x0000000000000000     0x182b
+.debug_abbrev   0x0000000000000000     0x188f
  .debug_abbrev  0x0000000000000000      0x1dd Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_abbrev  0x00000000000001dd      0x1cf Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_abbrev  0x00000000000003ac      0x1ab Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
@@ -2351,9 +2364,9 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_abbrev  0x0000000000001422       0x12 src/startup_stm32f10x_md.o
  .debug_abbrev  0x0000000000001434       0x78 src/stm32f1xx_it.o
  .debug_abbrev  0x00000000000014ac      0x16e src/system_stm32f10x.o
- .debug_abbrev  0x000000000000161a      0x211 src/tiny_broker.o
+ .debug_abbrev  0x000000000000161a      0x275 src/tiny_broker.o
 
-.debug_aranges  0x0000000000000000      0x6d0
+.debug_aranges  0x0000000000000000      0x6e0
  .debug_aranges
                 0x0000000000000000       0xa8 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_aranges
@@ -2381,9 +2394,9 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_aranges
                 0x0000000000000658       0x38 src/system_stm32f10x.o
  .debug_aranges
-                0x0000000000000690       0x40 src/tiny_broker.o
+                0x0000000000000690       0x50 src/tiny_broker.o
 
-.debug_ranges   0x0000000000000000      0x628
+.debug_ranges   0x0000000000000000      0x650
  .debug_ranges  0x0000000000000000       0x98 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_ranges  0x0000000000000098      0x108 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_ranges  0x00000000000001a0       0xc0 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
@@ -2397,9 +2410,9 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_ranges  0x0000000000000560       0x20 src/startup_stm32f10x_md.o
  .debug_ranges  0x0000000000000580       0x50 src/stm32f1xx_it.o
  .debug_ranges  0x00000000000005d0       0x28 src/system_stm32f10x.o
- .debug_ranges  0x00000000000005f8       0x30 src/tiny_broker.o
+ .debug_ranges  0x00000000000005f8       0x58 src/tiny_broker.o
 
-.debug_line     0x0000000000000000     0x2e00
+.debug_line     0x0000000000000000     0x2e47
  .debug_line    0x0000000000000000      0x3d3 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_line    0x00000000000003d3      0x4ce Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_line    0x00000000000008a1      0x430 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
@@ -2413,35 +2426,35 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_line    0x0000000000002623       0x7c src/startup_stm32f10x_md.o
  .debug_line    0x000000000000269f      0x21a src/stm32f1xx_it.o
  .debug_line    0x00000000000028b9      0x234 src/system_stm32f10x.o
- .debug_line    0x0000000000002aed      0x313 src/tiny_broker.o
+ .debug_line    0x0000000000002aed      0x35a src/tiny_broker.o
 
-.debug_str      0x0000000000000000     0x252b
+.debug_str      0x0000000000000000     0x25bd
  .debug_str     0x0000000000000000      0x537 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
                                         0x597 (size before relaxing)
  .debug_str     0x0000000000000537      0x440 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
                                         0x698 (size before relaxing)
  .debug_str     0x0000000000000977      0x3ce Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
                                         0x67b (size before relaxing)
- .debug_str     0x0000000000000d45      0x7ff src/main.o
-                                        0xc3b (size before relaxing)
- .debug_str     0x0000000000001544      0x619 src/mqtt_client.o
+ .debug_str     0x0000000000000d45      0x80f src/main.o
+                                        0xc50 (size before relaxing)
+ .debug_str     0x0000000000001554      0x619 src/mqtt_client.o
                                         0xfd2 (size before relaxing)
- .debug_str     0x0000000000001b5d      0x3d0 src/mqtt_packet.o
+ .debug_str     0x0000000000001b6d      0x3d0 src/mqtt_packet.o
                                        0x11eb (size before relaxing)
- .debug_str     0x0000000000001f2d       0xda src/mqtt_socket.o
+ .debug_str     0x0000000000001f3d       0xda src/mqtt_socket.o
                                         0xab4 (size before relaxing)
- .debug_str     0x0000000000002007      0x25d src/nrf24.o
+ .debug_str     0x0000000000002017      0x25d src/nrf24.o
                                         0x839 (size before relaxing)
- .debug_str     0x0000000000002264       0x48 src/nrf24_hal.o
+ .debug_str     0x0000000000002274       0x48 src/nrf24_hal.o
                                         0x4b7 (size before relaxing)
- .debug_str     0x00000000000022ac       0x58 src/radioPinFunctions.o
+ .debug_str     0x00000000000022bc       0x58 src/radioPinFunctions.o
                                         0x252 (size before relaxing)
- .debug_str     0x0000000000002304       0xa6 src/stm32f1xx_it.o
+ .debug_str     0x0000000000002314       0xa6 src/stm32f1xx_it.o
                                         0x25d (size before relaxing)
- .debug_str     0x00000000000023aa       0xc6 src/system_stm32f10x.o
+ .debug_str     0x00000000000023ba       0xc6 src/system_stm32f10x.o
                                         0x339 (size before relaxing)
- .debug_str     0x0000000000002470       0xbb src/tiny_broker.o
-                                        0x7e3 (size before relaxing)
+ .debug_str     0x0000000000002480      0x13d src/tiny_broker.o
+                                        0x87a (size before relaxing)
 
 .comment        0x0000000000000000       0x7c
  .comment       0x0000000000000000       0x7c Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
@@ -2459,7 +2472,7 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .comment       0x000000000000007c       0x7d src/system_stm32f10x.o
  .comment       0x000000000000007c       0x7d src/tiny_broker.o
 
-.debug_frame    0x0000000000000000     0x1aac
+.debug_frame    0x0000000000000000     0x1b28
  .debug_frame   0x0000000000000000      0x2d0 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_frame   0x00000000000002d0      0x4f4 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_frame   0x00000000000007c4      0x3a0 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
@@ -2472,10 +2485,11 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_frame   0x0000000000001748       0x74 src/radioPinFunctions.o
  .debug_frame   0x00000000000017bc      0x110 src/stm32f1xx_it.o
  .debug_frame   0x00000000000018cc       0x98 src/system_stm32f10x.o
- .debug_frame   0x0000000000001964       0xd4 src/tiny_broker.o
- .debug_frame   0x0000000000001a38       0x2c /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-init.o)
- .debug_frame   0x0000000000001a64       0x28 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memcpy-stub.o)
- .debug_frame   0x0000000000001a8c       0x20 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x0000000000001964      0x120 src/tiny_broker.o
+ .debug_frame   0x0000000000001a84       0x2c /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-init.o)
+ .debug_frame   0x0000000000001ab0       0x28 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x0000000000001ad8       0x20 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x0000000000001af8       0x30 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
 
 .stabstr        0x0000000000000000       0x3f
  .stabstr       0x0000000000000000       0x3f /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libnosys.a(write.o)
@@ -3297,6 +3311,7 @@ glcd_fillRectangle                                src/tm_stm32_ili9341.o
 glcd_fill_screen                                  src/tm_stm32_ili9341.o
 glcd_fill_screen_dma                              src/tm_stm32_ili9341.o
 iprintf                                           src/tiny_printf.o
+is_client_connected                               src/tiny_broker.o
 l3_receive_packet                                 src/nrf24.o
                                                   src/main.o
 l3_send_packet                                    src/nrf24.o
@@ -3382,6 +3397,8 @@ strlen                                            /opt/Atollic_TrueSTUDIO_for_ST
                                                   src/tm_stm32_fonts.o
                                                   src/tiny_printf.o
                                                   src/mqtt_packet.o
+strstr                                            /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-strstr.o)
+                                                  src/tiny_broker.o
 temp                                              src/main.o
 ts_formatlength                                   src/tiny_printf.o
 ts_formatstring                                   src/tiny_printf.o

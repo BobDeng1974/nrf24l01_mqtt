@@ -20,6 +20,16 @@
 #define MAX_CONN_CLIENTS			8
 #define ADDR_SIZE					4
 
+#define CLNT_ID_POS					14
+#define CLNT_ID_SIZE_POS			13
+
+
+#define CLEAN_S_FLAG			(1<<1)
+#define WILL_FLAG				(1<<2)
+#define WILL_QOS_FLAG			(3<<3)
+#define WILL_RETAIN_FLAG		(1<<5)
+#define USR_NAME_FLAG			(1<<6)
+#define PSWD_FLAG				(1<<7)
 
 typedef struct{
 uint8_t data[256];
@@ -36,6 +46,8 @@ typedef struct {
 	bool last_will;
 	char*  will_topic;
 	char*  will_payload;
+	uint8_t will_qos;
+	uint8_t will_retain;
 	char* subs_topic[MAX_SUBS_TOPIC];
 }  conn_client_t;
 

@@ -129,6 +129,7 @@ int main()
 
 	broker_t broker;
 	broker_init(&broker);
+
 	acccept_connection(&broker, local_host.data);
 
 //
