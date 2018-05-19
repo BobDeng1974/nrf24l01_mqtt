@@ -89,17 +89,19 @@ typedef struct{
 
 
 
-static read_connection_flags(uint8_t * frame, conn_flags_t * conn_flags){
-
+static inline void read_connection_flags(conn_flags_t ** conn_flags, uint8_t * frame){
+	uint8_t * flag_byte = &frame[9];
+	*conn_flags =  (conn_flags_t*) flag_byte;
 }
 
 
 void acccept_connection (broker_t * broker, uint8_t * frame){
-	uint8_t flag_byte = frame[9];
-	frame[9] |= (1<<4);
-	conn_flags_t * conn_flags =  (conn_flags_t*) &flag_byte;
+
+	conn_flags_t * conn_flags;
+	read_connection_flags(&conn_flags, frame);
 
 
+	uint8_t flag_byte;
 	char* client_id =  frame[CLNT_ID_POS];
 	if (flag_byte & CLEAN_S_FLAG){
 		if (is_client_connected(broker, client_id)){
