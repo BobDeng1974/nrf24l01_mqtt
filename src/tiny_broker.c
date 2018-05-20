@@ -126,57 +126,54 @@ void broker_remove_client(broker_t * broker, char* client_id){
 //}
 //
 
-
-uint16_t client_id_size = get_id_size(frame);
-char* client_id =  &frame[CLNT_ID_POS];
-
-
-static inline void read_client_id(client_id_t * id, uint8_t * frame){
-	uint8_t * client_id_len_start = &frame[9];
-	*id =  (client_id_t*) client_id_len_start;
+to sa offserty z payloadu
+static inline void read_frame_offsets(vhead_offsets_t * offsets, uint8_t * frame ){
+	uint8_t var_header_start = &frame[CLNT_ID_POS];
+	offsets->client_id = &frame[CLNT_ID_POS];
+	offsets->will_topic =
 }
 
 
 
-static inline void assign_id_to_client(conn_flags_t* client, client_id_t * id) {
-	client->id = XMALLOC(id->len+1);
-	strcpy(client->id, id->payload);
-}
-
-
-static inline void read_connection_flags(conn_flags_t ** conn_flags, uint8_t * frame){
-	uint8_t * flag_byte = &frame[9];
-	*conn_flags =  (conn_flags_t*) flag_byte;
+static inline void read_client_id(char* id, vhead_offsets_t * offsets, uint8_t * frame ){
+	offsets. = &frame[CLNT_ID_POS];
+	*id_ptr =  (client_id_ptr_t*) client_id_len_start;
 }
 
 
 
+static inline void assign_id_to_client(conn_client_t * client, client_id_ptr_t * id_ptr) {
+	client->id = XMALLOC(id_ptr->len+1);
+	strcpy(client->id, (char*) id_ptr->data);
+}
 
-static inline void read_will_topic(will_topic_t ** will_topic, uint8_t * frame){
+
+
+
+static inline void read_will_topic(will_topic_ptr_t ** will_topic_ptr, uint8_t * frame){
 	uint8_t * will_topic_len_start = &frame[10];
-	*will_topic=  (will_topic_t*) will_topic_len_start;
+	*will_topic_ptr = (will_topic_ptr_t*) will_topic_len_start;
 }
 
 
-static inline void assign_will_topic(conn_client_t * client, will_topic_t * will_topic ) {
-	client->will_topic = XMALLOC(will_topic->len+1);
-	strcpy(client->will_msg, will_msg->payload);
+static inline void assign_will_topic(conn_client_t * client, will_topic_ptr_t * will_topic_ptr ) {
+	client->will_topic = XMALLOC(will_topic_ptr->len+1);
+	strcpy(client->will_topic, (char*) will_topic_ptr->data);
 }
 
 
 
 
 
-
-static inline void read_will_msg(will_msg_t ** will_msg, uint8_t * frame){
+static inline void read_will_msg(will_msg_ptr_t ** will_msg_ptr, uint8_t * frame){
 	uint8_t * will_msg_len_start = &frame[9];
-	*will_msg =  (will_msg_t*) will_msg_len_start;
+	*will_msg_ptr =  (will_msg_ptr_t*) will_msg_len_start;
 }
 
 
-static inline void assign_will_msg(conn_client_t * client, will_msg_t * will_msg ) {
-	client->will_msg = XMALLOC(will_msg->len+1);
-	strcpy(client->will_msg, will_msg->payload);
+static inline void assign_will_msg(conn_client_t * client, will_msg_ptr_t * will_msg_ptr ) {
+	client->will_msg = XMALLOC(will_msg_ptr->len+1);
+	strcpy(client->will_msg, (char*) will_msg_ptr->data);
 }
 
 
@@ -188,6 +185,10 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 	conn_flags_t * conn_flags;
 	read_connection_flags(&conn_flags, frame);
 
+
+	client_id_ptr_t * id_ptr;
+	read_client_id(&id_ptr, frame);
+	char* client_id = (char*) id_ptr->data;
 
 	if (conn_flags->cleans_session){
 		broker_remove_client(broker, client_id);
@@ -202,14 +203,19 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 
 
 		conn_client_t new_client;
-		assign_id_to_client(new_client, client_id);
+		assign_id_to_client(&new_client, id_ptr);
 
 		if (conn_flags->will_retain){
 			new_client.will_retain = 1;
 
-			will_msg_t will_msg;
-			read_will_msg(&will_msg, frame);
-			assign_will_msg(new_client, &will_msg);
+
+			will_topic_ptr_t *will_topic_ptr;
+			read_will_topic(&will_topic_ptr, frame);
+			assign_will_topic(&new_client, will_topic_ptr);
+
+			will_msg_ptr_t *will_msg_ptr;
+			read_will_msg(&will_msg_ptr, frame);
+			assign_will_msg(&new_client, will_msg_ptr);
 
 
 

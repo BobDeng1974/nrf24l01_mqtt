@@ -40,22 +40,35 @@ uint8_t len;
 }local_host_t;
 
 
+
+//maybe "pointer to string struct"?
 typedef struct{
 	uint16_t len;
-	uint8_t * payload;
-}will_topic_t;
+	uint8_t * data;
+}will_topic_ptr_t;
 
-
-typedef struct{
-	uint16_t len;
-	uint8_t * payload;
-}will_msg_t;
 
 typedef struct{
 	uint16_t len;
-	uint8_t * payload;
-}client_id_t;
+	uint8_t * data;
+}will_msg_ptr_t;
 
+typedef struct{
+	uint16_t len;
+	uint8_t * data;
+}client_id_ptr_t;
+
+
+//przerobic na system offsetow;
+
+
+typedef struct{
+uint8_t client_id;
+uint8_t will_topic;
+uint8_t will_msg;
+uint8_t user_name;
+uint8_t user_pswd;
+}vhead_offsets_t;
 
 
 
