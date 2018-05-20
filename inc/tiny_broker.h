@@ -40,6 +40,38 @@ uint8_t len;
 }local_host_t;
 
 
+typedef struct{
+	uint16_t len;
+	uint8_t * payload;
+}will_topic_t;
+
+
+typedef struct{
+	uint16_t len;
+	uint8_t * payload;
+}will_msg_t;
+
+typedef struct{
+	uint16_t len;
+	uint8_t * payload;
+}client_id_t;
+
+
+
+
+typedef struct{
+	uint8_t reserved 	   :1;
+	uint8_t cleans_session :1;
+	uint8_t last_will      :1;
+	uint8_t will_qos       :2;
+	uint8_t will_retain    :1;
+	uint8_t psswd          :1;
+	uint8_t user_name      :1;
+}conn_flags_t;
+
+
+
+
 typedef struct {
 	uint8_t net_address[ADDR_SIZE];
 	char*  id;
@@ -48,7 +80,7 @@ typedef struct {
 	char*  password;
 	bool last_will;
 	char*  will_topic;
-	char*  will_payload;
+	char*  will_msg;
 	uint8_t will_qos;
 	uint8_t will_retain;
 	char* subs_topic[MAX_SUBS_TOPIC];

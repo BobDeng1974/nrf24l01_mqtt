@@ -65,17 +65,6 @@ void * m_malloc(size_t size){
 //broker->clients[i].
 
 
-typedef struct{
-	uint8_t reserved 	   :1;
-	uint8_t cleans_session :1;
-	uint8_t last_will      :1;
-	uint8_t will_qos       :2;
-	uint8_t will_retain    :1;
-	uint8_t psswd          :1;
-	uint8_t user_name      :1;
-}conn_flags_t;
-
-
 
 bool is_client_connected(broker_t * broker, char* client_id){
 	for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
@@ -127,25 +116,105 @@ void broker_remove_client(broker_t * broker, char* client_id){
 }
 
 
+//static conn_client_t * get_free_slot_for_client(broker_t * broker){
+//	for (uint8_t i = 0; i < MAX_CONN_CLIENTS; i++){
+//		if (!(broker->clients[i].active)){
+//			return &broker->clients[i];
+//		}
+//	}
+//	return NULL;
+//}
+//
+
+
+uint16_t client_id_size = get_id_size(frame);
+char* client_id =  &frame[CLNT_ID_POS];
+
+
+static inline void read_client_id(client_id_t * id, uint8_t * frame){
+	uint8_t * client_id_len_start = &frame[9];
+	*id =  (client_id_t*) client_id_len_start;
+}
+
+
+
+static inline void assign_id_to_client(conn_flags_t* client, client_id_t * id) {
+	client->id = XMALLOC(id->len+1);
+	strcpy(client->id, id->payload);
+}
+
+
+static inline void read_connection_flags(conn_flags_t ** conn_flags, uint8_t * frame){
+	uint8_t * flag_byte = &frame[9];
+	*conn_flags =  (conn_flags_t*) flag_byte;
+}
+
+
+
+
+static inline void read_will_topic(will_topic_t ** will_topic, uint8_t * frame){
+	uint8_t * will_topic_len_start = &frame[10];
+	*will_topic=  (will_topic_t*) will_topic_len_start;
+}
+
+
+static inline void assign_will_topic(conn_client_t * client, will_topic_t * will_topic ) {
+	client->will_topic = XMALLOC(will_topic->len+1);
+	strcpy(client->will_msg, will_msg->payload);
+}
+
+
+
+
+
+
+static inline void read_will_msg(will_msg_t ** will_msg, uint8_t * frame){
+	uint8_t * will_msg_len_start = &frame[9];
+	*will_msg =  (will_msg_t*) will_msg_len_start;
+}
+
+
+static inline void assign_will_msg(conn_client_t * client, will_msg_t * will_msg ) {
+	client->will_msg = XMALLOC(will_msg->len+1);
+	strcpy(client->will_msg, will_msg->payload);
+}
+
+
+
+
+
 void acccept_connection (broker_t * broker, uint8_t * frame){
 
 	conn_flags_t * conn_flags;
 	read_connection_flags(&conn_flags, frame);
 
-	uint16_t client_id_size = get_id_size(frame);
-	char* client_id =  &frame[CLNT_ID_POS];
 
 	if (conn_flags->cleans_session){
 		broker_remove_client(broker, client_id);
 	}
+
 	if (is_client_connected(broker, client_id)){
 		return;
 	}
-	if (has_broker_space_for_next_client(broker));
+
+	if (has_broker_space_for_next_client(broker))
 	{
-		conn_client_t client;
-		client.id = XMALLOC(client_id_size+1);
-		strcpy(client.id, client_id);
+
+
+		conn_client_t new_client;
+		assign_id_to_client(new_client, client_id);
+
+		if (conn_flags->will_retain){
+			new_client.will_retain = 1;
+
+			will_msg_t will_msg;
+			read_will_msg(&will_msg, frame);
+			assign_will_msg(new_client, &will_msg);
+
+
+
+		}
+
 
 
 		//
