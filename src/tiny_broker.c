@@ -126,12 +126,43 @@ void broker_remove_client(broker_t * broker, char* client_id){
 //}
 //
 
-to sa offserty z payloadu
-static inline void read_frame_offsets(vhead_offsets_t * offsets, uint8_t * frame ){
-	uint8_t var_header_start = &frame[CLNT_ID_POS];
-	offsets->client_id = &frame[CLNT_ID_POS];
-	offsets->will_topic =
+
+static inline void read_payload_offsets(pld_offsets_t * offsets, uint8_t * frame ){
+	offsets->client_id = &frame[PLD_START];
+
+	offsets->will_topic = (&frame[PLD_START]) + offsets->client_id;
+	offsets->will_msg = (offsets->will_topic) + offsets->client_id;
 }
+
+
+static inline void init_read_payload(payload_t * payload){
+	memset (payload, 0, sizeof (payload_t));
+}
+
+//conn flags odczytywac tu
+static inline void read_payload(payload_t* payload, conn_flags_t* flags, uint8_t* frame ){
+	init_read_payload(payload);
+	uint8_t pos;
+	pos = PLD_START;
+	payload->client_id  = (client_id_ptr_t*) &frame[pos];
+	pos += payload->client_id.len;
+	if (flags.last_will){
+		payload->will_topic = &frame[pos];
+		pos += payload->will_topic.len;
+		payload->will_msg   = &frame[pos];
+		pos += payload->will_topic.len;
+	}
+	if (flags->user_name){
+		payload->usr_name= &frame[pos];
+		pos += payload->usr_name.len;
+	}
+	if (flags->psswd){
+		payload->pswd= &frame[pos];
+		pos += payload->pswd.len;
+	}
+}
+
+
 
 
 

@@ -20,6 +20,7 @@
 #define MAX_CONN_CLIENTS			8
 #define ADDR_SIZE					4
 
+#define PLD_START					12
 #define CLNT_ID_POS					14
 #define CLNT_ID_SIZE_MSB_POS		12
 #define CLNT_ID_SIZE_LSB_POS		13
@@ -41,12 +42,15 @@ uint8_t len;
 
 
 
-//maybe "pointer to string struct"?
+typedef struct{
+	uint16_t len;
+	uint8_t * data;
+}client_id_ptr_t;
+
 typedef struct{
 	uint16_t len;
 	uint8_t * data;
 }will_topic_ptr_t;
-
 
 typedef struct{
 	uint16_t len;
@@ -56,19 +60,35 @@ typedef struct{
 typedef struct{
 	uint16_t len;
 	uint8_t * data;
-}client_id_ptr_t;
+}usr_name_ptr_t;
+
+typedef struct{
+	uint16_t len;
+	uint8_t * data;
+}psw_ptr_t;
+
+
+przerobic powyzsze strukltury na strukturer jednego typu
+
+typedef struct{
+	client_id_ptr_t * client_id;
+	will_topic_ptr_t * will_topic;
+	will_msg_ptr_t * will_msg;
+	usr_name_ptr_t * usr_name;
+	psw_ptr_t * pswd;
+}payload_t;
 
 
 //przerobic na system offsetow;
 
 
 typedef struct{
-uint8_t client_id;
-uint8_t will_topic;
-uint8_t will_msg;
-uint8_t user_name;
-uint8_t user_pswd;
-}vhead_offsets_t;
+uint16_t * client_id;
+uint16_t * will_topic;
+uint16_t * will_msg;
+uint16_t * user_name;
+uint16_t * user_pswd;
+}pld_offsets_t;
 
 
 
