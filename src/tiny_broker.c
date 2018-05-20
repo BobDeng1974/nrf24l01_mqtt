@@ -126,88 +126,112 @@ void broker_remove_client(broker_t * broker, char* client_id){
 //}
 //
 
-
-static inline void read_payload_offsets(pld_offsets_t * offsets, uint8_t * frame ){
-	offsets->client_id = &frame[PLD_START];
-
-	offsets->will_topic = (&frame[PLD_START]) + offsets->client_id;
-	offsets->will_msg = (offsets->will_topic) + offsets->client_id;
-}
-
-
-static inline void init_read_payload(payload_t * payload){
+static inline void init_payload_container(payload_t * payload){
 	memset (payload, 0, sizeof (payload_t));
 }
 
-//conn flags odczytywac tu
-static inline void read_payload(payload_t* payload, conn_flags_t* flags, uint8_t* frame ){
-	init_read_payload(payload);
-	uint8_t pos;
-	pos = PLD_START;
-	payload->client_id  = (client_id_ptr_t*) &frame[pos];
-	pos += payload->client_id.len;
-	if (flags.last_will){
+
+
+static inline void read_conn_payload(payload_t* payload, conn_flags_t* flags, uint8_t* frame ){
+	init_payload_container(payload);
+	uint8_t pos = PLD_START;
+
+	payload->client_id  = (string_in_frame_t*) &frame[pos];
+	pos += payload->client_id->len;
+	if (flags->last_will){
 		payload->will_topic = &frame[pos];
-		pos += payload->will_topic.len;
+		pos += payload->will_topic->len;
 		payload->will_msg   = &frame[pos];
-		pos += payload->will_topic.len;
+		pos += payload->will_topic->len;
 	}
 	if (flags->user_name){
 		payload->usr_name= &frame[pos];
-		pos += payload->usr_name.len;
+		pos += payload->usr_name->len;
 	}
-	if (flags->psswd){
+	if (flags->pswd){
 		payload->pswd= &frame[pos];
-		pos += payload->pswd.len;
+		pos += payload->pswd->len;
 	}
 }
 
 
 
 
+//
+//
+////conn flags odczytywac tu
+//static inline void process_payload(uint8_t* frame ){
+//	conn_flags_t * flags;
+//	read_connection_flags(&flags, frame);
+//	payload_t payload;
+//	init_payload_container(&payload);
+//
+//
+//	uint8_t pos = PLD_START;
+//	payload.client_id  = (string_in_frame_t*) &frame[pos];
+//	pos += payload.client_id->len;
+//	if (flags->last_will){
+//		payload.will_topic = &frame[pos];
+//		pos += payload.will_topic->len;
+//		payload.will_msg   = &frame[pos];
+//		pos += payload.will_topic->len;
+//	}
+//	if (flags->user_name){
+//		payload.usr_name= &frame[pos];
+//		pos += payload->usr_name->len;
+//	}
+//	if (flags->psswd){
+//		payload.pswd= &frame[pos];
+//		pos += payload.pswd->len;
+//	}
+//}
+//
 
-static inline void read_client_id(char* id, vhead_offsets_t * offsets, uint8_t * frame ){
-	offsets. = &frame[CLNT_ID_POS];
-	*id_ptr =  (client_id_ptr_t*) client_id_len_start;
-}
-
-
-
-static inline void assign_id_to_client(conn_client_t * client, client_id_ptr_t * id_ptr) {
-	client->id = XMALLOC(id_ptr->len+1);
-	strcpy(client->id, (char*) id_ptr->data);
-}
-
-
-
-
-static inline void read_will_topic(will_topic_ptr_t ** will_topic_ptr, uint8_t * frame){
-	uint8_t * will_topic_len_start = &frame[10];
-	*will_topic_ptr = (will_topic_ptr_t*) will_topic_len_start;
-}
-
-
-static inline void assign_will_topic(conn_client_t * client, will_topic_ptr_t * will_topic_ptr ) {
-	client->will_topic = XMALLOC(will_topic_ptr->len+1);
-	strcpy(client->will_topic, (char*) will_topic_ptr->data);
-}
-
-
-
-
-
-static inline void read_will_msg(will_msg_ptr_t ** will_msg_ptr, uint8_t * frame){
-	uint8_t * will_msg_len_start = &frame[9];
-	*will_msg_ptr =  (will_msg_ptr_t*) will_msg_len_start;
-}
-
-
-static inline void assign_will_msg(conn_client_t * client, will_msg_ptr_t * will_msg_ptr ) {
-	client->will_msg = XMALLOC(will_msg_ptr->len+1);
-	strcpy(client->will_msg, (char*) will_msg_ptr->data);
-}
-
-
+//
+//
+//
+//static inline void read_client_id(char* id, vhead_offsets_t * offsets, uint8_t * frame ){
+//	offsets. = &frame[CLNT_ID_POS];
+//	*id_ptr =  (client_id_ptr_t*) client_id_len_start;
+//}
+//
+//
+//
+//static inline void assign_id_to_client(conn_client_t * client, char* id) {
+//	client->id = XMALLOC(strlen(id));
+//	strcpy(client->id, id);
+//}
+//
+//
+//
+//
+//static inline void read_will_topic(will_topic_ptr_t ** will_topic_ptr, uint8_t * frame){
+//	uint8_t * will_topic_len_start = &frame[10];
+//	*will_topic_ptr = (will_topic_ptr_t*) will_topic_len_start;
+//}
+//
+//
+//static inline void assign_will_topic(conn_client_t * client, will_topic_ptr_t * will_topic_ptr ) {
+//	client->will_topic = XMALLOC(will_topic_ptr->len+1);
+//	strcpy(client->will_topic, (char*) will_topic_ptr->data);
+//}
+//
+//
+//
+//
+//
+//static inline void read_will_msg(will_msg_ptr_t ** will_msg_ptr, uint8_t * frame){
+//	uint8_t * will_msg_len_start = &frame[9];
+//	*will_msg_ptr =  (will_msg_ptr_t*) will_msg_len_start;
+//}
+//
+//
+//static inline void assign_will_msg(conn_client_t * client, will_msg_ptr_t * will_msg_ptr ) {
+//	client->will_msg = XMALLOC(will_msg_ptr->len+1);
+//	strcpy(client->will_msg, (char*) will_msg_ptr->data);
+//}
+//
+//
 
 
 
@@ -216,62 +240,51 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 	conn_flags_t * conn_flags;
 	read_connection_flags(&conn_flags, frame);
 
+	payload_t payload;
+	read_conn_payload(&payload, conn_flags, frame);
 
-	client_id_ptr_t * id_ptr;
-	read_client_id(&id_ptr, frame);
-	char* client_id = (char*) id_ptr->data;
+
 
 	if (conn_flags->cleans_session){
-		broker_remove_client(broker, client_id);
+		broker_remove_client(broker, payload.client_id->data);
 	}
 
-	if (is_client_connected(broker, client_id)){
+	if (is_client_connected(broker, payload.client_id->data)){
 		return;
 	}
 
 	if (has_broker_space_for_next_client(broker))
 	{
 
-
 		conn_client_t new_client;
-		assign_id_to_client(&new_client, id_ptr);
+		new_client.id = XMALLOC(strlen(payload.client_id->data));
+		strcpy(new_client.id,  payload.client_id->data);
 
 		if (conn_flags->will_retain){
 			new_client.will_retain = 1;
+		}
 
+		if (conn_flags->last_will){
+			new_client.will_retain = 1;
+			new_client.will_topic = XMALLOC(strlen(payload.will_topic->data));
+			strcpy(new_client.will_topic,  payload.will_topic->data);
 
-			will_topic_ptr_t *will_topic_ptr;
-			read_will_topic(&will_topic_ptr, frame);
-			assign_will_topic(&new_client, will_topic_ptr);
+			new_client.will_msg = XMALLOC(strlen(payload.client_id->data));
+			strcpy(new_client.will_topic,  payload.will_topic->data);
 
-			will_msg_ptr_t *will_msg_ptr;
-			read_will_msg(&will_msg_ptr, frame);
-			assign_will_msg(&new_client, will_msg_ptr);
-
-
+			memcpy(new_client.will_qos, conn_flags->will_qos, sizeof(new_client.will_qos));
 
 		}
 
+		if (conn_flags->user_name){
+			new_client.username = XMALLOC(strlen(payload.usr_name->data));
+			strcpy(new_client.username,  payload.usr_name->data);
+		}
 
-
-		//
-		//				}
-		//				/*will message not implemented yet*/
-		//				if (conn_flags->will_retain){
-		//					broker->clients[i].will_retain = 1;
-		//				}
-		//				// }
-		//				//	 else{
-		//				broker->clients[i].will_retain = 0;
-		//				// }
-		//				//			 if (flag_byte & USR_NAME_FLAG){
-		//				//				 uint8_t usr_name_size;
-		//				//			 }
-		//				//
-		//				//			 if (flag_byte & PSWD_FLAG){
-		//				//
-		//			 }
-
+		if (conn_flags->pswd){
+			new_client.password = XMALLOC(strlen(payload.pswd->data));
+			strcpy(new_client.password,  payload.pswd->data);
+		}
 
 
 		return;

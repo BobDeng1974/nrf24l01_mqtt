@@ -40,42 +40,20 @@ uint8_t data[256];
 uint8_t len;
 }local_host_t;
 
-
-
 typedef struct{
 	uint16_t len;
-	uint8_t * data;
-}client_id_ptr_t;
+	char * data;
+}string_in_frame_t;
+
+
+
 
 typedef struct{
-	uint16_t len;
-	uint8_t * data;
-}will_topic_ptr_t;
-
-typedef struct{
-	uint16_t len;
-	uint8_t * data;
-}will_msg_ptr_t;
-
-typedef struct{
-	uint16_t len;
-	uint8_t * data;
-}usr_name_ptr_t;
-
-typedef struct{
-	uint16_t len;
-	uint8_t * data;
-}psw_ptr_t;
-
-
-przerobic powyzsze strukltury na strukturer jednego typu
-
-typedef struct{
-	client_id_ptr_t * client_id;
-	will_topic_ptr_t * will_topic;
-	will_msg_ptr_t * will_msg;
-	usr_name_ptr_t * usr_name;
-	psw_ptr_t * pswd;
+	string_in_frame_t * client_id;
+	string_in_frame_t * will_topic;
+	string_in_frame_t * will_msg;
+	string_in_frame_t * usr_name;
+	string_in_frame_t * pswd;
 }payload_t;
 
 
