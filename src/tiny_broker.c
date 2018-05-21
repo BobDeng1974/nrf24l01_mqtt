@@ -38,32 +38,6 @@ void * m_malloc(size_t size){
 	}
 }
 
-//
-//
-//
-//
-//9 bajt z ramki to bajt z flagami: (tu 192, czy 11000000)
-//User Name Flag (1)
-//
-//Password Flag (1)
-//
-//Will Retain (0)
-//
-//Will QoS (01)
-//
-//Will Flag (1)
-//
-//Clean Session (1)
-//
-//Reserved (0)
-//mozna go sparsowac, np
-//
-//uint8_t byte = frame[9];
-//broker->clients[i].last_will = byte_flag & 1<<LAST_WILL_FLAG;
-//
-//
-//broker->clients[i].
-
 
 
 bool is_client_connected(broker_t * broker, char* client_id){
@@ -79,10 +53,6 @@ static inline void read_connection_flags(conn_flags_t ** conn_flags, uint8_t * f
 	uint8_t * flag_byte = &frame[9];
 	*conn_flags =  (conn_flags_t*) flag_byte;
 	//zwracac wskaznik
-}
-
-static inline uint16_t get_id_size(uint8_t *frame){
-	return (frame[CLNT_ID_SIZE_LSB_POS] +  (frame[CLNT_ID_SIZE_MSB_POS]<<8));
 }
 
 
@@ -126,126 +96,71 @@ void broker_remove_client(broker_t * broker, char* client_id){
 //}
 //
 
+
+
+static inline void init_header_container(header_t * header){
+	memset (header, 0, sizeof (header_t));
+}
+
+
+static inline void read_header(header_t** header, uint8_t * frame){
+	*header =  (header_t*) frame;
+}
+
+
+
 static inline void init_payload_container(payload_t * payload){
 	memset (payload, 0, sizeof (payload_t));
 }
 
 
 
-static inline void read_conn_payload(payload_t* payload, conn_flags_t* flags, uint8_t* frame ){
-	init_payload_container(payload);
+static inline void read_conn_payload(payload_t* payload, header_t* header, uint8_t* frame ){
 	uint8_t pos = PLD_START;
 
 	payload->client_id  = (string_in_frame_t*) &frame[pos];
 	pos += payload->client_id->len;
-	if (flags->last_will){
+	if (header->conn_flags->last_will){
 		payload->will_topic = &frame[pos];
 		pos += payload->will_topic->len;
 		payload->will_msg   = &frame[pos];
 		pos += payload->will_topic->len;
 	}
-	if (flags->user_name){
+	if (header->conn_flags->user_name){
 		payload->usr_name= &frame[pos];
 		pos += payload->usr_name->len;
 	}
-	if (flags->pswd){
+	if (header->conn_flags->pswd){
 		payload->pswd= &frame[pos];
 		pos += payload->pswd->len;
 	}
+
+}
+
+
+bool is_client_authorised(char* usr_name, char* pswd){
+	return true;
 }
 
 
 
-
-//
-//
-////conn flags odczytywac tu
-//static inline void process_payload(uint8_t* frame ){
-//	conn_flags_t * flags;
-//	read_connection_flags(&flags, frame);
-//	payload_t payload;
-//	init_payload_container(&payload);
-//
-//
-//	uint8_t pos = PLD_START;
-//	payload.client_id  = (string_in_frame_t*) &frame[pos];
-//	pos += payload.client_id->len;
-//	if (flags->last_will){
-//		payload.will_topic = &frame[pos];
-//		pos += payload.will_topic->len;
-//		payload.will_msg   = &frame[pos];
-//		pos += payload.will_topic->len;
-//	}
-//	if (flags->user_name){
-//		payload.usr_name= &frame[pos];
-//		pos += payload->usr_name->len;
-//	}
-//	if (flags->psswd){
-//		payload.pswd= &frame[pos];
-//		pos += payload.pswd->len;
-//	}
-//}
-//
-
-//
-//
-//
-//static inline void read_client_id(char* id, vhead_offsets_t * offsets, uint8_t * frame ){
-//	offsets. = &frame[CLNT_ID_POS];
-//	*id_ptr =  (client_id_ptr_t*) client_id_len_start;
-//}
-//
-//
-//
-//static inline void assign_id_to_client(conn_client_t * client, char* id) {
-//	client->id = XMALLOC(strlen(id));
-//	strcpy(client->id, id);
-//}
-//
-//
-//
-//
-//static inline void read_will_topic(will_topic_ptr_t ** will_topic_ptr, uint8_t * frame){
-//	uint8_t * will_topic_len_start = &frame[10];
-//	*will_topic_ptr = (will_topic_ptr_t*) will_topic_len_start;
-//}
-//
-//
-//static inline void assign_will_topic(conn_client_t * client, will_topic_ptr_t * will_topic_ptr ) {
-//	client->will_topic = XMALLOC(will_topic_ptr->len+1);
-//	strcpy(client->will_topic, (char*) will_topic_ptr->data);
-//}
-//
-//
-//
-//
-//
-//static inline void read_will_msg(will_msg_ptr_t ** will_msg_ptr, uint8_t * frame){
-//	uint8_t * will_msg_len_start = &frame[9];
-//	*will_msg_ptr =  (will_msg_ptr_t*) will_msg_len_start;
-//}
-//
-//
-//static inline void assign_will_msg(conn_client_t * client, will_msg_ptr_t * will_msg_ptr ) {
-//	client->will_msg = XMALLOC(will_msg_ptr->len+1);
-//	strcpy(client->will_msg, (char*) will_msg_ptr->data);
-//}
-//
-//
-
+// https://www.bevywise.com/developing-mqtt-clients/
+// https://morphuslabs.com/hacking-the-iot-with-mqtt-8edaf0d07b9b ack codes
 
 
 void acccept_connection (broker_t * broker, uint8_t * frame){
 
-	conn_flags_t * conn_flags;
-	read_connection_flags(&conn_flags, frame);
+	header_t * header;
+	read_header(&header, frame);
 
 	payload_t payload;
-	read_conn_payload(&payload, conn_flags, frame);
+	read_conn_payload(&payload, &header, frame);
 
+	if  (header->control_type != CONTROL_TYPE){
+		//ack
+	}
 
-
-	if (conn_flags->cleans_session){
+	if (header->conn_flags->cleans_session){
 		broker_remove_client(broker, payload.client_id->data);
 	}
 
@@ -260,11 +175,13 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 		new_client.id = XMALLOC(strlen(payload.client_id->data));
 		strcpy(new_client.id,  payload.client_id->data);
 
-		if (conn_flags->will_retain){
+		new_client.keepalive = *header->keep_alive;
+
+		if (header->conn_flags->will_retain){
 			new_client.will_retain = 1;
 		}
 
-		if (conn_flags->last_will){
+		if (header->conn_flags->last_will){
 			new_client.will_retain = 1;
 			new_client.will_topic = XMALLOC(strlen(payload.will_topic->data));
 			strcpy(new_client.will_topic,  payload.will_topic->data);
@@ -272,7 +189,7 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 			new_client.will_msg = XMALLOC(strlen(payload.client_id->data));
 			strcpy(new_client.will_topic,  payload.will_topic->data);
 
-			memcpy(new_client.will_qos, conn_flags->will_qos, sizeof(new_client.will_qos));
+			memcpy(new_client.will_qos, header->conn_flags->will_qos, sizeof(uint8_t));
 
 		}
 
@@ -286,8 +203,18 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 			strcpy(new_client.password,  payload.pswd->data);
 		}
 
+		if (is_client_authorised(new_client.username, new_client.password)){
+			add_client();
+			format_conn_ack();
+		}else{
+			format_conn_ack();
+		}
 
-		return;
+
+
+
+
+		//broker->net->write(void *context, const byte* buf, int buf_len, int timeout_ms);)
 	}
 
 }

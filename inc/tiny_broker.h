@@ -14,6 +14,8 @@
 #include "stdbool.h"
 #include "string.h"
 
+#define CONTROL_TYPE 				(4)
+
 #define MAX_SUBS_TOPIC 				8
 #define MAX_TOPIC_NAME_SIZE 		32
 #define NOT_FOUND					255
@@ -57,18 +59,6 @@ typedef struct{
 }payload_t;
 
 
-//przerobic na system offsetow;
-
-
-typedef struct{
-uint16_t * client_id;
-uint16_t * will_topic;
-uint16_t * will_msg;
-uint16_t * user_name;
-uint16_t * user_pswd;
-}pld_offsets_t;
-
-
 
 typedef struct{
 	uint8_t reserved 	   :1;
@@ -76,17 +66,26 @@ typedef struct{
 	uint8_t last_will      :1;
 	uint8_t will_qos       :2;
 	uint8_t will_retain    :1;
-	uint8_t psswd          :1;
+	uint8_t pswd          :1;
 	uint8_t user_name      :1;
 }conn_flags_t;
 
+
+typedef struct{
+	uint8_t * control_type;
+	uint8_t * remainin_len;
+	string_in_frame_t * prot_name;
+	uint8_t * proto_level;
+	conn_flags_t * conn_flags;
+	uint16_t *keep_alive;
+}header_t;
 
 
 
 typedef struct {
 	uint8_t net_address[ADDR_SIZE];
 	char*  id;
-	bool keepalive;
+	uint16_t keepalive;
 	char*  username;
 	char*  password;
 	bool last_will;
