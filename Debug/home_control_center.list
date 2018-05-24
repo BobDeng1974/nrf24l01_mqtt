@@ -5,39 +5,39 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .isr_vector   0000010c  08000000  08000000  00010000  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  1 .text         00002554  0800010c  0800010c  0001010c  2**2
+  1 .text         000026b0  0800010c  0800010c  0001010c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000028  08002660  08002660  00012660  2**2
+  2 .rodata       00000028  080027bc  080027bc  000127bc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .init_array   00000004  08002688  08002688  00012688  2**2
+  3 .init_array   00000004  080027e4  080027e4  000127e4  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  4 .fini_array   00000004  0800268c  0800268c  0001268c  2**2
+  4 .fini_array   00000004  080027e8  080027e8  000127e8  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  5 .data         00000010  20000000  08002690  00020000  2**2
+  5 .data         00000010  20000000  080027ec  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .bss          00000a08  20000010  080026a0  00020010  2**2
+  6 .bss          00000a08  20000010  080027fc  00020010  2**2
                   ALLOC
-  7 ._user_heap_stack 00000100  20000a18  080026a0  00020a18  2**0
+  7 ._user_heap_stack 00000100  20000a18  080027fc  00020a18  2**0
                   ALLOC
   8 .ARM.attributes 00000029  00000000  00000000  00020010  2**0
                   CONTENTS, READONLY
-  9 .debug_info   00009890  00000000  00000000  00020039  2**0
+  9 .debug_info   00009a90  00000000  00000000  00020039  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_abbrev 0000191d  00000000  00000000  000298c9  2**0
+ 10 .debug_abbrev 00001973  00000000  00000000  00029ac9  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_aranges 00000708  00000000  00000000  0002b1e8  2**3
+ 11 .debug_aranges 00000728  00000000  00000000  0002b440  2**3
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000678  00000000  00000000  0002b8f0  2**3
+ 12 .debug_ranges 00000680  00000000  00000000  0002bb68  2**3
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_line   00002ebd  00000000  00000000  0002bf68  2**0
+ 13 .debug_line   00002f1d  00000000  00000000  0002c1e8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    0000264d  00000000  00000000  0002ee25  2**0
+ 14 .debug_str    0000270f  00000000  00000000  0002f105  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .comment      0000007c  00000000  00000000  00031472  2**0
+ 15 .comment      0000007c  00000000  00000000  00031814  2**0
                   CONTENTS, READONLY
- 16 .debug_frame  00001c1c  00000000  00000000  000314f0  2**2
+ 16 .debug_frame  00001cc0  00000000  00000000  00031890  2**2
                   CONTENTS, READONLY, DEBUGGING
- 17 .stabstr      0000003f  00000000  00000000  0003310c  2**0
+ 17 .stabstr      0000003f  00000000  00000000  00033550  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -56,7 +56,7 @@ Disassembly of section .text:
  8000122:	bd10      	pop	{r4, pc}
  8000124:	20000010 	.word	0x20000010
  8000128:	00000000 	.word	0x00000000
- 800012c:	08002648 	.word	0x08002648
+ 800012c:	080027a4 	.word	0x080027a4
 
 08000130 <frame_dummy>:
  8000130:	b508      	push	{r3, lr}
@@ -68,7 +68,7 @@ Disassembly of section .text:
  800013e:	bd08      	pop	{r3, pc}
  8000140:	00000000 	.word	0x00000000
  8000144:	20000014 	.word	0x20000014
- 8000148:	08002648 	.word	0x08002648
+ 8000148:	080027a4 	.word	0x080027a4
 
 0800014c <strcmp>:
  800014c:	f810 2b01 	ldrb.w	r2, [r0], #1
@@ -808,7 +808,7 @@ void packet_send_localhost(uint8_t * data, uint8_t size){
  80004d6:	461a      	mov	r2, r3
  80004d8:	6879      	ldr	r1, [r7, #4]
  80004da:	4805      	ldr	r0, [pc, #20]	; (80004f0 <packet_send_localhost+0x28>)
- 80004dc:	f002 f87e 	bl	80025dc <memcpy>
+ 80004dc:	f002 f92c 	bl	8002738 <memcpy>
 	local_host.len = size;
  80004e0:	4a03      	ldr	r2, [pc, #12]	; (80004f0 <packet_send_localhost+0x28>)
  80004e2:	78fb      	ldrb	r3, [r7, #3]
@@ -884,7 +884,7 @@ void packet_send_localhost(uint8_t * data, uint8_t size){
  8000544:	461a      	mov	r2, r3
  8000546:	4904      	ldr	r1, [pc, #16]	; (8000558 <mqtt_net_read_cb+0x24>)
  8000548:	68b8      	ldr	r0, [r7, #8]
- 800054a:	f002 f847 	bl	80025dc <memcpy>
+ 800054a:	f002 f8f5 	bl	8002738 <memcpy>
 		;
 	}
  800054e:	bf00      	nop
@@ -952,7 +952,7 @@ int main()
  800059c:	f44f 7280 	mov.w	r2, #256	; 0x100
  80005a0:	2100      	movs	r1, #0
  80005a2:	485f      	ldr	r0, [pc, #380]	; (8000720 <main+0x18c>)
- 80005a4:	f002 f825 	bl	80025f2 <memset>
+ 80005a4:	f002 f8d3 	bl	800274e <memset>
 
     nrf24_init();
  80005a8:	f001 fa27 	bl	80019fa <nrf24_init>
@@ -1049,7 +1049,7 @@ int main()
  8000640:	2240      	movs	r2, #64	; 0x40
  8000642:	2100      	movs	r1, #0
  8000644:	4618      	mov	r0, r3
- 8000646:	f001 ffd4 	bl	80025f2 <memset>
+ 8000646:	f002 f882 	bl	800274e <memset>
 	uint8_t tx_buf_len = 64;
  800064a:	2340      	movs	r3, #64	; 0x40
  800064c:	f887 3377 	strb.w	r3, [r7, #887]	; 0x377
@@ -1122,7 +1122,7 @@ int main()
  80006da:	463b      	mov	r3, r7
  80006dc:	4910      	ldr	r1, [pc, #64]	; (8000720 <main+0x18c>)
  80006de:	4618      	mov	r0, r3
- 80006e0:	f001 fef4 	bl	80024cc <acccept_connection>
+ 80006e0:	f001 ff2d 	bl	800253e <acccept_connection>
 //    		// nrf24_powerDown();
 //
 //       }
@@ -1175,9 +1175,9 @@ int main()
  800073c:	0800055d 	.word	0x0800055d
  8000740:	08000581 	.word	0x08000581
  8000744:	080004f5 	.word	0x080004f5
- 8000748:	08002660 	.word	0x08002660
- 800074c:	08002664 	.word	0x08002664
- 8000750:	08002670 	.word	0x08002670
+ 8000748:	080027bc 	.word	0x080027bc
+ 800074c:	080027c0 	.word	0x080027c0
+ 8000750:	080027cc 	.word	0x080027cc
  8000754:	20000334 	.word	0x20000334
  8000758:	20000930 	.word	0x20000930
 
@@ -1997,7 +1997,7 @@ int MqttClient_Init(MqttClient *client, MqttNet* net,
  8000bb6:	226c      	movs	r2, #108	; 0x6c
  8000bb8:	2100      	movs	r1, #0
  8000bba:	68f8      	ldr	r0, [r7, #12]
- 8000bbc:	f001 fd19 	bl	80025f2 <memset>
+ 8000bbc:	f001 fdc7 	bl	800274e <memset>
 
     /* Setup client structure */
     client->msg_cb = msg_cb;
@@ -2708,7 +2708,7 @@ int MqttEncode_String(byte *buf, const char *str)
  8000faa:	461a      	mov	r2, r3
  8000fac:	6839      	ldr	r1, [r7, #0]
  8000fae:	6878      	ldr	r0, [r7, #4]
- 8000fb0:	f001 fb14 	bl	80025dc <memcpy>
+ 8000fb0:	f001 fbc2 	bl	8002738 <memcpy>
     return len + str_len;
  8000fb4:	68ba      	ldr	r2, [r7, #8]
  8000fb6:	68fb      	ldr	r3, [r7, #12]
@@ -2747,7 +2747,7 @@ int MqttEncode_Data(byte *buf, const byte *data, word16 data_len)
  8000fe6:	461a      	mov	r2, r3
  8000fe8:	68b9      	ldr	r1, [r7, #8]
  8000fea:	68f8      	ldr	r0, [r7, #12]
- 8000fec:	f001 faf6 	bl	80025dc <memcpy>
+ 8000fec:	f001 fba4 	bl	8002738 <memcpy>
     return len + data_len;
  8000ff0:	88fa      	ldrh	r2, [r7, #6]
  8000ff2:	697b      	ldr	r3, [r7, #20]
@@ -3137,7 +3137,7 @@ int MqttEncode_Connect(byte *tx_buf, int tx_buf_len, MqttConnect *connect)
  8001256:	3728      	adds	r7, #40	; 0x28
  8001258:	46bd      	mov	sp, r7
  800125a:	bd80      	pop	{r7, pc}
- 800125c:	0800267c 	.word	0x0800267c
+ 800125c:	080027d8 	.word	0x080027d8
 
 08001260 <MqttDecode_ConnectAck>:
 
@@ -4563,7 +4563,7 @@ bool l3_receive_packet(uint8_t *data, uint8_t * packet_buff){
  80019d2:	3302      	adds	r3, #2
  80019d4:	221e      	movs	r2, #30
  80019d6:	4619      	mov	r1, r3
- 80019d8:	f000 fe00 	bl	80025dc <memcpy>
+ 80019d8:	f000 feae 	bl	8002738 <memcpy>
 		if ((data[H_FRM]+1) == data[H_TOTAL]){
  80019dc:	687b      	ldr	r3, [r7, #4]
  80019de:	781b      	ldrb	r3, [r3, #0]
@@ -5774,7 +5774,7 @@ LoopFillZerobss:
  8002056:	f000 f83d 	bl	80020d4 <SystemInit>
 /* Call static constructors */
     bl __libc_init_array
- 800205a:	f000 fa9b 	bl	8002594 <__libc_init_array>
+ 800205a:	f000 fb49 	bl	80026f0 <__libc_init_array>
 /* Call the application's entry point.*/
 	bl	main
  800205e:	f7fe fa99 	bl	8000594 <main>
@@ -5783,7 +5783,7 @@ LoopFillZerobss:
   ldr   sp, =_estack    /* Atollic update: set stack pointer */
  8002064:	20005000 	.word	0x20005000
 	ldr	r3, =_sidata
- 8002068:	08002690 	.word	0x08002690
+ 8002068:	080027ec 	.word	0x080027ec
 	ldr	r0, =_sdata
  800206c:	20000000 	.word	0x20000000
 	ldr	r3, =_edata
@@ -6246,7 +6246,7 @@ extern local_host_t local_lost;
  8002252:	f44f 7211 	mov.w	r2, #580	; 0x244
  8002256:	2100      	movs	r1, #0
  8002258:	6878      	ldr	r0, [r7, #4]
- 800225a:	f000 f9ca 	bl	80025f2 <memset>
+ 800225a:	f000 fa78 	bl	800274e <memset>
  	broker->net = net;
  800225e:	687b      	ldr	r3, [r7, #4]
  8002260:	683a      	ldr	r2, [r7, #0]
@@ -6312,8 +6312,6 @@ void * m_malloc(size_t size){
  80022bc:	20000030 	.word	0x20000030
 
 080022c0 <is_client_connected>:
-//
-//broker->clients[i].
 
 
 
@@ -6339,7 +6337,7 @@ bool is_client_connected(broker_t * broker, char* client_id){
  80022e0:	681b      	ldr	r3, [r3, #0]
  80022e2:	6839      	ldr	r1, [r7, #0]
  80022e4:	4618      	mov	r0, r3
- 80022e6:	f000 f994 	bl	8002612 <strstr>
+ 80022e6:	f000 fa42 	bl	800276e <strstr>
  80022ea:	4603      	mov	r3, r0
  80022ec:	2b00      	cmp	r3, #0
  80022ee:	d001      	beq.n	80022f4 <is_client_connected+0x34>
@@ -6363,537 +6361,733 @@ bool is_client_connected(broker_t * broker, char* client_id){
  8002306:	46bd      	mov	sp, r7
  8002308:	bd80      	pop	{r7, pc}
 
-0800230a <read_connection_flags>:
-
-static inline void read_connection_flags(conn_flags_t ** conn_flags, uint8_t * frame){
- 800230a:	b480      	push	{r7}
- 800230c:	b085      	sub	sp, #20
- 800230e:	af00      	add	r7, sp, #0
- 8002310:	6078      	str	r0, [r7, #4]
- 8002312:	6039      	str	r1, [r7, #0]
-	uint8_t * flag_byte = &frame[9];
- 8002314:	683b      	ldr	r3, [r7, #0]
- 8002316:	3309      	adds	r3, #9
- 8002318:	60fb      	str	r3, [r7, #12]
-	*conn_flags =  (conn_flags_t*) flag_byte;
- 800231a:	687b      	ldr	r3, [r7, #4]
- 800231c:	68fa      	ldr	r2, [r7, #12]
- 800231e:	601a      	str	r2, [r3, #0]
+0800230a <has_broker_space_for_next_client>:
 	//zwracac wskaznik
-}
- 8002320:	bf00      	nop
- 8002322:	3714      	adds	r7, #20
- 8002324:	46bd      	mov	sp, r7
- 8002326:	bc80      	pop	{r7}
- 8002328:	4770      	bx	lr
-
-0800232a <has_broker_space_for_next_client>:
-	return (frame[CLNT_ID_SIZE_LSB_POS] +  (frame[CLNT_ID_SIZE_MSB_POS]<<8));
 }
 
 
 
 static bool has_broker_space_for_next_client(broker_t * broker){
- 800232a:	b480      	push	{r7}
- 800232c:	b085      	sub	sp, #20
- 800232e:	af00      	add	r7, sp, #0
- 8002330:	6078      	str	r0, [r7, #4]
+ 800230a:	b480      	push	{r7}
+ 800230c:	b085      	sub	sp, #20
+ 800230e:	af00      	add	r7, sp, #0
+ 8002310:	6078      	str	r0, [r7, #4]
 	for (uint8_t i = 0; i < MAX_CONN_CLIENTS; i++){
- 8002332:	2300      	movs	r3, #0
- 8002334:	73fb      	strb	r3, [r7, #15]
- 8002336:	e012      	b.n	800235e <has_broker_space_for_next_client+0x34>
+ 8002312:	2300      	movs	r3, #0
+ 8002314:	73fb      	strb	r3, [r7, #15]
+ 8002316:	e012      	b.n	800233e <has_broker_space_for_next_client+0x34>
 		if (!(broker->clients[i].active)){
- 8002338:	7bfa      	ldrb	r2, [r7, #15]
- 800233a:	6879      	ldr	r1, [r7, #4]
- 800233c:	4613      	mov	r3, r2
- 800233e:	00db      	lsls	r3, r3, #3
- 8002340:	4413      	add	r3, r2
- 8002342:	00db      	lsls	r3, r3, #3
- 8002344:	440b      	add	r3, r1
- 8002346:	3344      	adds	r3, #68	; 0x44
- 8002348:	781b      	ldrb	r3, [r3, #0]
- 800234a:	f083 0301 	eor.w	r3, r3, #1
- 800234e:	b2db      	uxtb	r3, r3
- 8002350:	2b00      	cmp	r3, #0
- 8002352:	d001      	beq.n	8002358 <has_broker_space_for_next_client+0x2e>
+ 8002318:	7bfa      	ldrb	r2, [r7, #15]
+ 800231a:	6879      	ldr	r1, [r7, #4]
+ 800231c:	4613      	mov	r3, r2
+ 800231e:	00db      	lsls	r3, r3, #3
+ 8002320:	4413      	add	r3, r2
+ 8002322:	00db      	lsls	r3, r3, #3
+ 8002324:	440b      	add	r3, r1
+ 8002326:	3344      	adds	r3, #68	; 0x44
+ 8002328:	781b      	ldrb	r3, [r3, #0]
+ 800232a:	f083 0301 	eor.w	r3, r3, #1
+ 800232e:	b2db      	uxtb	r3, r3
+ 8002330:	2b00      	cmp	r3, #0
+ 8002332:	d001      	beq.n	8002338 <has_broker_space_for_next_client+0x2e>
 			return true;
- 8002354:	2301      	movs	r3, #1
- 8002356:	e006      	b.n	8002366 <has_broker_space_for_next_client+0x3c>
+ 8002334:	2301      	movs	r3, #1
+ 8002336:	e006      	b.n	8002346 <has_broker_space_for_next_client+0x3c>
 	for (uint8_t i = 0; i < MAX_CONN_CLIENTS; i++){
- 8002358:	7bfb      	ldrb	r3, [r7, #15]
- 800235a:	3301      	adds	r3, #1
- 800235c:	73fb      	strb	r3, [r7, #15]
- 800235e:	7bfb      	ldrb	r3, [r7, #15]
- 8002360:	2b07      	cmp	r3, #7
- 8002362:	d9e9      	bls.n	8002338 <has_broker_space_for_next_client+0xe>
+ 8002338:	7bfb      	ldrb	r3, [r7, #15]
+ 800233a:	3301      	adds	r3, #1
+ 800233c:	73fb      	strb	r3, [r7, #15]
+ 800233e:	7bfb      	ldrb	r3, [r7, #15]
+ 8002340:	2b07      	cmp	r3, #7
+ 8002342:	d9e9      	bls.n	8002318 <has_broker_space_for_next_client+0xe>
 		}
 	}
 	return false;
- 8002364:	2300      	movs	r3, #0
+ 8002344:	2300      	movs	r3, #0
 }
- 8002366:	4618      	mov	r0, r3
- 8002368:	3714      	adds	r7, #20
- 800236a:	46bd      	mov	sp, r7
- 800236c:	bc80      	pop	{r7}
- 800236e:	4770      	bx	lr
+ 8002346:	4618      	mov	r0, r3
+ 8002348:	3714      	adds	r7, #20
+ 800234a:	46bd      	mov	sp, r7
+ 800234c:	bc80      	pop	{r7}
+ 800234e:	4770      	bx	lr
 
-08002370 <broker_find_client_pos>:
+08002350 <broker_find_client_pos>:
 
 static inline uint8_t broker_find_client_pos(broker_t * broker, char* client_id){
- 8002370:	b580      	push	{r7, lr}
- 8002372:	b084      	sub	sp, #16
- 8002374:	af00      	add	r7, sp, #0
- 8002376:	6078      	str	r0, [r7, #4]
- 8002378:	6039      	str	r1, [r7, #0]
+ 8002350:	b580      	push	{r7, lr}
+ 8002352:	b084      	sub	sp, #16
+ 8002354:	af00      	add	r7, sp, #0
+ 8002356:	6078      	str	r0, [r7, #4]
+ 8002358:	6039      	str	r1, [r7, #0]
 	for (uint8_t i = 0; i < MAX_CONN_CLIENTS; i++){
- 800237a:	2300      	movs	r3, #0
- 800237c:	73fb      	strb	r3, [r7, #15]
- 800237e:	e014      	b.n	80023aa <broker_find_client_pos+0x3a>
+ 800235a:	2300      	movs	r3, #0
+ 800235c:	73fb      	strb	r3, [r7, #15]
+ 800235e:	e014      	b.n	800238a <broker_find_client_pos+0x3a>
 		if (strcmp(broker->clients[i].id, client_id) ==0 ) {
- 8002380:	7bfa      	ldrb	r2, [r7, #15]
- 8002382:	6879      	ldr	r1, [r7, #4]
- 8002384:	4613      	mov	r3, r2
- 8002386:	00db      	lsls	r3, r3, #3
- 8002388:	4413      	add	r3, r2
- 800238a:	00db      	lsls	r3, r3, #3
- 800238c:	440b      	add	r3, r1
- 800238e:	3304      	adds	r3, #4
- 8002390:	681b      	ldr	r3, [r3, #0]
- 8002392:	6839      	ldr	r1, [r7, #0]
- 8002394:	4618      	mov	r0, r3
- 8002396:	f7fd fed9 	bl	800014c <strcmp>
- 800239a:	4603      	mov	r3, r0
- 800239c:	2b00      	cmp	r3, #0
- 800239e:	d101      	bne.n	80023a4 <broker_find_client_pos+0x34>
+ 8002360:	7bfa      	ldrb	r2, [r7, #15]
+ 8002362:	6879      	ldr	r1, [r7, #4]
+ 8002364:	4613      	mov	r3, r2
+ 8002366:	00db      	lsls	r3, r3, #3
+ 8002368:	4413      	add	r3, r2
+ 800236a:	00db      	lsls	r3, r3, #3
+ 800236c:	440b      	add	r3, r1
+ 800236e:	3304      	adds	r3, #4
+ 8002370:	681b      	ldr	r3, [r3, #0]
+ 8002372:	6839      	ldr	r1, [r7, #0]
+ 8002374:	4618      	mov	r0, r3
+ 8002376:	f7fd fee9 	bl	800014c <strcmp>
+ 800237a:	4603      	mov	r3, r0
+ 800237c:	2b00      	cmp	r3, #0
+ 800237e:	d101      	bne.n	8002384 <broker_find_client_pos+0x34>
 			return i;
- 80023a0:	7bfb      	ldrb	r3, [r7, #15]
- 80023a2:	e006      	b.n	80023b2 <broker_find_client_pos+0x42>
+ 8002380:	7bfb      	ldrb	r3, [r7, #15]
+ 8002382:	e006      	b.n	8002392 <broker_find_client_pos+0x42>
 	for (uint8_t i = 0; i < MAX_CONN_CLIENTS; i++){
- 80023a4:	7bfb      	ldrb	r3, [r7, #15]
- 80023a6:	3301      	adds	r3, #1
- 80023a8:	73fb      	strb	r3, [r7, #15]
- 80023aa:	7bfb      	ldrb	r3, [r7, #15]
- 80023ac:	2b07      	cmp	r3, #7
- 80023ae:	d9e7      	bls.n	8002380 <broker_find_client_pos+0x10>
+ 8002384:	7bfb      	ldrb	r3, [r7, #15]
+ 8002386:	3301      	adds	r3, #1
+ 8002388:	73fb      	strb	r3, [r7, #15]
+ 800238a:	7bfb      	ldrb	r3, [r7, #15]
+ 800238c:	2b07      	cmp	r3, #7
+ 800238e:	d9e7      	bls.n	8002360 <broker_find_client_pos+0x10>
 		}
 	}
 
 	return NOT_FOUND;
- 80023b0:	23ff      	movs	r3, #255	; 0xff
+ 8002390:	23ff      	movs	r3, #255	; 0xff
 
 }
- 80023b2:	4618      	mov	r0, r3
- 80023b4:	3710      	adds	r7, #16
- 80023b6:	46bd      	mov	sp, r7
- 80023b8:	bd80      	pop	{r7, pc}
+ 8002392:	4618      	mov	r0, r3
+ 8002394:	3710      	adds	r7, #16
+ 8002396:	46bd      	mov	sp, r7
+ 8002398:	bd80      	pop	{r7, pc}
 
-080023ba <broker_remove_client>:
+0800239a <broker_remove_client>:
 
 void broker_remove_client(broker_t * broker, char* client_id){
- 80023ba:	b580      	push	{r7, lr}
- 80023bc:	b084      	sub	sp, #16
- 80023be:	af00      	add	r7, sp, #0
- 80023c0:	6078      	str	r0, [r7, #4]
- 80023c2:	6039      	str	r1, [r7, #0]
+ 800239a:	b580      	push	{r7, lr}
+ 800239c:	b084      	sub	sp, #16
+ 800239e:	af00      	add	r7, sp, #0
+ 80023a0:	6078      	str	r0, [r7, #4]
+ 80023a2:	6039      	str	r1, [r7, #0]
 	uint8_t pos = broker_find_client_pos(broker, client_id);
- 80023c4:	6839      	ldr	r1, [r7, #0]
- 80023c6:	6878      	ldr	r0, [r7, #4]
- 80023c8:	f7ff ffd2 	bl	8002370 <broker_find_client_pos>
- 80023cc:	4603      	mov	r3, r0
- 80023ce:	73fb      	strb	r3, [r7, #15]
+ 80023a4:	6839      	ldr	r1, [r7, #0]
+ 80023a6:	6878      	ldr	r0, [r7, #4]
+ 80023a8:	f7ff ffd2 	bl	8002350 <broker_find_client_pos>
+ 80023ac:	4603      	mov	r3, r0
+ 80023ae:	73fb      	strb	r3, [r7, #15]
 	if (pos != NOT_FOUND){
- 80023d0:	7bfb      	ldrb	r3, [r7, #15]
- 80023d2:	2bff      	cmp	r3, #255	; 0xff
- 80023d4:	d009      	beq.n	80023ea <broker_remove_client+0x30>
+ 80023b0:	7bfb      	ldrb	r3, [r7, #15]
+ 80023b2:	2bff      	cmp	r3, #255	; 0xff
+ 80023b4:	d009      	beq.n	80023ca <broker_remove_client+0x30>
 		broker->clients[pos].active = false;
- 80023d6:	7bfa      	ldrb	r2, [r7, #15]
- 80023d8:	6879      	ldr	r1, [r7, #4]
- 80023da:	4613      	mov	r3, r2
- 80023dc:	00db      	lsls	r3, r3, #3
- 80023de:	4413      	add	r3, r2
- 80023e0:	00db      	lsls	r3, r3, #3
- 80023e2:	440b      	add	r3, r1
- 80023e4:	3344      	adds	r3, #68	; 0x44
- 80023e6:	2200      	movs	r2, #0
- 80023e8:	701a      	strb	r2, [r3, #0]
+ 80023b6:	7bfa      	ldrb	r2, [r7, #15]
+ 80023b8:	6879      	ldr	r1, [r7, #4]
+ 80023ba:	4613      	mov	r3, r2
+ 80023bc:	00db      	lsls	r3, r3, #3
+ 80023be:	4413      	add	r3, r2
+ 80023c0:	00db      	lsls	r3, r3, #3
+ 80023c2:	440b      	add	r3, r1
+ 80023c4:	3344      	adds	r3, #68	; 0x44
+ 80023c6:	2200      	movs	r2, #0
+ 80023c8:	701a      	strb	r2, [r3, #0]
 	}
-
 }
- 80023ea:	bf00      	nop
- 80023ec:	3710      	adds	r7, #16
- 80023ee:	46bd      	mov	sp, r7
- 80023f0:	bd80      	pop	{r7, pc}
+ 80023ca:	bf00      	nop
+ 80023cc:	3710      	adds	r7, #16
+ 80023ce:	46bd      	mov	sp, r7
+ 80023d0:	bd80      	pop	{r7, pc}
 
-080023f2 <init_payload_container>:
-//	}
-//	return NULL;
-//}
-//
+080023d2 <broker_first_free_pos_for_client>:
 
-static inline void init_payload_container(payload_t * payload){
- 80023f2:	b580      	push	{r7, lr}
- 80023f4:	b082      	sub	sp, #8
- 80023f6:	af00      	add	r7, sp, #0
- 80023f8:	6078      	str	r0, [r7, #4]
+
+static uint8_t broker_first_free_pos_for_client(broker_t * broker){
+ 80023d2:	b480      	push	{r7}
+ 80023d4:	b085      	sub	sp, #20
+ 80023d6:	af00      	add	r7, sp, #0
+ 80023d8:	6078      	str	r0, [r7, #4]
+	for (uint8_t i = 0; i < MAX_CONN_CLIENTS; i++){
+ 80023da:	2300      	movs	r3, #0
+ 80023dc:	73fb      	strb	r3, [r7, #15]
+ 80023de:	e012      	b.n	8002406 <broker_first_free_pos_for_client+0x34>
+		if (!(broker->clients[i].active)){
+ 80023e0:	7bfa      	ldrb	r2, [r7, #15]
+ 80023e2:	6879      	ldr	r1, [r7, #4]
+ 80023e4:	4613      	mov	r3, r2
+ 80023e6:	00db      	lsls	r3, r3, #3
+ 80023e8:	4413      	add	r3, r2
+ 80023ea:	00db      	lsls	r3, r3, #3
+ 80023ec:	440b      	add	r3, r1
+ 80023ee:	3344      	adds	r3, #68	; 0x44
+ 80023f0:	781b      	ldrb	r3, [r3, #0]
+ 80023f2:	f083 0301 	eor.w	r3, r3, #1
+ 80023f6:	b2db      	uxtb	r3, r3
+ 80023f8:	2b00      	cmp	r3, #0
+ 80023fa:	d001      	beq.n	8002400 <broker_first_free_pos_for_client+0x2e>
+			return i;
+ 80023fc:	7bfb      	ldrb	r3, [r7, #15]
+ 80023fe:	e006      	b.n	800240e <broker_first_free_pos_for_client+0x3c>
+	for (uint8_t i = 0; i < MAX_CONN_CLIENTS; i++){
+ 8002400:	7bfb      	ldrb	r3, [r7, #15]
+ 8002402:	3301      	adds	r3, #1
+ 8002404:	73fb      	strb	r3, [r7, #15]
+ 8002406:	7bfb      	ldrb	r3, [r7, #15]
+ 8002408:	2b07      	cmp	r3, #7
+ 800240a:	d9e9      	bls.n	80023e0 <broker_first_free_pos_for_client+0xe>
+		}
+	}
+	return NOT_FOUND;
+ 800240c:	23ff      	movs	r3, #255	; 0xff
+}
+ 800240e:	4618      	mov	r0, r3
+ 8002410:	3714      	adds	r7, #20
+ 8002412:	46bd      	mov	sp, r7
+ 8002414:	bc80      	pop	{r7}
+ 8002416:	4770      	bx	lr
+
+08002418 <add_client>:
+
+
+static void add_client (broker_t * broker, conn_client_t * new_client){
+ 8002418:	b580      	push	{r7, lr}
+ 800241a:	b084      	sub	sp, #16
+ 800241c:	af00      	add	r7, sp, #0
+ 800241e:	6078      	str	r0, [r7, #4]
+ 8002420:	6039      	str	r1, [r7, #0]
+	uint8_t pos = broker_first_free_pos_for_client(broker);
+ 8002422:	6878      	ldr	r0, [r7, #4]
+ 8002424:	f7ff ffd5 	bl	80023d2 <broker_first_free_pos_for_client>
+ 8002428:	4603      	mov	r3, r0
+ 800242a:	73fb      	strb	r3, [r7, #15]
+		memcpy(&broker->clients[pos], new_client, sizeof (conn_client_t));
+ 800242c:	7bfa      	ldrb	r2, [r7, #15]
+ 800242e:	4613      	mov	r3, r2
+ 8002430:	00db      	lsls	r3, r3, #3
+ 8002432:	4413      	add	r3, r2
+ 8002434:	00db      	lsls	r3, r3, #3
+ 8002436:	687a      	ldr	r2, [r7, #4]
+ 8002438:	4413      	add	r3, r2
+ 800243a:	2248      	movs	r2, #72	; 0x48
+ 800243c:	6839      	ldr	r1, [r7, #0]
+ 800243e:	4618      	mov	r0, r3
+ 8002440:	f000 f97a 	bl	8002738 <memcpy>
+}
+ 8002444:	bf00      	nop
+ 8002446:	3710      	adds	r7, #16
+ 8002448:	46bd      	mov	sp, r7
+ 800244a:	bd80      	pop	{r7, pc}
+
+0800244c <read_header>:
+static inline void init_header_container(header_t * header){
+	memset (header, 0, sizeof (header_t));
+}
+
+
+static inline void read_header(header_t** header, uint8_t * frame){
+ 800244c:	b480      	push	{r7}
+ 800244e:	b083      	sub	sp, #12
+ 8002450:	af00      	add	r7, sp, #0
+ 8002452:	6078      	str	r0, [r7, #4]
+ 8002454:	6039      	str	r1, [r7, #0]
+	*header =  (header_t*) frame;
+ 8002456:	687b      	ldr	r3, [r7, #4]
+ 8002458:	683a      	ldr	r2, [r7, #0]
+ 800245a:	601a      	str	r2, [r3, #0]
+}
+ 800245c:	bf00      	nop
+ 800245e:	370c      	adds	r7, #12
+ 8002460:	46bd      	mov	sp, r7
+ 8002462:	bc80      	pop	{r7}
+ 8002464:	4770      	bx	lr
+
+08002466 <read_conn_payload>:
 	memset (payload, 0, sizeof (payload_t));
- 80023fa:	2214      	movs	r2, #20
- 80023fc:	2100      	movs	r1, #0
- 80023fe:	6878      	ldr	r0, [r7, #4]
- 8002400:	f000 f8f7 	bl	80025f2 <memset>
 }
- 8002404:	bf00      	nop
- 8002406:	3708      	adds	r7, #8
- 8002408:	46bd      	mov	sp, r7
- 800240a:	bd80      	pop	{r7, pc}
-
-0800240c <read_conn_payload>:
 
 
 
-static inline void read_conn_payload(payload_t* payload, conn_flags_t* flags, uint8_t* frame ){
- 800240c:	b580      	push	{r7, lr}
- 800240e:	b086      	sub	sp, #24
- 8002410:	af00      	add	r7, sp, #0
- 8002412:	60f8      	str	r0, [r7, #12]
- 8002414:	60b9      	str	r1, [r7, #8]
- 8002416:	607a      	str	r2, [r7, #4]
-	init_payload_container(payload);
- 8002418:	68f8      	ldr	r0, [r7, #12]
- 800241a:	f7ff ffea 	bl	80023f2 <init_payload_container>
+static inline void read_conn_payload(payload_t* payload, header_t* header, uint8_t* frame ){
+ 8002466:	b480      	push	{r7}
+ 8002468:	b087      	sub	sp, #28
+ 800246a:	af00      	add	r7, sp, #0
+ 800246c:	60f8      	str	r0, [r7, #12]
+ 800246e:	60b9      	str	r1, [r7, #8]
+ 8002470:	607a      	str	r2, [r7, #4]
 	uint8_t pos = PLD_START;
- 800241e:	230c      	movs	r3, #12
- 8002420:	75fb      	strb	r3, [r7, #23]
+ 8002472:	230c      	movs	r3, #12
+ 8002474:	75fb      	strb	r3, [r7, #23]
 
 	payload->client_id  = (string_in_frame_t*) &frame[pos];
- 8002422:	7dfb      	ldrb	r3, [r7, #23]
- 8002424:	687a      	ldr	r2, [r7, #4]
- 8002426:	441a      	add	r2, r3
- 8002428:	68fb      	ldr	r3, [r7, #12]
- 800242a:	601a      	str	r2, [r3, #0]
+ 8002476:	7dfb      	ldrb	r3, [r7, #23]
+ 8002478:	687a      	ldr	r2, [r7, #4]
+ 800247a:	441a      	add	r2, r3
+ 800247c:	68fb      	ldr	r3, [r7, #12]
+ 800247e:	601a      	str	r2, [r3, #0]
 	pos += payload->client_id->len;
- 800242c:	68fb      	ldr	r3, [r7, #12]
- 800242e:	681b      	ldr	r3, [r3, #0]
- 8002430:	881b      	ldrh	r3, [r3, #0]
- 8002432:	b2da      	uxtb	r2, r3
- 8002434:	7dfb      	ldrb	r3, [r7, #23]
- 8002436:	4413      	add	r3, r2
- 8002438:	75fb      	strb	r3, [r7, #23]
-	if (flags->last_will){
- 800243a:	68bb      	ldr	r3, [r7, #8]
- 800243c:	781b      	ldrb	r3, [r3, #0]
- 800243e:	f003 0304 	and.w	r3, r3, #4
- 8002442:	b2db      	uxtb	r3, r3
- 8002444:	2b00      	cmp	r3, #0
- 8002446:	d017      	beq.n	8002478 <read_conn_payload+0x6c>
+ 8002480:	68fb      	ldr	r3, [r7, #12]
+ 8002482:	681b      	ldr	r3, [r3, #0]
+ 8002484:	881b      	ldrh	r3, [r3, #0]
+ 8002486:	b2da      	uxtb	r2, r3
+ 8002488:	7dfb      	ldrb	r3, [r7, #23]
+ 800248a:	4413      	add	r3, r2
+ 800248c:	75fb      	strb	r3, [r7, #23]
+	if (header->conn_flags->last_will){
+ 800248e:	68bb      	ldr	r3, [r7, #8]
+ 8002490:	691b      	ldr	r3, [r3, #16]
+ 8002492:	781b      	ldrb	r3, [r3, #0]
+ 8002494:	f003 0304 	and.w	r3, r3, #4
+ 8002498:	b2db      	uxtb	r3, r3
+ 800249a:	2b00      	cmp	r3, #0
+ 800249c:	d017      	beq.n	80024ce <read_conn_payload+0x68>
 		payload->will_topic = &frame[pos];
- 8002448:	7dfb      	ldrb	r3, [r7, #23]
- 800244a:	687a      	ldr	r2, [r7, #4]
- 800244c:	441a      	add	r2, r3
- 800244e:	68fb      	ldr	r3, [r7, #12]
- 8002450:	605a      	str	r2, [r3, #4]
+ 800249e:	7dfb      	ldrb	r3, [r7, #23]
+ 80024a0:	687a      	ldr	r2, [r7, #4]
+ 80024a2:	441a      	add	r2, r3
+ 80024a4:	68fb      	ldr	r3, [r7, #12]
+ 80024a6:	605a      	str	r2, [r3, #4]
 		pos += payload->will_topic->len;
- 8002452:	68fb      	ldr	r3, [r7, #12]
- 8002454:	685b      	ldr	r3, [r3, #4]
- 8002456:	881b      	ldrh	r3, [r3, #0]
- 8002458:	b2da      	uxtb	r2, r3
- 800245a:	7dfb      	ldrb	r3, [r7, #23]
- 800245c:	4413      	add	r3, r2
- 800245e:	75fb      	strb	r3, [r7, #23]
+ 80024a8:	68fb      	ldr	r3, [r7, #12]
+ 80024aa:	685b      	ldr	r3, [r3, #4]
+ 80024ac:	881b      	ldrh	r3, [r3, #0]
+ 80024ae:	b2da      	uxtb	r2, r3
+ 80024b0:	7dfb      	ldrb	r3, [r7, #23]
+ 80024b2:	4413      	add	r3, r2
+ 80024b4:	75fb      	strb	r3, [r7, #23]
 		payload->will_msg   = &frame[pos];
- 8002460:	7dfb      	ldrb	r3, [r7, #23]
- 8002462:	687a      	ldr	r2, [r7, #4]
- 8002464:	441a      	add	r2, r3
- 8002466:	68fb      	ldr	r3, [r7, #12]
- 8002468:	609a      	str	r2, [r3, #8]
+ 80024b6:	7dfb      	ldrb	r3, [r7, #23]
+ 80024b8:	687a      	ldr	r2, [r7, #4]
+ 80024ba:	441a      	add	r2, r3
+ 80024bc:	68fb      	ldr	r3, [r7, #12]
+ 80024be:	609a      	str	r2, [r3, #8]
 		pos += payload->will_topic->len;
- 800246a:	68fb      	ldr	r3, [r7, #12]
- 800246c:	685b      	ldr	r3, [r3, #4]
- 800246e:	881b      	ldrh	r3, [r3, #0]
- 8002470:	b2da      	uxtb	r2, r3
- 8002472:	7dfb      	ldrb	r3, [r7, #23]
- 8002474:	4413      	add	r3, r2
- 8002476:	75fb      	strb	r3, [r7, #23]
+ 80024c0:	68fb      	ldr	r3, [r7, #12]
+ 80024c2:	685b      	ldr	r3, [r3, #4]
+ 80024c4:	881b      	ldrh	r3, [r3, #0]
+ 80024c6:	b2da      	uxtb	r2, r3
+ 80024c8:	7dfb      	ldrb	r3, [r7, #23]
+ 80024ca:	4413      	add	r3, r2
+ 80024cc:	75fb      	strb	r3, [r7, #23]
 	}
-	if (flags->user_name){
- 8002478:	68bb      	ldr	r3, [r7, #8]
- 800247a:	781b      	ldrb	r3, [r3, #0]
- 800247c:	f023 037f 	bic.w	r3, r3, #127	; 0x7f
- 8002480:	b2db      	uxtb	r3, r3
- 8002482:	2b00      	cmp	r3, #0
- 8002484:	d00b      	beq.n	800249e <read_conn_payload+0x92>
+	if (header->conn_flags->user_name){
+ 80024ce:	68bb      	ldr	r3, [r7, #8]
+ 80024d0:	691b      	ldr	r3, [r3, #16]
+ 80024d2:	781b      	ldrb	r3, [r3, #0]
+ 80024d4:	f023 037f 	bic.w	r3, r3, #127	; 0x7f
+ 80024d8:	b2db      	uxtb	r3, r3
+ 80024da:	2b00      	cmp	r3, #0
+ 80024dc:	d00b      	beq.n	80024f6 <read_conn_payload+0x90>
 		payload->usr_name= &frame[pos];
- 8002486:	7dfb      	ldrb	r3, [r7, #23]
- 8002488:	687a      	ldr	r2, [r7, #4]
- 800248a:	441a      	add	r2, r3
- 800248c:	68fb      	ldr	r3, [r7, #12]
- 800248e:	60da      	str	r2, [r3, #12]
+ 80024de:	7dfb      	ldrb	r3, [r7, #23]
+ 80024e0:	687a      	ldr	r2, [r7, #4]
+ 80024e2:	441a      	add	r2, r3
+ 80024e4:	68fb      	ldr	r3, [r7, #12]
+ 80024e6:	60da      	str	r2, [r3, #12]
 		pos += payload->usr_name->len;
- 8002490:	68fb      	ldr	r3, [r7, #12]
- 8002492:	68db      	ldr	r3, [r3, #12]
- 8002494:	881b      	ldrh	r3, [r3, #0]
- 8002496:	b2da      	uxtb	r2, r3
- 8002498:	7dfb      	ldrb	r3, [r7, #23]
- 800249a:	4413      	add	r3, r2
- 800249c:	75fb      	strb	r3, [r7, #23]
+ 80024e8:	68fb      	ldr	r3, [r7, #12]
+ 80024ea:	68db      	ldr	r3, [r3, #12]
+ 80024ec:	881b      	ldrh	r3, [r3, #0]
+ 80024ee:	b2da      	uxtb	r2, r3
+ 80024f0:	7dfb      	ldrb	r3, [r7, #23]
+ 80024f2:	4413      	add	r3, r2
+ 80024f4:	75fb      	strb	r3, [r7, #23]
 	}
-	if (flags->psswd){
- 800249e:	68bb      	ldr	r3, [r7, #8]
- 80024a0:	781b      	ldrb	r3, [r3, #0]
- 80024a2:	f003 0340 	and.w	r3, r3, #64	; 0x40
- 80024a6:	b2db      	uxtb	r3, r3
- 80024a8:	2b00      	cmp	r3, #0
- 80024aa:	d00b      	beq.n	80024c4 <read_conn_payload+0xb8>
+	if (header->conn_flags->pswd){
+ 80024f6:	68bb      	ldr	r3, [r7, #8]
+ 80024f8:	691b      	ldr	r3, [r3, #16]
+ 80024fa:	781b      	ldrb	r3, [r3, #0]
+ 80024fc:	f003 0340 	and.w	r3, r3, #64	; 0x40
+ 8002500:	b2db      	uxtb	r3, r3
+ 8002502:	2b00      	cmp	r3, #0
+ 8002504:	d00b      	beq.n	800251e <read_conn_payload+0xb8>
 		payload->pswd= &frame[pos];
- 80024ac:	7dfb      	ldrb	r3, [r7, #23]
- 80024ae:	687a      	ldr	r2, [r7, #4]
- 80024b0:	441a      	add	r2, r3
- 80024b2:	68fb      	ldr	r3, [r7, #12]
- 80024b4:	611a      	str	r2, [r3, #16]
+ 8002506:	7dfb      	ldrb	r3, [r7, #23]
+ 8002508:	687a      	ldr	r2, [r7, #4]
+ 800250a:	441a      	add	r2, r3
+ 800250c:	68fb      	ldr	r3, [r7, #12]
+ 800250e:	611a      	str	r2, [r3, #16]
 		pos += payload->pswd->len;
- 80024b6:	68fb      	ldr	r3, [r7, #12]
- 80024b8:	691b      	ldr	r3, [r3, #16]
- 80024ba:	881b      	ldrh	r3, [r3, #0]
- 80024bc:	b2da      	uxtb	r2, r3
- 80024be:	7dfb      	ldrb	r3, [r7, #23]
- 80024c0:	4413      	add	r3, r2
- 80024c2:	75fb      	strb	r3, [r7, #23]
+ 8002510:	68fb      	ldr	r3, [r7, #12]
+ 8002512:	691b      	ldr	r3, [r3, #16]
+ 8002514:	881b      	ldrh	r3, [r3, #0]
+ 8002516:	b2da      	uxtb	r2, r3
+ 8002518:	7dfb      	ldrb	r3, [r7, #23]
+ 800251a:	4413      	add	r3, r2
+ 800251c:	75fb      	strb	r3, [r7, #23]
 	}
+
 }
- 80024c4:	bf00      	nop
- 80024c6:	3718      	adds	r7, #24
- 80024c8:	46bd      	mov	sp, r7
- 80024ca:	bd80      	pop	{r7, pc}
+ 800251e:	bf00      	nop
+ 8002520:	371c      	adds	r7, #28
+ 8002522:	46bd      	mov	sp, r7
+ 8002524:	bc80      	pop	{r7}
+ 8002526:	4770      	bx	lr
 
-080024cc <acccept_connection>:
-//
-//
+08002528 <is_client_authorised>:
 
+
+bool is_client_authorised(char* usr_name, char* pswd){
+ 8002528:	b480      	push	{r7}
+ 800252a:	b083      	sub	sp, #12
+ 800252c:	af00      	add	r7, sp, #0
+ 800252e:	6078      	str	r0, [r7, #4]
+ 8002530:	6039      	str	r1, [r7, #0]
+	return true;
+ 8002532:	2301      	movs	r3, #1
+}
+ 8002534:	4618      	mov	r0, r3
+ 8002536:	370c      	adds	r7, #12
+ 8002538:	46bd      	mov	sp, r7
+ 800253a:	bc80      	pop	{r7}
+ 800253c:	4770      	bx	lr
+
+0800253e <acccept_connection>:
+
+// https://www.bevywise.com/developing-mqtt-clients/
+// https://morphuslabs.com/hacking-the-iot-with-mqtt-8edaf0d07b9b ack codes
 
 
 void acccept_connection (broker_t * broker, uint8_t * frame){
- 80024cc:	b580      	push	{r7, lr}
- 80024ce:	b09a      	sub	sp, #104	; 0x68
- 80024d0:	af00      	add	r7, sp, #0
- 80024d2:	6078      	str	r0, [r7, #4]
- 80024d4:	6039      	str	r1, [r7, #0]
+ 800253e:	b580      	push	{r7, lr}
+ 8002540:	b09c      	sub	sp, #112	; 0x70
+ 8002542:	af00      	add	r7, sp, #0
+ 8002544:	6078      	str	r0, [r7, #4]
+ 8002546:	6039      	str	r1, [r7, #0]
 
-	conn_flags_t * conn_flags;
-	read_connection_flags(&conn_flags, frame);
- 80024d6:	f107 0364 	add.w	r3, r7, #100	; 0x64
- 80024da:	6839      	ldr	r1, [r7, #0]
- 80024dc:	4618      	mov	r0, r3
- 80024de:	f7ff ff14 	bl	800230a <read_connection_flags>
+	header_t * header;
+	read_header(&header, frame);
+ 8002548:	f107 036c 	add.w	r3, r7, #108	; 0x6c
+ 800254c:	6839      	ldr	r1, [r7, #0]
+ 800254e:	4618      	mov	r0, r3
+ 8002550:	f7ff ff7c 	bl	800244c <read_header>
 
 	payload_t payload;
-	read_conn_payload(&payload, conn_flags, frame);
- 80024e2:	6e79      	ldr	r1, [r7, #100]	; 0x64
- 80024e4:	f107 0350 	add.w	r3, r7, #80	; 0x50
- 80024e8:	683a      	ldr	r2, [r7, #0]
- 80024ea:	4618      	mov	r0, r3
- 80024ec:	f7ff ff8e 	bl	800240c <read_conn_payload>
+	read_conn_payload(&payload, &header, frame);
+ 8002554:	f107 016c 	add.w	r1, r7, #108	; 0x6c
+ 8002558:	f107 0358 	add.w	r3, r7, #88	; 0x58
+ 800255c:	683a      	ldr	r2, [r7, #0]
+ 800255e:	4618      	mov	r0, r3
+ 8002560:	f7ff ff81 	bl	8002466 <read_conn_payload>
 
+	if  (header->control_type != CONTROL_TYPE){
+		//ack
+	}
 
-
-	if (conn_flags->cleans_session){
- 80024f0:	6e7b      	ldr	r3, [r7, #100]	; 0x64
- 80024f2:	781b      	ldrb	r3, [r3, #0]
- 80024f4:	f003 0302 	and.w	r3, r3, #2
- 80024f8:	b2db      	uxtb	r3, r3
- 80024fa:	2b00      	cmp	r3, #0
- 80024fc:	d005      	beq.n	800250a <acccept_connection+0x3e>
+	if (header->conn_flags->cleans_session){
+ 8002564:	6efb      	ldr	r3, [r7, #108]	; 0x6c
+ 8002566:	691b      	ldr	r3, [r3, #16]
+ 8002568:	781b      	ldrb	r3, [r3, #0]
+ 800256a:	f003 0302 	and.w	r3, r3, #2
+ 800256e:	b2db      	uxtb	r3, r3
+ 8002570:	2b00      	cmp	r3, #0
+ 8002572:	d008      	beq.n	8002586 <acccept_connection+0x48>
 		broker_remove_client(broker, payload.client_id->data);
- 80024fe:	6d3b      	ldr	r3, [r7, #80]	; 0x50
- 8002500:	685b      	ldr	r3, [r3, #4]
- 8002502:	4619      	mov	r1, r3
- 8002504:	6878      	ldr	r0, [r7, #4]
- 8002506:	f7ff ff58 	bl	80023ba <broker_remove_client>
+ 8002574:	6dbb      	ldr	r3, [r7, #88]	; 0x58
+ 8002576:	685b      	ldr	r3, [r3, #4]
+ 8002578:	4619      	mov	r1, r3
+ 800257a:	6878      	ldr	r0, [r7, #4]
+ 800257c:	f7ff ff0d 	bl	800239a <broker_remove_client>
+		header_ack.ack_flags = SESSION_PRESENT;
+ 8002580:	2301      	movs	r3, #1
+ 8002582:	f887 3056 	strb.w	r3, [r7, #86]	; 0x56
 	}
 
 	if (is_client_connected(broker, payload.client_id->data)){
- 800250a:	6d3b      	ldr	r3, [r7, #80]	; 0x50
- 800250c:	685b      	ldr	r3, [r3, #4]
- 800250e:	4619      	mov	r1, r3
- 8002510:	6878      	ldr	r0, [r7, #4]
- 8002512:	f7ff fed5 	bl	80022c0 <is_client_connected>
- 8002516:	4603      	mov	r3, r0
- 8002518:	2b00      	cmp	r3, #0
- 800251a:	d135      	bne.n	8002588 <acccept_connection+0xbc>
-		return;
+ 8002586:	6dbb      	ldr	r3, [r7, #88]	; 0x58
+ 8002588:	685b      	ldr	r3, [r3, #4]
+ 800258a:	4619      	mov	r1, r3
+ 800258c:	6878      	ldr	r0, [r7, #4]
+ 800258e:	f7ff fe97 	bl	80022c0 <is_client_connected>
+ 8002592:	4603      	mov	r3, r0
+ 8002594:	2b00      	cmp	r3, #0
+ 8002596:	d002      	beq.n	800259e <acccept_connection+0x60>
+		header_ack.ack_flags = SESSION_PRESENT;
+ 8002598:	2301      	movs	r3, #1
+ 800259a:	f887 3056 	strb.w	r3, [r7, #86]	; 0x56
+		//broker_send_con_rsp(CONN_ACK_OK);
 	}
 
 	if (has_broker_space_for_next_client(broker))
- 800251c:	6878      	ldr	r0, [r7, #4]
- 800251e:	f7ff ff04 	bl	800232a <has_broker_space_for_next_client>
- 8002522:	4603      	mov	r3, r0
- 8002524:	2b00      	cmp	r3, #0
- 8002526:	d032      	beq.n	800258e <acccept_connection+0xc2>
+ 800259e:	6878      	ldr	r0, [r7, #4]
+ 80025a0:	f7ff feb3 	bl	800230a <has_broker_space_for_next_client>
+ 80025a4:	4603      	mov	r3, r0
+ 80025a6:	2b00      	cmp	r3, #0
+ 80025a8:	f000 809e 	beq.w	80026e8 <acccept_connection+0x1aa>
 	{
 
 		conn_client_t new_client;
 		new_client.id = XMALLOC(strlen(payload.client_id->data));
- 8002528:	6d3b      	ldr	r3, [r7, #80]	; 0x50
- 800252a:	685b      	ldr	r3, [r3, #4]
- 800252c:	4618      	mov	r0, r3
- 800252e:	f7fd fe17 	bl	8000160 <strlen>
- 8002532:	4603      	mov	r3, r0
- 8002534:	4618      	mov	r0, r3
- 8002536:	f7ff fe9b 	bl	8002270 <m_malloc>
- 800253a:	4603      	mov	r3, r0
- 800253c:	60fb      	str	r3, [r7, #12]
+ 80025ac:	6dbb      	ldr	r3, [r7, #88]	; 0x58
+ 80025ae:	685b      	ldr	r3, [r3, #4]
+ 80025b0:	4618      	mov	r0, r3
+ 80025b2:	f7fd fdd5 	bl	8000160 <strlen>
+ 80025b6:	4603      	mov	r3, r0
+ 80025b8:	4618      	mov	r0, r3
+ 80025ba:	f7ff fe59 	bl	8002270 <m_malloc>
+ 80025be:	4603      	mov	r3, r0
+ 80025c0:	613b      	str	r3, [r7, #16]
 		strcpy(new_client.id,  payload.client_id->data);
- 800253e:	68fa      	ldr	r2, [r7, #12]
- 8002540:	6d3b      	ldr	r3, [r7, #80]	; 0x50
- 8002542:	685b      	ldr	r3, [r3, #4]
- 8002544:	4619      	mov	r1, r3
- 8002546:	4610      	mov	r0, r2
- 8002548:	f000 f85b 	bl	8002602 <strcpy>
+ 80025c2:	693a      	ldr	r2, [r7, #16]
+ 80025c4:	6dbb      	ldr	r3, [r7, #88]	; 0x58
+ 80025c6:	685b      	ldr	r3, [r3, #4]
+ 80025c8:	4619      	mov	r1, r3
+ 80025ca:	4610      	mov	r0, r2
+ 80025cc:	f000 f8c7 	bl	800275e <strcpy>
 
-		if (conn_flags->will_retain){
- 800254c:	6e7b      	ldr	r3, [r7, #100]	; 0x64
- 800254e:	781b      	ldrb	r3, [r3, #0]
- 8002550:	f003 0320 	and.w	r3, r3, #32
- 8002554:	b2db      	uxtb	r3, r3
- 8002556:	2b00      	cmp	r3, #0
- 8002558:	d018      	beq.n	800258c <acccept_connection+0xc0>
+		new_client.keepalive = *header->keep_alive;
+ 80025d0:	6efb      	ldr	r3, [r7, #108]	; 0x6c
+ 80025d2:	695b      	ldr	r3, [r3, #20]
+ 80025d4:	881b      	ldrh	r3, [r3, #0]
+ 80025d6:	82bb      	strh	r3, [r7, #20]
+
+		if (header->conn_flags->will_retain){
+ 80025d8:	6efb      	ldr	r3, [r7, #108]	; 0x6c
+ 80025da:	691b      	ldr	r3, [r3, #16]
+ 80025dc:	781b      	ldrb	r3, [r3, #0]
+ 80025de:	f003 0320 	and.w	r3, r3, #32
+ 80025e2:	b2db      	uxtb	r3, r3
+ 80025e4:	2b00      	cmp	r3, #0
+ 80025e6:	d002      	beq.n	80025ee <acccept_connection+0xb0>
 			new_client.will_retain = 1;
- 800255a:	2301      	movs	r3, #1
- 800255c:	f887 3029 	strb.w	r3, [r7, #41]	; 0x29
+ 80025e8:	2301      	movs	r3, #1
+ 80025ea:	f887 302d 	strb.w	r3, [r7, #45]	; 0x2d
+		}
 
-			new_client.will_topic = XMALLOC(strlen(payload.client_id->data));
- 8002560:	6d3b      	ldr	r3, [r7, #80]	; 0x50
- 8002562:	685b      	ldr	r3, [r3, #4]
- 8002564:	4618      	mov	r0, r3
- 8002566:	f7fd fdfb 	bl	8000160 <strlen>
- 800256a:	4603      	mov	r3, r0
- 800256c:	4618      	mov	r0, r3
- 800256e:	f7ff fe7f 	bl	8002270 <m_malloc>
- 8002572:	4603      	mov	r3, r0
- 8002574:	623b      	str	r3, [r7, #32]
+		if (header->conn_flags->last_will){
+ 80025ee:	6efb      	ldr	r3, [r7, #108]	; 0x6c
+ 80025f0:	691b      	ldr	r3, [r3, #16]
+ 80025f2:	781b      	ldrb	r3, [r3, #0]
+ 80025f4:	f003 0304 	and.w	r3, r3, #4
+ 80025f8:	b2db      	uxtb	r3, r3
+ 80025fa:	2b00      	cmp	r3, #0
+ 80025fc:	d031      	beq.n	8002662 <acccept_connection+0x124>
+			new_client.will_retain = 1;
+ 80025fe:	2301      	movs	r3, #1
+ 8002600:	f887 302d 	strb.w	r3, [r7, #45]	; 0x2d
+			new_client.will_topic = XMALLOC(strlen(payload.will_topic->data));
+ 8002604:	6dfb      	ldr	r3, [r7, #92]	; 0x5c
+ 8002606:	685b      	ldr	r3, [r3, #4]
+ 8002608:	4618      	mov	r0, r3
+ 800260a:	f7fd fda9 	bl	8000160 <strlen>
+ 800260e:	4603      	mov	r3, r0
+ 8002610:	4618      	mov	r0, r3
+ 8002612:	f7ff fe2d 	bl	8002270 <m_malloc>
+ 8002616:	4603      	mov	r3, r0
+ 8002618:	627b      	str	r3, [r7, #36]	; 0x24
 			strcpy(new_client.will_topic,  payload.will_topic->data);
- 8002576:	6a3a      	ldr	r2, [r7, #32]
- 8002578:	6d7b      	ldr	r3, [r7, #84]	; 0x54
- 800257a:	685b      	ldr	r3, [r3, #4]
- 800257c:	4619      	mov	r1, r3
- 800257e:	4610      	mov	r0, r2
- 8002580:	f000 f83f 	bl	8002602 <strcpy>
-		//				//
-		//			 }
+ 800261a:	6a7a      	ldr	r2, [r7, #36]	; 0x24
+ 800261c:	6dfb      	ldr	r3, [r7, #92]	; 0x5c
+ 800261e:	685b      	ldr	r3, [r3, #4]
+ 8002620:	4619      	mov	r1, r3
+ 8002622:	4610      	mov	r0, r2
+ 8002624:	f000 f89b 	bl	800275e <strcpy>
+
+			new_client.will_msg = XMALLOC(strlen(payload.client_id->data));
+ 8002628:	6dbb      	ldr	r3, [r7, #88]	; 0x58
+ 800262a:	685b      	ldr	r3, [r3, #4]
+ 800262c:	4618      	mov	r0, r3
+ 800262e:	f7fd fd97 	bl	8000160 <strlen>
+ 8002632:	4603      	mov	r3, r0
+ 8002634:	4618      	mov	r0, r3
+ 8002636:	f7ff fe1b 	bl	8002270 <m_malloc>
+ 800263a:	4603      	mov	r3, r0
+ 800263c:	62bb      	str	r3, [r7, #40]	; 0x28
+			strcpy(new_client.will_topic,  payload.will_topic->data);
+ 800263e:	6a7a      	ldr	r2, [r7, #36]	; 0x24
+ 8002640:	6dfb      	ldr	r3, [r7, #92]	; 0x5c
+ 8002642:	685b      	ldr	r3, [r3, #4]
+ 8002644:	4619      	mov	r1, r3
+ 8002646:	4610      	mov	r0, r2
+ 8002648:	f000 f889 	bl	800275e <strcpy>
+
+			memcpy(new_client.will_qos, header->conn_flags->will_qos, sizeof(uint8_t));
+ 800264c:	f897 302c 	ldrb.w	r3, [r7, #44]	; 0x2c
+ 8002650:	461a      	mov	r2, r3
+ 8002652:	6efb      	ldr	r3, [r7, #108]	; 0x6c
+ 8002654:	691b      	ldr	r3, [r3, #16]
+ 8002656:	781b      	ldrb	r3, [r3, #0]
+ 8002658:	f3c3 03c1 	ubfx	r3, r3, #3, #2
+ 800265c:	b2db      	uxtb	r3, r3
+ 800265e:	781b      	ldrb	r3, [r3, #0]
+ 8002660:	7013      	strb	r3, [r2, #0]
+
+		}
+
+		if (header->conn_flags->user_name){
+ 8002662:	6efb      	ldr	r3, [r7, #108]	; 0x6c
+ 8002664:	691b      	ldr	r3, [r3, #16]
+ 8002666:	781b      	ldrb	r3, [r3, #0]
+ 8002668:	f023 037f 	bic.w	r3, r3, #127	; 0x7f
+ 800266c:	b2db      	uxtb	r3, r3
+ 800266e:	2b00      	cmp	r3, #0
+ 8002670:	d011      	beq.n	8002696 <acccept_connection+0x158>
+			new_client.username = XMALLOC(strlen(payload.usr_name->data));
+ 8002672:	6e7b      	ldr	r3, [r7, #100]	; 0x64
+ 8002674:	685b      	ldr	r3, [r3, #4]
+ 8002676:	4618      	mov	r0, r3
+ 8002678:	f7fd fd72 	bl	8000160 <strlen>
+ 800267c:	4603      	mov	r3, r0
+ 800267e:	4618      	mov	r0, r3
+ 8002680:	f7ff fdf6 	bl	8002270 <m_malloc>
+ 8002684:	4603      	mov	r3, r0
+ 8002686:	61bb      	str	r3, [r7, #24]
+			strcpy(new_client.username,  payload.usr_name->data);
+ 8002688:	69ba      	ldr	r2, [r7, #24]
+ 800268a:	6e7b      	ldr	r3, [r7, #100]	; 0x64
+ 800268c:	685b      	ldr	r3, [r3, #4]
+ 800268e:	4619      	mov	r1, r3
+ 8002690:	4610      	mov	r0, r2
+ 8002692:	f000 f864 	bl	800275e <strcpy>
+		}
+
+		if (header->conn_flags->pswd){
+ 8002696:	6efb      	ldr	r3, [r7, #108]	; 0x6c
+ 8002698:	691b      	ldr	r3, [r3, #16]
+ 800269a:	781b      	ldrb	r3, [r3, #0]
+ 800269c:	f003 0340 	and.w	r3, r3, #64	; 0x40
+ 80026a0:	b2db      	uxtb	r3, r3
+ 80026a2:	2b00      	cmp	r3, #0
+ 80026a4:	d011      	beq.n	80026ca <acccept_connection+0x18c>
+			new_client.password = XMALLOC(strlen(payload.pswd->data));
+ 80026a6:	6ebb      	ldr	r3, [r7, #104]	; 0x68
+ 80026a8:	685b      	ldr	r3, [r3, #4]
+ 80026aa:	4618      	mov	r0, r3
+ 80026ac:	f7fd fd58 	bl	8000160 <strlen>
+ 80026b0:	4603      	mov	r3, r0
+ 80026b2:	4618      	mov	r0, r3
+ 80026b4:	f7ff fddc 	bl	8002270 <m_malloc>
+ 80026b8:	4603      	mov	r3, r0
+ 80026ba:	61fb      	str	r3, [r7, #28]
+			strcpy(new_client.password,  payload.pswd->data);
+ 80026bc:	69fa      	ldr	r2, [r7, #28]
+ 80026be:	6ebb      	ldr	r3, [r7, #104]	; 0x68
+ 80026c0:	685b      	ldr	r3, [r3, #4]
+ 80026c2:	4619      	mov	r1, r3
+ 80026c4:	4610      	mov	r0, r2
+ 80026c6:	f000 f84a 	bl	800275e <strcpy>
+		}
+
+		if (is_client_authorised(new_client.username, new_client.password)){
+ 80026ca:	69bb      	ldr	r3, [r7, #24]
+ 80026cc:	69fa      	ldr	r2, [r7, #28]
+ 80026ce:	4611      	mov	r1, r2
+ 80026d0:	4618      	mov	r0, r3
+ 80026d2:	f7ff ff29 	bl	8002528 <is_client_authorised>
+ 80026d6:	4603      	mov	r3, r0
+ 80026d8:	2b00      	cmp	r3, #0
+ 80026da:	d005      	beq.n	80026e8 <acccept_connection+0x1aa>
+			add_client(broker, &new_client);
+ 80026dc:	f107 030c 	add.w	r3, r7, #12
+ 80026e0:	4619      	mov	r1, r3
+ 80026e2:	6878      	ldr	r0, [r7, #4]
+ 80026e4:	f7ff fe98 	bl	8002418 <add_client>
 
 
-
-		return;
- 8002584:	bf00      	nop
- 8002586:	e001      	b.n	800258c <acccept_connection+0xc0>
-		return;
- 8002588:	bf00      	nop
- 800258a:	e000      	b.n	800258e <acccept_connection+0xc2>
-		return;
- 800258c:	bf00      	nop
+		//broker->net->write(void *context, const byte* buf, int buf_len, int timeout_ms);)
 	}
 
 }
- 800258e:	3768      	adds	r7, #104	; 0x68
- 8002590:	46bd      	mov	sp, r7
- 8002592:	bd80      	pop	{r7, pc}
+ 80026e8:	bf00      	nop
+ 80026ea:	3770      	adds	r7, #112	; 0x70
+ 80026ec:	46bd      	mov	sp, r7
+ 80026ee:	bd80      	pop	{r7, pc}
 
-08002594 <__libc_init_array>:
- 8002594:	b570      	push	{r4, r5, r6, lr}
- 8002596:	2500      	movs	r5, #0
- 8002598:	4e0c      	ldr	r6, [pc, #48]	; (80025cc <__libc_init_array+0x38>)
- 800259a:	4c0d      	ldr	r4, [pc, #52]	; (80025d0 <__libc_init_array+0x3c>)
- 800259c:	1ba4      	subs	r4, r4, r6
- 800259e:	10a4      	asrs	r4, r4, #2
- 80025a0:	42a5      	cmp	r5, r4
- 80025a2:	d109      	bne.n	80025b8 <__libc_init_array+0x24>
- 80025a4:	f000 f850 	bl	8002648 <_init>
- 80025a8:	2500      	movs	r5, #0
- 80025aa:	4e0a      	ldr	r6, [pc, #40]	; (80025d4 <__libc_init_array+0x40>)
- 80025ac:	4c0a      	ldr	r4, [pc, #40]	; (80025d8 <__libc_init_array+0x44>)
- 80025ae:	1ba4      	subs	r4, r4, r6
- 80025b0:	10a4      	asrs	r4, r4, #2
- 80025b2:	42a5      	cmp	r5, r4
- 80025b4:	d105      	bne.n	80025c2 <__libc_init_array+0x2e>
- 80025b6:	bd70      	pop	{r4, r5, r6, pc}
- 80025b8:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
- 80025bc:	4798      	blx	r3
- 80025be:	3501      	adds	r5, #1
- 80025c0:	e7ee      	b.n	80025a0 <__libc_init_array+0xc>
- 80025c2:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
- 80025c6:	4798      	blx	r3
- 80025c8:	3501      	adds	r5, #1
- 80025ca:	e7f2      	b.n	80025b2 <__libc_init_array+0x1e>
- 80025cc:	08002688 	.word	0x08002688
- 80025d0:	08002688 	.word	0x08002688
- 80025d4:	08002688 	.word	0x08002688
- 80025d8:	0800268c 	.word	0x0800268c
+080026f0 <__libc_init_array>:
+ 80026f0:	b570      	push	{r4, r5, r6, lr}
+ 80026f2:	2500      	movs	r5, #0
+ 80026f4:	4e0c      	ldr	r6, [pc, #48]	; (8002728 <__libc_init_array+0x38>)
+ 80026f6:	4c0d      	ldr	r4, [pc, #52]	; (800272c <__libc_init_array+0x3c>)
+ 80026f8:	1ba4      	subs	r4, r4, r6
+ 80026fa:	10a4      	asrs	r4, r4, #2
+ 80026fc:	42a5      	cmp	r5, r4
+ 80026fe:	d109      	bne.n	8002714 <__libc_init_array+0x24>
+ 8002700:	f000 f850 	bl	80027a4 <_init>
+ 8002704:	2500      	movs	r5, #0
+ 8002706:	4e0a      	ldr	r6, [pc, #40]	; (8002730 <__libc_init_array+0x40>)
+ 8002708:	4c0a      	ldr	r4, [pc, #40]	; (8002734 <__libc_init_array+0x44>)
+ 800270a:	1ba4      	subs	r4, r4, r6
+ 800270c:	10a4      	asrs	r4, r4, #2
+ 800270e:	42a5      	cmp	r5, r4
+ 8002710:	d105      	bne.n	800271e <__libc_init_array+0x2e>
+ 8002712:	bd70      	pop	{r4, r5, r6, pc}
+ 8002714:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
+ 8002718:	4798      	blx	r3
+ 800271a:	3501      	adds	r5, #1
+ 800271c:	e7ee      	b.n	80026fc <__libc_init_array+0xc>
+ 800271e:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
+ 8002722:	4798      	blx	r3
+ 8002724:	3501      	adds	r5, #1
+ 8002726:	e7f2      	b.n	800270e <__libc_init_array+0x1e>
+ 8002728:	080027e4 	.word	0x080027e4
+ 800272c:	080027e4 	.word	0x080027e4
+ 8002730:	080027e4 	.word	0x080027e4
+ 8002734:	080027e8 	.word	0x080027e8
 
-080025dc <memcpy>:
- 80025dc:	b510      	push	{r4, lr}
- 80025de:	1e43      	subs	r3, r0, #1
- 80025e0:	440a      	add	r2, r1
- 80025e2:	4291      	cmp	r1, r2
- 80025e4:	d100      	bne.n	80025e8 <memcpy+0xc>
- 80025e6:	bd10      	pop	{r4, pc}
- 80025e8:	f811 4b01 	ldrb.w	r4, [r1], #1
- 80025ec:	f803 4f01 	strb.w	r4, [r3, #1]!
- 80025f0:	e7f7      	b.n	80025e2 <memcpy+0x6>
+08002738 <memcpy>:
+ 8002738:	b510      	push	{r4, lr}
+ 800273a:	1e43      	subs	r3, r0, #1
+ 800273c:	440a      	add	r2, r1
+ 800273e:	4291      	cmp	r1, r2
+ 8002740:	d100      	bne.n	8002744 <memcpy+0xc>
+ 8002742:	bd10      	pop	{r4, pc}
+ 8002744:	f811 4b01 	ldrb.w	r4, [r1], #1
+ 8002748:	f803 4f01 	strb.w	r4, [r3, #1]!
+ 800274c:	e7f7      	b.n	800273e <memcpy+0x6>
 
-080025f2 <memset>:
- 80025f2:	4603      	mov	r3, r0
- 80025f4:	4402      	add	r2, r0
- 80025f6:	4293      	cmp	r3, r2
- 80025f8:	d100      	bne.n	80025fc <memset+0xa>
- 80025fa:	4770      	bx	lr
- 80025fc:	f803 1b01 	strb.w	r1, [r3], #1
- 8002600:	e7f9      	b.n	80025f6 <memset+0x4>
+0800274e <memset>:
+ 800274e:	4603      	mov	r3, r0
+ 8002750:	4402      	add	r2, r0
+ 8002752:	4293      	cmp	r3, r2
+ 8002754:	d100      	bne.n	8002758 <memset+0xa>
+ 8002756:	4770      	bx	lr
+ 8002758:	f803 1b01 	strb.w	r1, [r3], #1
+ 800275c:	e7f9      	b.n	8002752 <memset+0x4>
 
-08002602 <strcpy>:
- 8002602:	4603      	mov	r3, r0
- 8002604:	f811 2b01 	ldrb.w	r2, [r1], #1
- 8002608:	f803 2b01 	strb.w	r2, [r3], #1
- 800260c:	2a00      	cmp	r2, #0
- 800260e:	d1f9      	bne.n	8002604 <strcpy+0x2>
- 8002610:	4770      	bx	lr
+0800275e <strcpy>:
+ 800275e:	4603      	mov	r3, r0
+ 8002760:	f811 2b01 	ldrb.w	r2, [r1], #1
+ 8002764:	f803 2b01 	strb.w	r2, [r3], #1
+ 8002768:	2a00      	cmp	r2, #0
+ 800276a:	d1f9      	bne.n	8002760 <strcpy+0x2>
+ 800276c:	4770      	bx	lr
 
-08002612 <strstr>:
- 8002612:	b5f0      	push	{r4, r5, r6, r7, lr}
- 8002614:	7803      	ldrb	r3, [r0, #0]
- 8002616:	b133      	cbz	r3, 8002626 <strstr+0x14>
- 8002618:	4603      	mov	r3, r0
- 800261a:	4618      	mov	r0, r3
- 800261c:	1c5e      	adds	r6, r3, #1
- 800261e:	781b      	ldrb	r3, [r3, #0]
- 8002620:	b933      	cbnz	r3, 8002630 <strstr+0x1e>
- 8002622:	4618      	mov	r0, r3
- 8002624:	bdf0      	pop	{r4, r5, r6, r7, pc}
- 8002626:	780b      	ldrb	r3, [r1, #0]
- 8002628:	2b00      	cmp	r3, #0
- 800262a:	bf18      	it	ne
- 800262c:	2000      	movne	r0, #0
- 800262e:	bdf0      	pop	{r4, r5, r6, r7, pc}
- 8002630:	1e4d      	subs	r5, r1, #1
- 8002632:	1e44      	subs	r4, r0, #1
- 8002634:	f815 2f01 	ldrb.w	r2, [r5, #1]!
- 8002638:	2a00      	cmp	r2, #0
- 800263a:	d0f3      	beq.n	8002624 <strstr+0x12>
- 800263c:	f814 7f01 	ldrb.w	r7, [r4, #1]!
- 8002640:	4633      	mov	r3, r6
- 8002642:	4297      	cmp	r7, r2
- 8002644:	d0f6      	beq.n	8002634 <strstr+0x22>
- 8002646:	e7e8      	b.n	800261a <strstr+0x8>
+0800276e <strstr>:
+ 800276e:	b5f0      	push	{r4, r5, r6, r7, lr}
+ 8002770:	7803      	ldrb	r3, [r0, #0]
+ 8002772:	b133      	cbz	r3, 8002782 <strstr+0x14>
+ 8002774:	4603      	mov	r3, r0
+ 8002776:	4618      	mov	r0, r3
+ 8002778:	1c5e      	adds	r6, r3, #1
+ 800277a:	781b      	ldrb	r3, [r3, #0]
+ 800277c:	b933      	cbnz	r3, 800278c <strstr+0x1e>
+ 800277e:	4618      	mov	r0, r3
+ 8002780:	bdf0      	pop	{r4, r5, r6, r7, pc}
+ 8002782:	780b      	ldrb	r3, [r1, #0]
+ 8002784:	2b00      	cmp	r3, #0
+ 8002786:	bf18      	it	ne
+ 8002788:	2000      	movne	r0, #0
+ 800278a:	bdf0      	pop	{r4, r5, r6, r7, pc}
+ 800278c:	1e4d      	subs	r5, r1, #1
+ 800278e:	1e44      	subs	r4, r0, #1
+ 8002790:	f815 2f01 	ldrb.w	r2, [r5, #1]!
+ 8002794:	2a00      	cmp	r2, #0
+ 8002796:	d0f3      	beq.n	8002780 <strstr+0x12>
+ 8002798:	f814 7f01 	ldrb.w	r7, [r4, #1]!
+ 800279c:	4633      	mov	r3, r6
+ 800279e:	4297      	cmp	r7, r2
+ 80027a0:	d0f6      	beq.n	8002790 <strstr+0x22>
+ 80027a2:	e7e8      	b.n	8002776 <strstr+0x8>
 
-08002648 <_init>:
- 8002648:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 800264a:	bf00      	nop
- 800264c:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 800264e:	bc08      	pop	{r3}
- 8002650:	469e      	mov	lr, r3
- 8002652:	4770      	bx	lr
+080027a4 <_init>:
+ 80027a4:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 80027a6:	bf00      	nop
+ 80027a8:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 80027aa:	bc08      	pop	{r3}
+ 80027ac:	469e      	mov	lr, r3
+ 80027ae:	4770      	bx	lr
 
-08002654 <_fini>:
- 8002654:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 8002656:	bf00      	nop
- 8002658:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 800265a:	bc08      	pop	{r3}
- 800265c:	469e      	mov	lr, r3
- 800265e:	4770      	bx	lr
+080027b0 <_fini>:
+ 80027b0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 80027b2:	bf00      	nop
+ 80027b4:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 80027b6:	bc08      	pop	{r3}
+ 80027b8:	469e      	mov	lr, r3
+ 80027ba:	4770      	bx	lr

@@ -12,7 +12,7 @@
 #define BROKER_TIMEOUT		60
 #define TOPIC_POS 			6
 #define M_HEAP_SIZE			512
-
+#define NOT_FOUND 			255
 #define XMALLOC				m_malloc
 
 extern local_host_t local_lost;
@@ -82,9 +82,23 @@ void broker_remove_client(broker_t * broker, char* client_id){
 	if (pos != NOT_FOUND){
 		broker->clients[pos].active = false;
 	}
-
 }
 
+
+static uint8_t broker_first_free_pos_for_client(broker_t * broker){
+	for (uint8_t i = 0; i < MAX_CONN_CLIENTS; i++){
+		if (!(broker->clients[i].active)){
+			return i;
+		}
+	}
+	return NOT_FOUND;
+}
+
+
+static void add_client (broker_t * broker, conn_client_t * new_client){
+	uint8_t pos = broker_first_free_pos_for_client(broker);
+		memcpy(&broker->clients[pos], new_client, sizeof (conn_client_t));
+}
 
 //static conn_client_t * get_free_slot_for_client(broker_t * broker){
 //	for (uint8_t i = 0; i < MAX_CONN_CLIENTS; i++){
@@ -143,6 +157,20 @@ bool is_client_authorised(char* usr_name, char* pswd){
 }
 
 
+uint8_t * format_conn_ack(header_conn_ack_t * header_ack, uint8_t conn_ack_code, bool alread_conn){
+	header_ack->control_type = CONNACK;
+	header_ack->conn_code = conn_ack_code;
+	header_ack->ack_flags = SESSION_PRESENT;
+	header_ack->remainin_len = CONN_ACK_PLD_LEN;
+	return (uint8_t *)header_ack;
+}
+
+
+void broker_send_con_rsp(broker_t * broker, uint8_t * conn_ack_id){
+
+}
+
+
 
 // https://www.bevywise.com/developing-mqtt-clients/
 // https://morphuslabs.com/hacking-the-iot-with-mqtt-8edaf0d07b9b ack codes
@@ -156,16 +184,20 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 	payload_t payload;
 	read_conn_payload(&payload, &header, frame);
 
+	header_conn_ack_t header_ack;
+
 	if  (header->control_type != CONTROL_TYPE){
 		//ack
 	}
 
 	if (header->conn_flags->cleans_session){
 		broker_remove_client(broker, payload.client_id->data);
+		header_ack.ack_flags = SESSION_PRESENT;
 	}
 
 	if (is_client_connected(broker, payload.client_id->data)){
-		return;
+		header_ack.ack_flags = SESSION_PRESENT;
+		//broker_send_con_rsp(CONN_ACK_OK);
 	}
 
 	if (has_broker_space_for_next_client(broker))
@@ -193,21 +225,22 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 
 		}
 
-		if (conn_flags->user_name){
+		if (header->conn_flags->user_name){
 			new_client.username = XMALLOC(strlen(payload.usr_name->data));
 			strcpy(new_client.username,  payload.usr_name->data);
 		}
 
-		if (conn_flags->pswd){
+		if (header->conn_flags->pswd){
 			new_client.password = XMALLOC(strlen(payload.pswd->data));
 			strcpy(new_client.password,  payload.pswd->data);
 		}
 
 		if (is_client_authorised(new_client.username, new_client.password)){
-			add_client();
-			format_conn_ack();
+			add_client(broker, &new_client);
+
+			//broker_send_con_rsp(CONN_ACK_OK);
 		}else{
-			format_conn_ack();
+		//	broker_send_con_rsp(CONN_ACK_BAD_AUTH);
 		}
 
 

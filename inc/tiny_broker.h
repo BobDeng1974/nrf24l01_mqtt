@@ -16,17 +16,18 @@
 
 #define CONTROL_TYPE 				(4)
 
-#define MAX_SUBS_TOPIC 				8
-#define MAX_TOPIC_NAME_SIZE 		32
-#define NOT_FOUND					255
-#define MAX_CONN_CLIENTS			8
-#define ADDR_SIZE					4
+#define MAX_SUBS_TOPIC 				(8)
+#define MAX_TOPIC_NAME_SIZE 		(32)
+#define NOT_FOUND					(255)
+#define MAX_CONN_CLIENTS			(8)
+#define ADDR_SIZE					(4)
 
-#define PLD_START					12
-#define CLNT_ID_POS					14
-#define CLNT_ID_SIZE_MSB_POS		12
-#define CLNT_ID_SIZE_LSB_POS		13
+#define PLD_START					(12)
+#define CLNT_ID_POS					(14)
+#define CLNT_ID_SIZE_MSB_POS		(12)
+#define CLNT_ID_SIZE_LSB_POS		(13)
 
+#define CONN_ACK_PLD_LEN			(2)
 
 #define CLEAN_S_FLAG			(1<<1)
 #define WILL_FLAG				(1<<2)
@@ -35,7 +36,214 @@
 #define USR_NAME_FLAG			(1<<6)
 #define PSWD_FLAG				(1<<7)
 
+
+#define SESSION_PRESENT			(1<<0)
+
 #define STRINGS_EQUAL			(0)
+
+
+
+
+#define CONN_ACK_OK				(0)
+#define CONN_ACK_BAD_PROTO		(1)
+#define CONN_ACK_BAD_ID			(2)
+#define CONN_ACK_NOT_AVBL		(3)
+#define CONN_ACK_AUTH_MALFORM	(4)
+#define CONN_ACK_BAD_AUTH		(5)
+
+
+#define CONNACK 	(2)
+
+//
+//Reserved
+//
+//
+//0
+//
+//
+//Forbidden
+//
+//
+//Reserved
+//
+//CONNECT
+//
+//
+//1
+//
+//
+//Client to Server
+//
+//
+//Client request to connect to Server
+//
+//#define CONNACK 	(2)
+//
+//
+//Server to Client
+//
+//
+//Connect acknowledgment
+//
+//PUBLISH
+//
+//
+//3
+//
+//
+//Client to Server
+//
+//          or
+//
+//Server to Client
+//
+//
+//Publish message
+//
+//PUBACK
+//
+//
+//4
+//
+//
+//Client to Server
+//
+//          or
+//
+//Server to Client
+//
+//
+//Publish acknowledgment
+//
+//PUBREC
+//
+//
+//5
+//
+//
+//Client to Server
+//
+//          or
+//
+//Server to Client
+//
+//
+//Publish received (assured delivery part 1)
+//
+//PUBREL
+//
+//
+//6
+//
+//
+//Client to Server
+//
+//          or
+//
+//Server to Client
+//
+//
+//Publish release (assured delivery part 2)
+//
+//PUBCOMP
+//
+//
+//7
+//
+//
+//Client to Server
+//
+//          or
+//
+//Server to Client
+//
+//
+//Publish complete (assured delivery part 3)
+//
+//SUBSCRIBE
+//
+//
+//8
+//
+//
+//Client to Server
+//
+//
+//Client subscribe request
+//
+//SUBACK
+//
+//
+//9
+//
+//
+//Server to Client
+//
+//
+//Subscribe acknowledgment
+//
+//UNSUBSCRIBE
+//
+//
+//10
+//
+//
+//Client to Server
+//
+//
+//Unsubscribe request
+//
+//UNSUBACK
+//
+//
+//11
+//
+//
+//Server to Client
+//
+//
+//Unsubscribe acknowledgment
+//
+//PINGREQ
+//
+//
+//12
+//
+//
+//Client to Server
+//
+//
+//PING request
+//
+//PINGRESP
+//
+//
+//13
+//
+//
+//Server to Client
+//
+//
+//PING response
+//
+//DISCONNECT
+//
+//
+//14
+//
+//
+//Client to Server
+//
+//
+//Client is disconnecting
+//
+//Reserved
+//
+//
+//15
+//
+//
+
 
 typedef struct{
 uint8_t data[256];
@@ -80,6 +288,15 @@ typedef struct{
 	uint16_t *keep_alive;
 }header_t;
 
+
+
+
+typedef struct{
+	uint8_t control_type;
+	uint8_t remainin_len;
+	uint8_t ack_flags;
+	uint8_t conn_code;
+}header_conn_ack_t;
 
 
 typedef struct {
