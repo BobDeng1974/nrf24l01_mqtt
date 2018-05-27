@@ -9,11 +9,16 @@
 #include "tiny_broker.h"
 #include <string.h>
 
+
+
+
 #define BROKER_TIMEOUT		60
 #define TOPIC_POS 			6
 #define M_HEAP_SIZE			512
 #define NOT_FOUND 			255
 #define XMALLOC				m_malloc
+
+#define XHTONS(a) ((a>>8) | (a<<8))
 
 extern local_host_t local_lost;
 
@@ -119,6 +124,7 @@ static inline void init_header_container(header_t * header){
 
 static inline void read_header(header_t** header, uint8_t * frame){
 	*header =  (header_t*) frame;
+
 }
 
 
@@ -132,22 +138,35 @@ static inline void init_payload_container(payload_t * payload){
 static inline void read_conn_payload(payload_t* payload, header_t* header, uint8_t* frame ){
 	uint8_t pos = PLD_START;
 
-	payload->client_id  = (string_in_frame_t*) &frame[pos];
-	pos += payload->client_id->len;
-	if (header->conn_flags->last_will){
-		payload->will_topic = &frame[pos];
-		pos += payload->will_topic->len;
-		payload->will_msg   = &frame[pos];
-		pos += payload->will_topic->len;
+	payload->client_id_len  = (uint16_t*) &frame[pos];
+	*payload->client_id_len = XHTONS(*payload->client_id_len);
+	pos += 2;
+	payload->client_id = (char*) &frame[pos];
+	pos += *payload->client_id_len;
+
+
+	if (header->conn_flags.last_will){
+
+		payload->will_topic_len = (uint16_t*)  &frame[pos];
+		*payload->will_topic_len = XHTONS(* payload->will_topic_len);
+		pos += 2;
+		payload->will_topic = (char*)  &frame[pos];
+		pos += *payload->will_topic_len;
+
+		payload->will_msg_len = (uint16_t*)  &frame[pos];
+		*payload->will_msg_len = XHTONS(* payload->will_msg_len);
+		pos += 2;
+		payload->will_msg = (char*)  &frame[pos];
+		pos += *payload->will_msg_len;
 	}
-	if (header->conn_flags->user_name){
-		payload->usr_name= &frame[pos];
-		pos += payload->usr_name->len;
-	}
-	if (header->conn_flags->pswd){
-		payload->pswd= &frame[pos];
-		pos += payload->pswd->len;
-	}
+//	if (header->conn_flags.user_name){
+//		payload->usr_name= &frame[pos];
+//		pos += payload->usr_name->len;
+//	}
+//	if (header->conn_flags.pswd){
+//		payload->pswd= &frame[pos];
+//		pos += payload->pswd->len;
+//	}
 
 }
 
@@ -190,12 +209,12 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 		//ack
 	}
 
-	if (header->conn_flags->cleans_session){
-		broker_remove_client(broker, payload.client_id->data);
+	if (header->conn_flags.cleans_session){
+		broker_remove_client(broker, payload.client_id);
 		header_ack.ack_flags = SESSION_PRESENT;
 	}
 
-	if (is_client_connected(broker, payload.client_id->data)){
+	if (is_client_connected(broker, payload.client_id)){
 		header_ack.ack_flags = SESSION_PRESENT;
 		//broker_send_con_rsp(CONN_ACK_OK);
 	}
@@ -203,51 +222,51 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 	if (has_broker_space_for_next_client(broker))
 	{
 
-		conn_client_t new_client;
-		new_client.id = XMALLOC(strlen(payload.client_id->data));
-		strcpy(new_client.id,  payload.client_id->data);
-
-		new_client.keepalive = *header->keep_alive;
-
-		if (header->conn_flags->will_retain){
-			new_client.will_retain = 1;
-		}
-
-		if (header->conn_flags->last_will){
-			new_client.will_retain = 1;
-			new_client.will_topic = XMALLOC(strlen(payload.will_topic->data));
-			strcpy(new_client.will_topic,  payload.will_topic->data);
-
-			new_client.will_msg = XMALLOC(strlen(payload.client_id->data));
-			strcpy(new_client.will_topic,  payload.will_topic->data);
-
-			memcpy(new_client.will_qos, header->conn_flags->will_qos, sizeof(uint8_t));
-
-		}
-
-		if (header->conn_flags->user_name){
-			new_client.username = XMALLOC(strlen(payload.usr_name->data));
-			strcpy(new_client.username,  payload.usr_name->data);
-		}
-
-		if (header->conn_flags->pswd){
-			new_client.password = XMALLOC(strlen(payload.pswd->data));
-			strcpy(new_client.password,  payload.pswd->data);
-		}
-
-		if (is_client_authorised(new_client.username, new_client.password)){
-			add_client(broker, &new_client);
-
-			//broker_send_con_rsp(CONN_ACK_OK);
-		}else{
-		//	broker_send_con_rsp(CONN_ACK_BAD_AUTH);
-		}
-
-
+//		conn_client_t new_client;
+//		new_client.id = XMALLOC(strlen(payload.client_id->data));
+//		strcpy(new_client.id,  payload.client_id->data);
+//
+//		new_client.keepalive = header->keep_alive;
+//
+//		if (header->conn_flags.will_retain){
+//			new_client.will_retain = 1;
+//		}
+//
+//		if (header->conn_flags.last_will){
+//			new_client.will_retain = 1;
+//			new_client.will_topic = XMALLOC(strlen(payload.will_topic->data));
+//			strcpy(new_client.will_topic,  payload.will_topic->data);
+//
+//			new_client.will_msg = XMALLOC(strlen(payload.client_id->data));
+//			strcpy(new_client.will_topic,  payload.will_topic->data);
+//
+//			memcpy(new_client.will_qos, header->conn_flags.will_qos, sizeof(uint8_t));
+//
+//		}
+//
+//		if (header->conn_flags.user_name){
+//			new_client.username = XMALLOC(strlen(payload.usr_name->data));
+//			strcpy(new_client.username,  payload.usr_name->data);
+//		}
+//
+//		if (header->conn_flags.pswd){
+//			new_client.password = XMALLOC(strlen(payload.pswd->data));
+//			strcpy(new_client.password,  payload.pswd->data);
+//		}
+//
+//		if (is_client_authorised(new_client.username, new_client.password)){
+//			add_client(broker, &new_client);
+//
+//			//broker_send_con_rsp(CONN_ACK_OK);
+//		}else{
+//		//	broker_send_con_rsp(CONN_ACK_BAD_AUTH);
+//		}
 
 
 
-		//broker->net->write(void *context, const byte* buf, int buf_len, int timeout_ms);)
+
+
+//		broker->net->write(void *context, const byte* buf, int buf_len, int timeout_ms);)
 	}
 
 }

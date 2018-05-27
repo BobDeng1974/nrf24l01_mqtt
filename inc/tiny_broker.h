@@ -251,7 +251,8 @@ uint8_t len;
 }local_host_t;
 
 typedef struct{
-	uint16_t len;
+	uint8_t len_LSB;
+
 	char * data;
 }string_in_frame_t;
 
@@ -259,11 +260,17 @@ typedef struct{
 
 
 typedef struct{
-	string_in_frame_t * client_id;
-	string_in_frame_t * will_topic;
-	string_in_frame_t * will_msg;
-	string_in_frame_t * usr_name;
-	string_in_frame_t * pswd;
+
+	uint16_t * client_id_len;
+	char * client_id;
+	uint16_t  * will_topic_len;
+	char * will_topic;
+	uint16_t  * will_msg_len;
+	char *  will_msg;
+	uint16_t * usr_name_len;
+	char* usr_name;
+	uint16_t pswd_len;
+	char*  pswd;
 }payload_t;
 
 
@@ -280,12 +287,13 @@ typedef struct{
 
 
 typedef struct{
-	uint8_t * control_type;
-	uint8_t * remainin_len;
-	string_in_frame_t * prot_name;
-	uint8_t * proto_level;
-	conn_flags_t * conn_flags;
-	uint16_t *keep_alive;
+	uint8_t control_type;
+	uint8_t remainin_len;
+	uint16_t len;
+	char * data;
+	uint8_t proto_level;
+	conn_flags_t conn_flags;
+	uint16_t keep_alive;
 }header_t;
 
 
