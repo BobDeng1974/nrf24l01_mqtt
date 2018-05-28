@@ -14,7 +14,7 @@
 #include "stdbool.h"
 #include "string.h"
 
-#define CONTROL_TYPE 				(4)
+#define PROTO_LEVEL_MQTT311			(4)
 
 #define MAX_SUBS_TOPIC 				(8)
 #define MAX_TOPIC_NAME_SIZE 		(32)
@@ -51,8 +51,9 @@
 #define CONN_ACK_AUTH_MALFORM	(4)
 #define CONN_ACK_BAD_AUTH		(5)
 
+#define CONN_ACK_LEN			(2)
 
-#define CONNACK 	(2)
+#define CONTR_TYPE_CONNACK 		(2)
 
 //
 //Reserved
@@ -269,7 +270,7 @@ typedef struct{
 	char *  will_msg;
 	uint16_t * usr_name_len;
 	char* usr_name;
-	uint16_t pswd_len;
+	uint16_t * pswd_len;
 	char*  pswd;
 }payload_t;
 
@@ -286,25 +287,41 @@ typedef struct{
 }conn_flags_t;
 
 
+
+
+
 typedef struct{
 	uint8_t control_type;
 	uint8_t remainin_len;
-	uint16_t len;
-	char * data;
-	uint8_t proto_level;
-	conn_flags_t conn_flags;
-	uint16_t keep_alive;
+}fixed_header_t;
+
+
+typedef struct{
+	fixed_header_t * fixed_header;
+	uint16_t * len;
+	char * proto_name;
+	uint8_t * proto_level;
+	conn_flags_t * conn_flags;
+	uint16_t * keep_alive;
 }header_t;
 
 
+typedef struct{
+	uint8_t session_pres   :1;
+	uint8_t reserved 	   :7;
+}Connect_ack_Flags;
 
 
 typedef struct{
 	uint8_t control_type;
 	uint8_t remainin_len;
-	uint8_t ack_flags;
+	Connect_ack_Flags ack_flags;
 	uint8_t conn_code;
 }header_conn_ack_t;
+
+
+
+
 
 
 typedef struct {
