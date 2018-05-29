@@ -190,14 +190,14 @@ bool is_client_authorised(char* usr_name, char* pswd){
 	return true;
 }
 
-przemyslec i wykorzystac
-uint8_t * format_conn_ack(header_conn_ack_t * header_ack, uint8_t conn_ack_code, bool alread_conn){
-	header_ack->control_type = CONNACK;
-	header_ack->conn_code = conn_ack_code;
-	header_ack->ack_flags = SESSION_PRESENT;
-	header_ack->remainin_len = CONN_ACK_PLD_LEN;
-	return (uint8_t *)header_ack;
-}
+//
+//uint8_t * format_conn_ack(header_conn_ack_t * header_ack, uint8_t conn_ack_code, bool alread_conn){
+//	header_ack->control_type = CONNACK;
+//	header_ack->conn_code = conn_ack_code;
+//	header_ack->ack_flags = SESSION_PRESENT;
+//	header_ack->remainin_len = CONN_ACK_PLD_LEN;
+//	return (uint8_t *)header_ack;
+//}
 
 
 void broker_send_con_rsp(broker_t * broker, uint8_t * conn_ack_id){
@@ -223,11 +223,14 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 	header_ack.control_type = (CONTR_TYPE_CONNACK << 4);
 	header_ack.remainin_len = CONN_ACK_LEN;
 
+
+	conn_flags_t * flags = header.conn_flags;
+
 	if  (*header.proto_level != PROTO_LEVEL_MQTT311){
 		header_ack.conn_code = CONN_ACK_BAD_PROTO;
 	}
 
-	if (header.conn_flags->cleans_session){
+	if (flags->cleans_session){
 		if (broker_remove_client(broker, payload.client_id)){
 			header_ack.ack_flags.session_pres = true;
 		}
@@ -246,30 +249,30 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 
 		new_client.keepalive = *header.keep_alive;
 
-		if (header->conn_flags.will_retain){
+		if (flags->will_retain){
 			new_client.will_retain = 1;
 		}
 
-		if (header->conn_flags.last_will){
+		if (flags->last_will){
 			new_client.will_retain = 1;
-			new_client.will_topic = X_MALLOC(strlen(payload.will_topic->data));
-			strcpy(new_client.will_topic,  payload.will_topic->data);
+			new_client.will_topic = X_MALLOC(strlen(payload.will_topic));
+			strcpy(new_client.will_topic,  payload.will_topic);
 
-			new_client.will_msg = X_MALLOC(strlen(payload.client_id->data));
-			strcpy(new_client.will_topic,  payload.will_topic->data);
+			new_client.will_msg = X_MALLOC(strlen(payload.client_id));
+			strcpy(new_client.will_topic,  payload.will_topic);
 
-			memcpy(new_client.will_qos, header->conn_flags.will_qos, sizeof(uint8_t));
+			new_client.will_qos = flags->will_qos;
 
 		}
 
-		if (header->conn_flags.user_name){
-			new_client.username = X_MALLOC(strlen(payload.usr_name->data));
-			strcpy(new_client.username,  payload.usr_name->data);
+		if (flags->user_name){
+			new_client.username = X_MALLOC(*payload.usr_name_len);
+			strncpy(new_client.username,  payload.usr_name, *payload.usr_name_len);
 		}
 
-		if (header->conn_flags.pswd){
-			new_client.password = X_MALLOC(strlen(payload.pswd->data));
-			strcpy(new_client.password,  payload.pswd->data);
+		if (flags->pswd){
+			new_client.password = X_MALLOC(*payload.pswd_len);
+			strncpy(new_client.password,  payload.pswd, *payload.pswd_len);
 		}
 
 		if (is_client_authorised(new_client.username, new_client.password)){
@@ -282,9 +285,9 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 
 
 
+		//broker->net->write(context, buf, buf_len, timeout_ms);
 
-
-		broker->net->write(void *context, const byte* buf, int buf_len, int timeout_ms);)
+		//broker->net->write(void *context, const byte* buf, int buf_len, int timeout_ms);
 	}
 
 }
