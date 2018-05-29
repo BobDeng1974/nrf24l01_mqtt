@@ -44,16 +44,15 @@
 
 
 
-#define CONN_ACK_OK				(0)
-#define CONN_ACK_BAD_PROTO		(1)
-#define CONN_ACK_BAD_ID			(2)
-#define CONN_ACK_NOT_AVBL		(3)
-#define CONN_ACK_AUTH_MALFORM	(4)
-#define CONN_ACK_BAD_AUTH		(5)
+#define CONN_ACK_OK					(0)
+#define CONN_ACK_BAD_PROTO			(1)
+#define CONN_ACK_BAD_ID				(2)
+#define CONN_ACK_NOT_AVBL			(3)
+#define CONN_ACK_AUTH_MALFORM		(4)
+#define CONN_ACK_BAD_AUTH			(5)
+#define CONN_ACK_OK_SESS_PRESENT	(0)
 
-#define CONN_ACK_LEN			(2)
-
-#define CONTR_TYPE_CONNACK 		(2)
+#define CONTR_TYPE_CONNACK 			(2)
 
 //
 //Reserved
@@ -345,5 +344,6 @@ typedef struct{
 }broker_t;
 
 void * m_malloc(size_t size);
+void broker_fill_new_client(conn_client_t *new_client, header_t *header, payload_t *payload);
 
 #endif /* INC_TINY_BROKER_H_ */
