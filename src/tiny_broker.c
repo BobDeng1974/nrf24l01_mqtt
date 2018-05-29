@@ -62,7 +62,7 @@ static inline void read_connection_flags(conn_flags_t ** conn_flags, uint8_t * f
 
 
 
-static bool has_broker_space_for_next_client(broker_t * broker){
+static bool can_broker_accept_next_client(broker_t * broker){
 	for (uint8_t i = 0; i < MAX_CONN_CLIENTS; i++){
 		if (!(broker->clients[i].active)){
 			return true;
@@ -175,10 +175,16 @@ static inline void read_conn_payload(payload_t* payload, header_t* header, uint8
 		pos += *payload->will_msg_len;
 	}
 	if (header->conn_flags->user_name){
+		payload->usr_name_len = (uint16_t*)  &frame[pos];
+		*payload->usr_name_len = X_HTONS(* payload->usr_name_len);
+		pos += 2;
 		payload->usr_name= (char*) &frame[pos];
 		pos += *payload->usr_name_len;
 	}
 	if (header->conn_flags->pswd){
+		payload->pswd_len = (uint16_t*)  &frame[pos];
+		*payload->pswd_len = X_HTONS(* payload->pswd_len);
+		pos += 2;
 		payload->pswd= (char*) &frame[pos];
 		pos += *payload->pswd_len;
 	}
@@ -205,6 +211,10 @@ void broker_send_con_rsp(broker_t * broker, uint8_t * conn_ack_id){
 }
 
 
+
+void broker_create_new_client(conn_client_t *new_client, header_t *header, payload_t *payload){
+	;
+}
 
 // https://www.bevywise.com/developing-mqtt-clients/
 // https://morphuslabs.com/hacking-the-iot-with-mqtt-8edaf0d07b9b ack codes
@@ -241,11 +251,11 @@ void acccept_connection (broker_t * broker, uint8_t * frame){
 		//broker_send_con_rsp(CONN_ACK_OK);
 	}
 
-	if (has_broker_space_for_next_client(broker))
+	if (can_broker_accept_next_client(broker))
 	{
 		conn_client_t new_client;
 		new_client.id = X_MALLOC(*payload.client_id_len);
-		strcpy(new_client.id,  payload.client_id);
+		strncpy(new_client.id,  payload.client_id, *payload.client_id_len);
 
 		new_client.keepalive = *header.keep_alive;
 
