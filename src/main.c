@@ -128,10 +128,11 @@ int main()
 	MqttClient_Connect(&client, &mqtt_con);
 
 	broker_t broker;
-	broker_init(&broker);
+	broker_init(&broker, net);
 
-	acccept_connection(&broker, local_host.data);
-
+	conn_ack_stat_t stat;
+	broker_decode_connect(&broker, local_host.data, &stat);
+	broker_send_conn_ack(&broker, &stat);
 //
     while(1)
     {    

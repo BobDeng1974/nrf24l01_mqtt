@@ -14,6 +14,8 @@
 #include "stdbool.h"
 #include "string.h"
 
+#define DEFAULT_BROKER_TIMEOUT		(100)
+
 #define PROTO_LEVEL_MQTT311			(4)
 
 #define MAX_SUBS_TOPIC 				(8)
@@ -320,6 +322,11 @@ typedef struct{
 
 
 
+typedef struct{
+	bool session_present;
+	uint8_t code;
+}conn_ack_stat_t;
+
 
 
 
@@ -345,5 +352,7 @@ typedef struct{
 
 void * m_malloc(size_t size);
 void broker_fill_new_client(conn_client_t *new_client, header_t *header, payload_t *payload);
+void broker_mantain_conn_frame (broker_t * broker, uint8_t * frame, conn_ack_stat_t * stat);
+void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat);
 
 #endif /* INC_TINY_BROKER_H_ */

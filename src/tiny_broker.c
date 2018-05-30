@@ -198,7 +198,7 @@ bool is_client_authorised(char* usr_name, char* pswd){
 
 
 uint8_t * format_conn_ack(header_conn_ack_t * header_ack, bool session_pres, uint8_t code){
-	memset(&header_ack, 0, sizeof (header_conn_ack_t));
+	memset(header_ack, 0, sizeof (header_conn_ack_t));
 	header_ack->control_type = (CONTR_TYPE_CONNACK << 4);
 	header_ack->remainin_len = CONN_ACK_PLD_LEN;
 	header_ack->ack_flags.session_pres = session_pres;
@@ -253,7 +253,7 @@ void broker_fill_new_client(conn_client_t *new_client, header_t *header, payload
 // https://morphuslabs.com/hacking-the-iot-with-mqtt-8edaf0d07b9b ack codes
 
 
-uint8_t acccept_connection (broker_t * broker, uint8_t * frame){
+void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_ack_stat_t * stat){
 
 	header_t header;
 	read_header(&header, frame);
@@ -261,10 +261,11 @@ uint8_t acccept_connection (broker_t * broker, uint8_t * frame){
 	payload_t payload;
 	read_conn_payload(&payload, &header, frame);
 
-	bool session_present;
 
 	if  (*header.proto_level != PROTO_LEVEL_MQTT311){
-		return  CONN_ACK_BAD_PROTO;
+		stat->session_present = false;
+		stat->code = CONN_ACK_BAD_PROTO;
+		return;
 	}
 
 	if (header.conn_flags->cleans_session){
@@ -273,7 +274,9 @@ uint8_t acccept_connection (broker_t * broker, uint8_t * frame){
 	}
 
 	if (is_client_connected(broker, payload.client_id)){
-		return CONN_ACK_OK_SESS_PRESENT;
+		stat->session_present = true;
+		stat->code = CONN_ACK_OK;
+		return;
 	}
 
 	if (can_broker_accept_next_client(broker))
@@ -283,14 +286,30 @@ uint8_t acccept_connection (broker_t * broker, uint8_t * frame){
 
 		if (is_client_authorised(new_client.username, new_client.password)){
 			add_client(broker, &new_client);
-			return CONN_ACK_OK;
+			stat->session_present = false;
+			stat->code = CONN_ACK_OK;
+			return;
 
 		}else{
-			return CONN_ACK_BAD_AUTH;
+			stat->session_present = false;
+			stat->code = CONN_ACK_BAD_AUTH;
+			return;
 		}
 	} else {
-		return CONN_ACK_NOT_AVBL;
+		stat->session_present = false;
+		stat->code = CONN_ACK_NOT_AVBL;
+		return;
 	}
+}
+
+
+void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat){
+	header_conn_ack_t header_ack;
+	format_conn_ack(&header_ack, stat->session_present, stat->code);
+	uint8_t * buf = (uint8_t *) &header_ack;
+	uint8_t buf_len = sizeof(header_conn_ack_t);
+	broker->net->write(NULL, buf, buf_len, DEFAULT_BROKER_TIMEOUT);
+
 }
 
 
@@ -323,7 +342,7 @@ uint8_t acccept_connection (broker_t * broker, uint8_t * frame){
 				 if (!(broker->clients[i].subs_topic[j])){
 					 unsigned char * topic_to_subs = &frame[5];
 					 uint8_t topic_len = frame[3] + (frame[4]<<8);
-					 broker->clients[i].subs_topic[j] = (unsigned char  *) X_MALLOC(topic_len);
+					 broker->clients[i].subs_topic[j] =  X_MALLOC(topic_len);
 					 memcpy(broker->clients[i].subs_topic[j], topic_to_subs, topic_len);
 				 }
 			 }
