@@ -250,6 +250,7 @@
 typedef struct{
 uint8_t data[256];
 uint8_t len;
+uint8_t pos;
 }local_host_t;
 
 typedef struct{
@@ -322,10 +323,46 @@ typedef struct{
 
 
 
+typedef struct {
+	uint8_t retain :1;
+	uint8_t QoS :2;
+	uint8_t dup :1;
+	uint8_t type :4;
+	uint8_t len;
+}pub_header_t;
+
+
+
+
+
+
+typedef struct{
+	uint16_t * topic_name_len;
+	unsigned char * topic_name;
+	uint16_t  * packet_id;
+}pub_pld_t;
+
+
+
+typedef struct{
+	pub_header_t * head;
+	pub_pld_t * pld;
+}pub_msg_t;
+
+
+
+
+
 typedef struct{
 	bool session_present;
 	uint8_t code;
 }conn_ack_stat_t;
+
+
+typedef struct{
+	bool session_present;
+	uint8_t code;
+}pub_ack_stat_t;
 
 
 
@@ -350,6 +387,8 @@ typedef struct{
 	MqttNet * net;
 }broker_t;
 
+void broker_init (broker_t * broker, MqttNet* net);
+void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_ack_stat_t * stat);
 void * m_malloc(size_t size);
 void broker_fill_new_client(conn_client_t *new_client, header_t *header, payload_t *payload);
 void broker_mantain_conn_frame (broker_t * broker, uint8_t * frame, conn_ack_stat_t * stat);

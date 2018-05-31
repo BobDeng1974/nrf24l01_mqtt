@@ -390,6 +390,20 @@ int MqttClient_Connect(MqttClient *client, MqttConnect *connect)
         connect->stat = MQTT_MSG_WAIT;
     }
 
+/*
+ * --test--
+ *
+#include "tiny_broker.h"
+	broker_t broker;
+	extern MqttNet net;
+	broker_init(&broker, &net);
+
+	extern local_host_t local_host;
+	conn_ack_stat_t stat;
+	broker_decode_connect(&broker, local_host.data, &stat);
+	broker_send_conn_ack(&broker, &stat);
+*/
+
     /* Wait for connect ack packet */
     rc = MqttClient_WaitType(client, &client->msg, client->cmd_timeout_ms,
         MQTT_PACKET_TYPE_CONNECT_ACK, 0, &connect->ack);

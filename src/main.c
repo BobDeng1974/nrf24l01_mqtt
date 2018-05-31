@@ -5,6 +5,7 @@
 #include "stm32f10x_gpio.h"
 #include "mqtt_client.h"
 #include "tiny_broker.h"
+#include "string.h"
 
 volatile static int debug_var;
 uint8_t temp;
@@ -42,7 +43,9 @@ void packet_send_localhost(uint8_t * data, uint8_t size){
 	}
 
 	int mqtt_net_read_cb(void *context, byte* buf, int buf_len, int timeout_ms){
-		memcpy(buf, local_host.data, buf_len);
+		memcpy(buf, &local_host.data[local_host.pos], buf_len);
+		local_host.pos += buf_len;
+		return buf_len;
 		;
 	}
 
@@ -63,7 +66,7 @@ void packet_send_localhost(uint8_t * data, uint8_t size){
 		;
 	}
 
-
+	MqttNet net;
 int main()
 {
   
@@ -102,17 +105,17 @@ int main()
 
 
 	MqttClient client;
-	MqttNet net;
+
 	net.connect = mqt_net_connect_cb;
 	net.read = mqtt_net_read_cb;
 	net.write = mqtt_net_write_cb;
 	net.disconnect = mqtt_net_disconnect_cb;
 
 
-	uint8_t tx_buf[64];
+	uint8_t * tx_buf = local_host.data;
 	memset(tx_buf, 0, 64);
 	uint8_t tx_buf_len = 64;
-	byte rx_buf[64];
+	uint8_t * rx_buf = local_host.data;
 	int rx_buf_len =64;
 	int cmd_timeout_ms =500;
 	MqttClient_Init(&client, &net, mqtt_message_cb, tx_buf, tx_buf_len, rx_buf, rx_buf_len, cmd_timeout_ms);
@@ -127,12 +130,22 @@ int main()
 	mqtt_con.password = "passw0rd";
 	MqttClient_Connect(&client, &mqtt_con);
 
-	broker_t broker;
-	broker_init(&broker, net);
+	MqttPublish publish;
 
-	conn_ack_stat_t stat;
-	broker_decode_connect(&broker, local_host.data, &stat);
-	broker_send_conn_ack(&broker, &stat);
+	const char* topic = "flat/room/temp/1";
+	publish.topic_name = topic;
+	publish.topic_name_len = strlen(topic);
+	uint8_t temp = 25;
+	publish.buffer = &temp;
+	publish.total_len = sizeof(temp);
+	uint16_t pck_id = 1;
+	publish.packet_id = pck_id;
+	publish.qos = 1;
+	publish.retain = (byte) true;
+
+	MqttClient_Publish(&client, &publish);
+
+
 //
     while(1)
     {    

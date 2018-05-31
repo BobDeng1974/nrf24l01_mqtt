@@ -15,7 +15,6 @@
 #define BROKER_TIMEOUT		60
 #define TOPIC_POS 			6
 #define M_HEAP_SIZE			512
-#define NOT_FOUND 			255
 #define X_MALLOC				m_malloc
 
 #define X_HTONS(a) ((a>>8) | (a<<8))
@@ -207,11 +206,6 @@ uint8_t * format_conn_ack(header_conn_ack_t * header_ack, bool session_pres, uin
 }
 
 
-void broker_send_con_rsp(broker_t * broker, uint8_t * conn_ack_id){
-
-}
-
-
 
 void broker_fill_new_client(conn_client_t *new_client, header_t *header, payload_t *payload){
 	conn_flags_t * flags = header->conn_flags;
@@ -315,11 +309,55 @@ void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat){
 
 
 
+static inline void read_publish_payload(pub_pld_t* payload, pub_header_t *header, uint8_t* frame){
+	uint8_t pos = sizeof (pub_header_t);
+
+	payload->topic_name_len  = (uint16_t*) &frame[pos];
+	*payload->topic_name_len = X_HTONS(*payload->topic_name_len);
+	pos += 2;
+	payload->topic_name = (char*) &frame[pos];
+	pos += *payload->topic_name_len;
+
+
+	if (header->QoS > 0){
+	}
+}
+
+
+/* alternatively  decode publish msg (wich contains head&pld) */
+void broker_decode_publish (uint8_t * frame, pub_msg_t * pub_msg, conn_ack_stat_t * stat){
+	pub_msg->head = (pub_header_t *) frame;
+	read_publish_payload(pub_msg->pld, pub_msg->head, frame);
+}
+
+
+void publish_msg_to_subscribers(broker_t * broker, pub_msg_t * pub_msg){
+	for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
+		if ((broker->clients->id)){
+			for (uint8_t j =0; j < MAX_SUBS_TOPIC; j++){
+				uint16_t len = *pub_msg->pld->topic_name_len;
+				unsigned char* topic = pub_msg->pld->topic_name;
+				if (memcmp (broker->clients[i].subs_topic[j], topic, len)){
+					broker->net->write(broker->clients[i].net_address, topic, len, BROKER_TIMEOUT);
+					break;
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
 //broker->net->write(context, buf, buf_len, timeout_ms);
 
 //broker->net->write(void *context, const byte* buf, int buf_len, int timeout_ms);
 
- void publish_msg_to_subscribers(broker_t * broker, uint8_t * frame, uint8_t len){
+
+void publish_msg_to_subscribersx(broker_t * broker, uint8_t * frame, uint8_t len){
 	 for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
 		 if ((broker->clients->id)){
 			 for (uint8_t j =0; j < MAX_CONN_CLIENTS; j++){
