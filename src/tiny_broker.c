@@ -247,13 +247,20 @@ void broker_fill_new_client(conn_client_t *new_client, header_t *header, payload
 // https://morphuslabs.com/hacking-the-iot-with-mqtt-8edaf0d07b9b ack codes
 
 
-void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_ack_stat_t * stat){
+
+void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_msg_t * conn_msg ){
+	as general type publish msg (from function arg)
 
 	header_t header;
 	read_header(&header, frame);
 
 	payload_t payload;
 	read_conn_payload(&payload, &header, frame);
+
+}
+
+void broker_mantain_new_connect (broker_t *broker, conn_msg_t *conn_msg, net_t * net, conn_ack_stat_t * stat){
+
 
 
 	if  (*header.proto_level != PROTO_LEVEL_MQTT311){
@@ -326,7 +333,7 @@ static inline void read_publish_payload(pub_pld_t* payload, pub_header_t *header
 
 /* alternatively  decode publish msg (wich contains head&pld) */
 void broker_decode_publish (uint8_t * frame, pub_msg_t * pub_msg, conn_ack_stat_t * stat){
-	pub_msg->head = (pub_header_t *) frame;
+	pub_msg->head = (pub_header_t *) frame; //maybe extract to function? (will have same abstract layer)
 	read_publish_payload(pub_msg->pld, pub_msg->head, frame);
 }
 
@@ -352,25 +359,35 @@ void publish_msg_to_subscribers(broker_t * broker, pub_msg_t * pub_msg){
 
 
 
+static inline void read_subscribe_payload(pub_pld_t* payload, pub_header_t *header, uint8_t* frame){
+	uint8_t pos = sizeof (pub_header_t);
+
+	payload->topic_name_len  = (uint16_t*) &frame[pos];
+	*payload->topic_name_len = X_HTONS(*payload->topic_name_len);
+	pos += 2;
+	payload->topic_name = (char*) &frame[pos];
+	pos += *payload->topic_name_len;
+
+
+	if (header->QoS > 0){
+	}
+}
+
+
+/* alternatively  decode publish msg (wich contains head&pld) */
+void broker_decode_subscribe (uint8_t * frame, pub_msg_t * pub_msg, conn_ack_stat_t * stat){
+	pub_msg->head = (pub_header_t *) frame;
+	read_publish_payload(pub_msg->pld, pub_msg->head, frame);
+}
+
+
+
+
+
+
 //broker->net->write(context, buf, buf_len, timeout_ms);
 
 //broker->net->write(void *context, const byte* buf, int buf_len, int timeout_ms);
-
-
-void publish_msg_to_subscribersx(broker_t * broker, uint8_t * frame, uint8_t len){
-	 for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
-		 if ((broker->clients->id)){
-			 for (uint8_t j =0; j < MAX_CONN_CLIENTS; j++){
-				 char * topic_name = (char *) &frame[5];
-				 uint8_t topic_len = frame[3] + (frame[4]<<8);
-				 if (memcmp (broker->clients[i].subs_topic[j], topic_name, topic_len)){
-					 broker->net->write(broker->clients[i].net_address, frame, len, BROKER_TIMEOUT);
-					 break;
-				 }
-			 }
-		 }
-	 }
- }
 
 
  void add_subscribtion(broker_t * broker, uint8_t * client_addr, uint8_t *frame){
@@ -387,6 +404,10 @@ void publish_msg_to_subscribersx(broker_t * broker, uint8_t * frame, uint8_t len
 		 }
 	 }
  }
+
+
+
+
 
 
 

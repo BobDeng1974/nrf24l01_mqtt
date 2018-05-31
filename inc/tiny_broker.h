@@ -323,6 +323,20 @@ typedef struct{
 
 
 
+
+
+typedef struct{
+	conn_header_t * head;
+	conn_pld_t * pld;
+}conn_msg_t;
+
+
+
+
+
+
+
+/*---------publish-------------------*/
 typedef struct {
 	uint8_t retain :1;
 	uint8_t QoS :2;
@@ -332,16 +346,11 @@ typedef struct {
 }pub_header_t;
 
 
-
-
-
-
 typedef struct{
 	uint16_t * topic_name_len;
 	unsigned char * topic_name;
 	uint16_t  * packet_id;
 }pub_pld_t;
-
 
 
 typedef struct{

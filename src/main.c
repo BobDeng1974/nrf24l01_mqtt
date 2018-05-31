@@ -132,9 +132,10 @@ int main()
 
 	MqttPublish publish;
 
-	const char* topic = "flat/room/temp/1";
-	publish.topic_name = topic;
-	publish.topic_name_len = strlen(topic);
+	const char* test_topic1 = "flat/livingroom/temp/1";
+	const char* test_topic2 = "flat/bedroom/humidity/2";
+	publish.topic_name = test_topic1;
+	publish.topic_name_len = strlen(test_topic1);
 	uint8_t temp = 25;
 	publish.buffer = &temp;
 	publish.total_len = sizeof(temp);
@@ -143,6 +144,22 @@ int main()
 	publish.qos = 1;
 	publish.retain = (byte) true;
 
+
+    MqttTopic * topics[2];
+    topics[0]->qos =1;
+    topics[0]->topic_filter = test_topic1;
+
+    topics[1]->qos =1;
+    topics[1]->topic_filter = test_topic2;
+
+
+
+	MqttSubscribe *subscribe;
+	subscribe->packet_id = pck_id;
+	uint8_t topic_count = 2;
+	subscribe->topic_count = topic_count;
+	subscribe->topics = topics;
+	MqttClient_Subscribe(&client, &subscribe);
 	MqttClient_Publish(&client, &publish);
 
 
