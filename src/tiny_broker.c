@@ -255,8 +255,6 @@ void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_pck_t * con
 
 void broker_mantain_new_connect (broker_t *broker, conn_pck_t *conn_pck, conn_ack_stat_t * stat){
 
-
-
 	if  (*conn_pck->head->proto_level != PROTO_LEVEL_MQTT311){
 		stat->session_present = false;
 		stat->code = CONN_ACK_BAD_PROTO;
@@ -311,19 +309,25 @@ void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat){
 
 
 
-static inline void broker_decode_publish(uint8_t* frame, pub_msg_t * pub_msg){
+static inline void broker_decode_publish(uint8_t* frame, pub_pck_t * pub_pck){
 	uint8_t pos = 0;
 
-	pub_msg->head = (pub_header_t *) frame;
-	pos += sizeof (pub_header_t);
+	pub_pck->fix_head = (pub_fix_head_t *) frame;
+	pos += sizeof (pub_fix_head_t);
 
-	pub_msg->pld->topic_name_len  = (uint16_t*) &frame[pos];
-	*pub_msg->pld->topic_name_len = X_HTONS(*pub_msg->pld->topic_name_len);
+	pub_pck->var_head->topic_name_len  = (uint16_t*) &frame[pos];
+	*pub_pck->var_head->topic_name_len = X_HTONS(*pub_pck->var_head->topic_name_len);
 	pos += 2;
 
+	pub_pck->var_head->topic_name = (unsigned char*)  &frame[pos];
+	pos += *pub_pck->var_head->topic_name_len;
 
-	if (pub_msg->head->QoS > 0){
+	if (pub_pck->fix_head->QoS > 0){
+		pub_pck->var_head->packet_id  = (uint16_t*) &frame[pos];
+		*pub_pck->var_head->packet_id = X_HTONS(*pub_pck->var_head->packet_id);
+		pos += 2;
 	}
+	pub_pck->pld = &frame[pos];
 }
 
 

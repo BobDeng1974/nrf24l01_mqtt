@@ -15,6 +15,12 @@
 #include "string.h"
 
 #define DEFAULT_BROKER_TIMEOUT		(100)
+#define MAX_PLD_SIZE				(128)
+
+
+
+
+
 
 #define PROTO_LEVEL_MQTT311			(4)
 
@@ -342,20 +348,21 @@ typedef struct {
 	uint8_t dup :1;
 	uint8_t type :4;
 	uint8_t len;
-}pub_header_t;
+}pub_fix_head_t;
 
 
 typedef struct{
 	uint16_t * topic_name_len;
 	unsigned char * topic_name;
 	uint16_t  * packet_id;
-}pub_pld_t;
+}pub_var_head_t;
 
 
 typedef struct{
-	pub_header_t * head;
-	pub_pld_t * pld;
-}pub_msg_t;
+	pub_fix_head_t * fix_head;
+	pub_var_head_t * var_head;
+	uint8_t * pld[MAX_PLD_SIZE];
+}pub_pck_t;
 
 
 
