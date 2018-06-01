@@ -262,21 +262,6 @@ typedef struct{
 
 
 
-typedef struct{
-
-	uint16_t * client_id_len;
-	char * client_id;
-	uint16_t  * will_topic_len;
-	char * will_topic;
-	uint16_t  * will_msg_len;
-	char *  will_msg;
-	uint16_t * usr_name_len;
-	char* usr_name;
-	uint16_t * pswd_len;
-	char*  pswd;
-}payload_t;
-
-
 
 typedef struct{
 	uint8_t reserved 	   :1;
@@ -288,24 +273,7 @@ typedef struct{
 	uint8_t user_name      :1;
 }conn_flags_t;
 
-
-
-
-
-typedef struct{
-	uint8_t control_type;
-	uint8_t remainin_len;
-}fixed_header_t;
-
-
-typedef struct{
-	fixed_header_t * fixed_header;
-	uint16_t * len;
-	char * proto_name;
-	uint8_t * proto_level;
-	conn_flags_t * conn_flags;
-	uint16_t * keep_alive;
-}header_t;
+;
 
 
 typedef struct{
@@ -325,10 +293,41 @@ typedef struct{
 
 
 
+
+typedef struct{
+	uint8_t control_type;
+	uint8_t remainin_len;
+}conn_fixed_header_t;
+
+
+typedef struct{
+	conn_fixed_header_t * fix_head;
+	uint16_t * len;
+	char * proto_name;
+	uint8_t * proto_level;
+	conn_flags_t * conn_flags;
+	uint16_t * keep_alive;
+}conn_header_t;
+
+
+typedef struct{
+	uint16_t * client_id_len;
+	char * client_id;
+	uint16_t  * will_topic_len;
+	char * will_topic;
+	uint16_t  * will_msg_len;
+	char *  will_msg;
+	uint16_t * usr_name_len;
+	char* usr_name;
+	uint16_t * pswd_len;
+	char*  pswd;
+}conn_pld_t;
+
+
 typedef struct{
 	conn_header_t * head;
 	conn_pld_t * pld;
-}conn_msg_t;
+}conn_pck_t;
 
 
 
@@ -397,9 +396,9 @@ typedef struct{
 }broker_t;
 
 void broker_init (broker_t * broker, MqttNet* net);
-void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_ack_stat_t * stat);
+void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_pck_t * conn_pck );
 void * m_malloc(size_t size);
-void broker_fill_new_client(conn_client_t *new_client, header_t *header, payload_t *payload);
+void broker_fill_new_client(conn_client_t *new_client, conn_pck_t conn_pck;);
 void broker_mantain_conn_frame (broker_t * broker, uint8_t * frame, conn_ack_stat_t * stat);
 void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat);
 

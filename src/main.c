@@ -34,12 +34,12 @@ void packet_send_localhost(uint8_t * data, uint8_t size){
 //
 
 	int mqtt_message_cb(struct _MqttClient *client, MqttMessage *message, byte msg_new, byte msg_done){
-		;
+		return 1;
 	}
 
 
 	int mqt_net_connect_cb (void *context, const char* host, word16 port, int timeout_ms){
-		;
+		return 1;
 	}
 
 	int mqtt_net_read_cb(void *context, byte* buf, int buf_len, int timeout_ms){

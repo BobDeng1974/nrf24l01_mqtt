@@ -118,24 +118,25 @@ static void add_client (broker_t * broker, conn_client_t * new_client){
 
 
 
-static inline void init_header_container(header_t * header){
-	memset (header, 0, sizeof (header_t));
-}
 
-
-static inline void read_header(header_t* header, uint8_t * frame){
+static inline void read_conn_header(conn_header_t *header, uint8_t * frame){
 	uint8_t pos = 0;
-	header->fixed_header =  (fixed_header_t *) &frame[pos];
+	header->fix_head =  (conn_fixed_header_t *) &frame[pos];
 	pos += 2;
+
 	header->len = (uint16_t*) &frame[pos];
 	*header->len = X_HTONS(*header->len);
 	pos += 2;
+
 	header->proto_name = (char*) &frame[pos];
 	pos += *header->len;
+
 	header->proto_level = (uint8_t*) &frame[pos];
 	pos += 1;
+
 	header->conn_flags = (conn_flags_t*) &frame[pos];
 	pos += 1;
+
 	header->keep_alive = (uint16_t*)  &frame[pos];
 	*header->keep_alive = X_HTONS(*header->keep_alive);
 
@@ -143,13 +144,9 @@ static inline void read_header(header_t* header, uint8_t * frame){
 
 
 
-static inline void init_payload_container(payload_t * payload){
-	memset (payload, 0, sizeof (payload_t));
-}
 
 
-
-static inline void read_conn_payload(payload_t* payload, header_t* header, uint8_t* frame ){
+static inline void read_conn_payload(conn_pld_t *payload, conn_header_t* header, uint8_t* frame ){
 	uint8_t pos = PLD_START;
 
 	payload->client_id_len  = (uint16_t*) &frame[pos];
@@ -207,8 +204,10 @@ uint8_t * format_conn_ack(header_conn_ack_t * header_ack, bool session_pres, uin
 
 
 
-void broker_fill_new_client(conn_client_t *new_client, header_t *header, payload_t *payload){
+void broker_fill_new_client(conn_client_t *new_client, const conn_pck_t * conn_pck){
+	conn_header_t * header = conn_pck->head;
 	conn_flags_t * flags = header->conn_flags;
+	conn_pld_t * payload = conn_pck->pld;
 
 	// all len should be extracted to separate  variable!!
 	new_client->id = X_MALLOC((*payload->client_id_len)+1);
@@ -248,33 +247,28 @@ void broker_fill_new_client(conn_client_t *new_client, header_t *header, payload
 
 
 
-void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_msg_t * conn_msg ){
-	as general type publish msg (from function arg)
-
-	header_t header;
-	read_header(&header, frame);
-
-	payload_t payload;
-	read_conn_payload(&payload, &header, frame);
+void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_pck_t * conn_pck ){
+	read_header(conn_pck->head, frame);
+	read_conn_payload(conn_pck->pld, conn_pck->head, frame);
 
 }
 
-void broker_mantain_new_connect (broker_t *broker, conn_msg_t *conn_msg, net_t * net, conn_ack_stat_t * stat){
+void broker_mantain_new_connect (broker_t *broker, conn_pck_t *conn_pck, conn_ack_stat_t * stat){
 
 
 
-	if  (*header.proto_level != PROTO_LEVEL_MQTT311){
+	if  (*conn_pck->head->proto_level != PROTO_LEVEL_MQTT311){
 		stat->session_present = false;
 		stat->code = CONN_ACK_BAD_PROTO;
 		return;
 	}
 
-	if (header.conn_flags->cleans_session){
-		if (broker_remove_client(broker, payload.client_id)){
+	if (conn_pck->head->conn_flags->cleans_session){
+		if (broker_remove_client(broker, conn_pck->pld->client_id)){
 		}
 	}
 
-	if (is_client_connected(broker, payload.client_id)){
+	if (is_client_connected(broker, conn_pck->pld->client_id)){
 		stat->session_present = true;
 		stat->code = CONN_ACK_OK;
 		return;
@@ -283,7 +277,7 @@ void broker_mantain_new_connect (broker_t *broker, conn_msg_t *conn_msg, net_t *
 	if (can_broker_accept_next_client(broker))
 	{
 		conn_client_t new_client;
-		broker_fill_new_client(&new_client, &header, &payload);
+		broker_fill_new_client(&new_client, conn_pck);
 
 		if (is_client_authorised(new_client.username, new_client.password)){
 			add_client(broker, &new_client);
@@ -316,26 +310,23 @@ void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat){
 
 
 
-static inline void read_publish_payload(pub_pld_t* payload, pub_header_t *header, uint8_t* frame){
-	uint8_t pos = sizeof (pub_header_t);
 
-	payload->topic_name_len  = (uint16_t*) &frame[pos];
-	*payload->topic_name_len = X_HTONS(*payload->topic_name_len);
+static inline void broker_decode_publish(uint8_t* frame, pub_msg_t * pub_msg){
+	uint8_t pos = 0;
+
+	pub_msg->head = (pub_header_t *) frame;
+	pos += sizeof (pub_header_t);
+
+	pub_msg->pld->topic_name_len  = (uint16_t*) &frame[pos];
+	*pub_msg->pld->topic_name_len = X_HTONS(*pub_msg->pld->topic_name_len);
 	pos += 2;
-	payload->topic_name = (char*) &frame[pos];
-	pos += *payload->topic_name_len;
 
 
-	if (header->QoS > 0){
+	if (pub_msg->head->QoS > 0){
 	}
 }
 
 
-/* alternatively  decode publish msg (wich contains head&pld) */
-void broker_decode_publish (uint8_t * frame, pub_msg_t * pub_msg, conn_ack_stat_t * stat){
-	pub_msg->head = (pub_header_t *) frame; //maybe extract to function? (will have same abstract layer)
-	read_publish_payload(pub_msg->pld, pub_msg->head, frame);
-}
 
 
 void publish_msg_to_subscribers(broker_t * broker, pub_msg_t * pub_msg){

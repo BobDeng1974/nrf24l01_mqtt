@@ -1538,8 +1538,6 @@ Discarded input sections
                 0x0000000000000000       0x46 src/tiny_broker.o
  .text.add_client
                 0x0000000000000000       0x34 src/tiny_broker.o
- .text.read_header
-                0x0000000000000000       0xbe src/tiny_broker.o
  .text.read_conn_payload
                 0x0000000000000000      0x1bc src/tiny_broker.o
  .text.is_client_authorised
@@ -1547,36 +1545,34 @@ Discarded input sections
  .text.format_conn_ack
                 0x0000000000000000       0x42 src/tiny_broker.o
  .text.broker_fill_new_client
-                0x0000000000000000      0x146 src/tiny_broker.o
+                0x0000000000000000      0x150 src/tiny_broker.o
  .text.broker_decode_connect
-                0x0000000000000000       0xe6 src/tiny_broker.o
+                0x0000000000000000       0x30 src/tiny_broker.o
+ .text.broker_mantain_new_connect
+                0x0000000000000000       0xd0 src/tiny_broker.o
  .text.broker_send_conn_ack
                 0x0000000000000000       0x40 src/tiny_broker.o
- .text.read_publish_payload
-                0x0000000000000000       0x6c src/tiny_broker.o
- .text.broker_decode_publish
-                0x0000000000000000       0x2a src/tiny_broker.o
  .text.publish_msg_to_subscribers
                 0x0000000000000000       0x98 src/tiny_broker.o
  .text.broker_decode_subscribe
                 0x0000000000000000       0x2a src/tiny_broker.o
  .text.add_subscribtion
                 0x0000000000000000       0xc4 src/tiny_broker.o
- .bss.new_used_bytes_nb.5899
+ .bss.new_used_bytes_nb.5902
                 0x0000000000000000        0x2 src/tiny_broker.o
- .bss.prev_used_bytes_nb.5898
+ .bss.prev_used_bytes_nb.5901
                 0x0000000000000000        0x2 src/tiny_broker.o
- .bss.m_heap.5897
+ .bss.m_heap.5900
                 0x0000000000000000      0x200 src/tiny_broker.o
- .debug_info    0x0000000000000000     0x1550 src/tiny_broker.o
- .debug_abbrev  0x0000000000000000      0x343 src/tiny_broker.o
+ .debug_info    0x0000000000000000     0x150a src/tiny_broker.o
+ .debug_abbrev  0x0000000000000000      0x352 src/tiny_broker.o
  .debug_aranges
-                0x0000000000000000       0xb8 src/tiny_broker.o
- .debug_ranges  0x0000000000000000       0xa8 src/tiny_broker.o
- .debug_line    0x0000000000000000      0x4b8 src/tiny_broker.o
- .debug_str     0x0000000000000000      0xb19 src/tiny_broker.o
+                0x0000000000000000       0xa8 src/tiny_broker.o
+ .debug_ranges  0x0000000000000000       0x98 src/tiny_broker.o
+ .debug_line    0x0000000000000000      0x47e src/tiny_broker.o
+ .debug_str     0x0000000000000000      0xb39 src/tiny_broker.o
  .comment       0x0000000000000000       0x7d src/tiny_broker.o
- .debug_frame   0x0000000000000000      0x30c src/tiny_broker.o
+ .debug_frame   0x0000000000000000      0x2b8 src/tiny_broker.o
  .ARM.attributes
                 0x0000000000000000       0x33 src/tiny_broker.o
  .text          0x0000000000000000        0x0 src/tiny_printf.o
@@ -2461,20 +2457,20 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_ranges  0x0000000000000580       0x50 src/stm32f1xx_it.o
  .debug_ranges  0x00000000000005d0       0x28 src/system_stm32f10x.o
 
-.debug_line     0x0000000000000000     0x2b07
+.debug_line     0x0000000000000000     0x2b09
  .debug_line    0x0000000000000000      0x3d3 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_line    0x00000000000003d3      0x4ce Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_line    0x00000000000008a1      0x430 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
- .debug_line    0x0000000000000cd1      0x3f6 src/main.o
- .debug_line    0x00000000000010c7      0x496 src/mqtt_client.o
- .debug_line    0x000000000000155d      0x5c5 src/mqtt_packet.o
- .debug_line    0x0000000000001b22      0x323 src/mqtt_socket.o
- .debug_line    0x0000000000001e45      0x415 src/nrf24.o
- .debug_line    0x000000000000225a      0x223 src/nrf24_hal.o
- .debug_line    0x000000000000247d      0x1c0 src/radioPinFunctions.o
- .debug_line    0x000000000000263d       0x7c src/startup_stm32f10x_md.o
- .debug_line    0x00000000000026b9      0x21a src/stm32f1xx_it.o
- .debug_line    0x00000000000028d3      0x234 src/system_stm32f10x.o
+ .debug_line    0x0000000000000cd1      0x3f8 src/main.o
+ .debug_line    0x00000000000010c9      0x496 src/mqtt_client.o
+ .debug_line    0x000000000000155f      0x5c5 src/mqtt_packet.o
+ .debug_line    0x0000000000001b24      0x323 src/mqtt_socket.o
+ .debug_line    0x0000000000001e47      0x415 src/nrf24.o
+ .debug_line    0x000000000000225c      0x223 src/nrf24_hal.o
+ .debug_line    0x000000000000247f      0x1c0 src/radioPinFunctions.o
+ .debug_line    0x000000000000263f       0x7c src/startup_stm32f10x_md.o
+ .debug_line    0x00000000000026bb      0x21a src/stm32f1xx_it.o
+ .debug_line    0x00000000000028d5      0x234 src/system_stm32f10x.o
 
 .debug_str      0x0000000000000000     0x2418
  .debug_str     0x0000000000000000      0x537 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
@@ -3341,10 +3337,10 @@ bmp280_set_standby_durn                           src/bmp280.o
 bmp280_set_work_mode                              src/bmp280.o
 bmp280_write_register                             src/bmp280.o
 broker_decode_connect                             src/tiny_broker.o
-broker_decode_publish                             src/tiny_broker.o
 broker_decode_subscribe                           src/tiny_broker.o
 broker_fill_new_client                            src/tiny_broker.o
 broker_init                                       src/tiny_broker.o
+broker_mantain_new_connect                        src/tiny_broker.o
 broker_remove_client                              src/tiny_broker.o
 broker_send_conn_ack                              src/tiny_broker.o
 data_array                                        src/main.o
@@ -3437,6 +3433,8 @@ printf                                            src/tiny_printf.o
 publish_msg_to_subscribers                        src/tiny_broker.o
 puts                                              src/tiny_printf.o
 q                                                 src/main.o
+read_header                                       src/tiny_broker.o
+read_publish_payload                              src/tiny_broker.o
 rx_address                                        src/main.o
 siprintf                                          src/tiny_printf.o
 spi2_init                                         src/bmp280_hal.o
