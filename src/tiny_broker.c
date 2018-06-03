@@ -117,6 +117,7 @@ static void add_client (broker_t * broker, conn_client_t * new_client){
 //
 
 
+/*-------------------------------PUBLIHS-----------------------------------------*/
 
 
 static inline void read_conn_header(conn_header_t *header, uint8_t * frame){
@@ -306,8 +307,7 @@ void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat){
 }
 
 
-
-
+/*-------------------------------PUBLIHS-----------------------------------------*/
 
 static inline void broker_decode_publish(uint8_t* frame, pub_pck_t * pub_pck){
 	uint8_t pos = 0;
@@ -333,12 +333,12 @@ static inline void broker_decode_publish(uint8_t* frame, pub_pck_t * pub_pck){
 
 
 
-void publish_msg_to_subscribers(broker_t * broker, pub_msg_t * pub_msg){
+void publish_msg_to_subscribers(broker_t * broker, pub_pck_t * pub_pck){
 	for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
 		if ((broker->clients->id)){
 			for (uint8_t j =0; j < MAX_SUBS_TOPIC; j++){
-				uint16_t len = *pub_msg->pld->topic_name_len;
-				unsigned char* topic = pub_msg->pld->topic_name;
+				uint16_t len = *pub_pck->var_head->topic_name_len;
+				unsigned char* topic = pub_pck->var_head->topic_name;
 				if (memcmp (broker->clients[i].subs_topic[j], topic, len)){
 					broker->net->write(broker->clients[i].net_address, topic, len, BROKER_TIMEOUT);
 					break;
@@ -354,28 +354,30 @@ void publish_msg_to_subscribers(broker_t * broker, pub_msg_t * pub_msg){
 
 
 
-static inline void read_subscribe_payload(pub_pld_t* payload, pub_header_t *header, uint8_t* frame){
-	uint8_t pos = sizeof (pub_header_t);
+static inline void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck){
+	uint8_t pos = 0;
 
-	payload->topic_name_len  = (uint16_t*) &frame[pos];
-	*payload->topic_name_len = X_HTONS(*payload->topic_name_len);
+	sub_pck->fix_head = (sub_fix_head_t *) frame;
+	sub_pck->fix_head->len =  X_HTONS(*sub_pck->fix_head->len);
+	pos += sizeof (sub_fix_head_t);
+
+	sub_pck->var_head->packet_id  = (uint16_t*) &frame[pos];
+	*sub_pck->var_head->packet_id = X_HTONS(*sub_pck->var_head->packet_id);
 	pos += 2;
-	payload->topic_name = (char*) &frame[pos];
-	pos += *payload->topic_name_len;
 
+	while (pos < *sub_pck->fix_head->len){
 
-	if (header->QoS > 0){
+		sub_pck->var_head->packet_id  = (uint16_t*) &frame[pos];
+		sub_pck->pld_topics->topic_name_len = (uint16_t *)  &frame[pos];
+		sub_pck->pld_topics.topic_name_len  = X_HTONS(*sub_pck->pld_topics->topic_name_len );
+		pos += 2;
+		sub_pck->pld_topics->topic_name =  = (unsigned char*)  &frame[pos];
+		pos += ()*pub_pck->pld_topics->topic_name_len);
+		sub_pck->pld_topics->qos = (uint8_t*) &frame[pos];
 	}
+
+
 }
-
-
-/* alternatively  decode publish msg (wich contains head&pld) */
-void broker_decode_subscribe (uint8_t * frame, pub_msg_t * pub_msg, conn_ack_stat_t * stat){
-	pub_msg->head = (pub_header_t *) frame;
-	read_publish_payload(pub_msg->pld, pub_msg->head, frame);
-}
-
-
 
 
 

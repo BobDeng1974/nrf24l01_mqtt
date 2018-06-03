@@ -16,7 +16,7 @@
 
 #define DEFAULT_BROKER_TIMEOUT		(100)
 #define MAX_PLD_SIZE				(128)
-
+#define MAX_SUB_PLDT				(8)
 
 
 
@@ -336,6 +336,10 @@ typedef struct{
 }conn_pck_t;
 
 
+typedef struct{
+	bool session_present;
+	uint8_t code;
+}conn_ack_stat_t;
 
 
 
@@ -361,23 +365,44 @@ typedef struct{
 typedef struct{
 	pub_fix_head_t * fix_head;
 	pub_var_head_t * var_head;
-	uint8_t * pld[MAX_PLD_SIZE];
+	uint8_t * pld;
 }pub_pck_t;
-
-
-
-
-
-typedef struct{
-	bool session_present;
-	uint8_t code;
-}conn_ack_stat_t;
 
 
 typedef struct{
 	bool session_present;
 	uint8_t code;
 }pub_ack_stat_t;
+
+
+/*---------subscribe-------------------*/
+typedef struct {
+	uint8_t type :4;
+	uint8_t reserved :4;
+	uint8_t *len;
+}sub_fix_head_t;
+
+
+typedef struct{
+	uint16_t  * packet_id;
+}sub_var_head_t;
+
+
+typedef struct{
+	uint16_t * topic_name_len;
+	unsigned char * topic_name;
+	uint8_t qos :2;
+	uint8_t res :6;
+}sub_pld_topic_t;
+
+
+
+
+typedef struct{
+	sub_fix_head_t * fix_head;
+	sub_var_head_t * var_head;
+	sub_pld_topic_t pld_topics[MAX_SUB_PLDT];
+}sub_pck_t;
 
 
 
@@ -405,7 +430,7 @@ typedef struct{
 void broker_init (broker_t * broker, MqttNet* net);
 void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_pck_t * conn_pck );
 void * m_malloc(size_t size);
-void broker_fill_new_client(conn_client_t *new_client, conn_pck_t conn_pck;);
+void broker_fill_new_client(conn_client_t *new_client, const conn_pck_t * conn_pck);
 void broker_mantain_conn_frame (broker_t * broker, uint8_t * frame, conn_ack_stat_t * stat);
 void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat);
 
