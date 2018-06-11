@@ -358,22 +358,21 @@ static inline void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck){
 	uint8_t pos = 0;
 
 	sub_pck->fix_head = (sub_fix_head_t *) frame;
-	sub_pck->fix_head->len =  X_HTONS(*sub_pck->fix_head->len);
+	*sub_pck->fix_head->len =  X_HTONS(*sub_pck->fix_head->len);
 	pos += sizeof (sub_fix_head_t);
 
 	sub_pck->var_head->packet_id  = (uint16_t*) &frame[pos];
 	*sub_pck->var_head->packet_id = X_HTONS(*sub_pck->var_head->packet_id);
 	pos += 2;
 
-	while (pos < *sub_pck->fix_head->len){
-
-		sub_pck->var_head->packet_id  = (uint16_t*) &frame[pos];
+	while (pos <= *sub_pck->fix_head->len){
 		sub_pck->pld_topics->topic_name_len = (uint16_t *)  &frame[pos];
-		sub_pck->pld_topics.topic_name_len  = X_HTONS(*sub_pck->pld_topics->topic_name_len );
+		*sub_pck->pld_topics->topic_name_len  = X_HTONS(*sub_pck->pld_topics->topic_name_len );
 		pos += 2;
-		sub_pck->pld_topics->topic_name =  = (unsigned char*)  &frame[pos];
-		pos += ()*pub_pck->pld_topics->topic_name_len);
+		sub_pck->pld_topics->topic_name =  (unsigned char*)  &frame[pos];
+		pos += (*sub_pck->pld_topics->topic_name_len);
 		sub_pck->pld_topics->qos = (uint8_t*) &frame[pos];
+		pos += 1;
 	}
 
 
@@ -381,30 +380,30 @@ static inline void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck){
 
 
 
+/*TODO: extract methods (and len value)*/
+void add_subscribtion(conn_client_t *client, sub_pck_t * sub_pck){
+	for (uint8_t i=0; i < MAX_SUBS_TOPIC; i++){
+		for (uint8_t j =0; j < MAX_SUBS_TOPIC; j++){
+			/*to be sure that one topic is not subset of another filter*/
+			if (client->subs_topic[i].topic_name != NULL){
+				if (*client->subs_topic[i].topic_name_len == *sub_pck->pld_topics[j].topic_name_len){
+					if (memcmp(client->subs_topic[i].topic_name, sub_pck->pld_topics[j].topic_name, *sub_pck->pld_topics[j].topic_name_len)){
+						client->subs_topic[i].qos = sub_pck->pld_topics[j].qos;
+					}
+				}
+			}else{
+				memcpy(&client->subs_topic[i], &sub_pck->pld_topics[j], *sub_pck->pld_topics[j].topic_name_len);
+				break;
+			}
+		}
+	}
+}
+
+
+
+
+
 
 //broker->net->write(context, buf, buf_len, timeout_ms);
-
 //broker->net->write(void *context, const byte* buf, int buf_len, int timeout_ms);
-
-
- void add_subscribtion(broker_t * broker, uint8_t * client_addr, uint8_t *frame){
-	 for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
-		 if (memcmp(&broker->clients[i].net_address, client_addr, ADDR_SIZE)){
-			 for (uint8_t j =0; j < MAX_SUBS_TOPIC; j++){
-				 if (!(broker->clients[i].subs_topic[j])){
-					 unsigned char * topic_to_subs = &frame[5];
-					 uint8_t topic_len = frame[3] + (frame[4]<<8);
-					 broker->clients[i].subs_topic[j] =  X_MALLOC(topic_len);
-					 memcpy(broker->clients[i].subs_topic[j], topic_to_subs, topic_len);
-				 }
-			 }
-		 }
-	 }
- }
-
-
-
-
-
-
 

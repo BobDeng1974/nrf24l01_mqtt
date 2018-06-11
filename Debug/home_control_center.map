@@ -1554,25 +1554,23 @@ Discarded input sections
                 0x0000000000000000       0x40 src/tiny_broker.o
  .text.publish_msg_to_subscribers
                 0x0000000000000000       0x98 src/tiny_broker.o
- .text.broker_decode_subscribe
-                0x0000000000000000       0x2a src/tiny_broker.o
  .text.add_subscribtion
                 0x0000000000000000       0xc4 src/tiny_broker.o
- .bss.new_used_bytes_nb.5902
+ .bss.new_used_bytes_nb.5922
                 0x0000000000000000        0x2 src/tiny_broker.o
- .bss.prev_used_bytes_nb.5901
+ .bss.prev_used_bytes_nb.5921
                 0x0000000000000000        0x2 src/tiny_broker.o
- .bss.m_heap.5900
+ .bss.m_heap.5920
                 0x0000000000000000      0x200 src/tiny_broker.o
- .debug_info    0x0000000000000000     0x150a src/tiny_broker.o
- .debug_abbrev  0x0000000000000000      0x352 src/tiny_broker.o
+ .debug_info    0x0000000000000000     0x14ca src/tiny_broker.o
+ .debug_abbrev  0x0000000000000000      0x325 src/tiny_broker.o
  .debug_aranges
-                0x0000000000000000       0xa8 src/tiny_broker.o
- .debug_ranges  0x0000000000000000       0x98 src/tiny_broker.o
- .debug_line    0x0000000000000000      0x47e src/tiny_broker.o
- .debug_str     0x0000000000000000      0xb39 src/tiny_broker.o
+                0x0000000000000000       0xa0 src/tiny_broker.o
+ .debug_ranges  0x0000000000000000       0x90 src/tiny_broker.o
+ .debug_line    0x0000000000000000      0x46b src/tiny_broker.o
+ .debug_str     0x0000000000000000      0xb1c src/tiny_broker.o
  .comment       0x0000000000000000       0x7d src/tiny_broker.o
- .debug_frame   0x0000000000000000      0x2b8 src/tiny_broker.o
+ .debug_frame   0x0000000000000000      0x294 src/tiny_broker.o
  .ARM.attributes
                 0x0000000000000000       0x33 src/tiny_broker.o
  .text          0x0000000000000000        0x0 src/tiny_printf.o
@@ -2384,20 +2382,20 @@ LOAD /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-
                 0x000000000000036d       0x1d /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
 OUTPUT(home_control_center.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000     0x8807
+.debug_info     0x0000000000000000     0x880c
  .debug_info    0x0000000000000000      0x701 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_info    0x0000000000000701      0x8b2 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_info    0x0000000000000fb3      0x906 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
- .debug_info    0x00000000000018b9     0x13a5 src/main.o
- .debug_info    0x0000000000002c5e     0x15ff src/mqtt_client.o
- .debug_info    0x000000000000425d     0x1b2a src/mqtt_packet.o
- .debug_info    0x0000000000005d87      0xfac src/mqtt_socket.o
- .debug_info    0x0000000000006d33      0xde5 src/nrf24.o
- .debug_info    0x0000000000007b18      0x4b9 src/nrf24_hal.o
- .debug_info    0x0000000000007fd1      0x1b6 src/radioPinFunctions.o
- .debug_info    0x0000000000008187       0x85 src/startup_stm32f10x_md.o
- .debug_info    0x000000000000820c      0x154 src/stm32f1xx_it.o
- .debug_info    0x0000000000008360      0x4a7 src/system_stm32f10x.o
+ .debug_info    0x00000000000018b9     0x13aa src/main.o
+ .debug_info    0x0000000000002c63     0x15ff src/mqtt_client.o
+ .debug_info    0x0000000000004262     0x1b2a src/mqtt_packet.o
+ .debug_info    0x0000000000005d8c      0xfac src/mqtt_socket.o
+ .debug_info    0x0000000000006d38      0xde5 src/nrf24.o
+ .debug_info    0x0000000000007b1d      0x4b9 src/nrf24_hal.o
+ .debug_info    0x0000000000007fd6      0x1b6 src/radioPinFunctions.o
+ .debug_info    0x000000000000818c       0x85 src/startup_stm32f10x_md.o
+ .debug_info    0x0000000000008211      0x154 src/stm32f1xx_it.o
+ .debug_info    0x0000000000008365      0x4a7 src/system_stm32f10x.o
 
 .debug_abbrev   0x0000000000000000     0x1600
  .debug_abbrev  0x0000000000000000      0x1dd Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
@@ -3337,7 +3335,6 @@ bmp280_set_standby_durn                           src/bmp280.o
 bmp280_set_work_mode                              src/bmp280.o
 bmp280_write_register                             src/bmp280.o
 broker_decode_connect                             src/tiny_broker.o
-broker_decode_subscribe                           src/tiny_broker.o
 broker_fill_new_client                            src/tiny_broker.o
 broker_init                                       src/tiny_broker.o
 broker_mantain_new_connect                        src/tiny_broker.o
@@ -3434,7 +3431,6 @@ publish_msg_to_subscribers                        src/tiny_broker.o
 puts                                              src/tiny_printf.o
 q                                                 src/main.o
 read_header                                       src/tiny_broker.o
-read_publish_payload                              src/tiny_broker.o
 rx_address                                        src/main.o
 siprintf                                          src/tiny_printf.o
 spi2_init                                         src/bmp280_hal.o

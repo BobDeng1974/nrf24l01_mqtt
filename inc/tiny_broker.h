@@ -379,7 +379,7 @@ typedef struct{
 typedef struct {
 	uint8_t type :4;
 	uint8_t reserved :4;
-	uint8_t *len;
+	uint16_t *len;
 }sub_fix_head_t;
 
 
@@ -389,11 +389,10 @@ typedef struct{
 
 
 typedef struct{
-	uint16_t * topic_name_len;
-	unsigned char * topic_name;
-	uint8_t qos :2;
-	uint8_t res :6;
-}sub_pld_topic_t;
+	uint16_t *topic_name_len;
+	unsigned char *topic_name;
+	uint8_t *qos;
+}sub_topic_t;
 
 
 
@@ -401,13 +400,14 @@ typedef struct{
 typedef struct{
 	sub_fix_head_t * fix_head;
 	sub_var_head_t * var_head;
-	sub_pld_topic_t pld_topics[MAX_SUB_PLDT];
+	sub_topic_t pld_topics[MAX_SUB_PLDT];
 }sub_pck_t;
 
 
 
 
 typedef struct {
+	bool exist;
 	uint8_t net_address[ADDR_SIZE];
 	char*  id;
 	uint16_t keepalive;
@@ -418,7 +418,7 @@ typedef struct {
 	char*  will_msg;
 	uint8_t will_qos;
 	uint8_t will_retain;
-	char* subs_topic[MAX_SUBS_TOPIC];
+	sub_topic_t subs_topic[MAX_SUBS_TOPIC];
 	bool active;
 }  conn_client_t;
 
