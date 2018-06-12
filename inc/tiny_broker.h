@@ -407,7 +407,6 @@ typedef struct{
 
 
 typedef struct {
-	bool exist;
 	uint8_t net_address[ADDR_SIZE];
 	char*  id;
 	uint16_t keepalive;
@@ -430,7 +429,7 @@ typedef struct{
 void broker_init (broker_t * broker, MqttNet* net);
 void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_pck_t * conn_pck );
 void * m_malloc(size_t size);
-void broker_fill_new_client(conn_client_t *new_client, const conn_pck_t * conn_pck);
+void broker_fill_new_client(conn_client_t *new_client, const conn_pck_t * conn_pck, uint8_t* net_address);
 void broker_mantain_conn_frame (broker_t * broker, uint8_t * frame, conn_ack_stat_t * stat);
 void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat);
 

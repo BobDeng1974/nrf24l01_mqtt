@@ -3,5 +3,5 @@ main.c:36:6:mqtt_message_cb	24	static
 main.c:41:6:mqt_net_connect_cb	24	static
 main.c:45:6:mqtt_net_read_cb	24	static
 main.c:60:6:mqtt_net_write_cb	24	static
-main.c:65:6:mqtt_net_disconnect_cb	16	static
-main.c:70:5:main	256	static
+main.c:66:6:mqtt_net_disconnect_cb	16	static
+main.c:71:5:main	256	static

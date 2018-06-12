@@ -59,11 +59,12 @@ void packet_send_localhost(uint8_t * data, uint8_t size){
 
 	int mqtt_net_write_cb(void *context, const byte* buf, int buf_len, int timeout_ms){
 		packet_send_localhost(buf, buf_len);
+		return 0;
 	}
 
 
 	int mqtt_net_disconnect_cb(void *context){
-		;
+		return 0;
 	}
 
 	MqttNet net;

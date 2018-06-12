@@ -205,12 +205,11 @@ uint8_t * format_conn_ack(header_conn_ack_t * header_ack, bool session_pres, uin
 
 
 
-void broker_fill_new_client(conn_client_t *new_client, const conn_pck_t * conn_pck){
+void broker_fill_new_client(conn_client_t *new_client, const conn_pck_t * conn_pck, uint8_t* net_address){
 	conn_header_t * header = conn_pck->head;
 	conn_flags_t * flags = header->conn_flags;
 	conn_pld_t * payload = conn_pck->pld;
 
-	// all len should be extracted to separate  variable!!
 	new_client->id = X_MALLOC((*payload->client_id_len)+1);
 	strncpy(new_client->id,  payload->client_id, *payload->client_id_len);
 
@@ -243,6 +242,8 @@ void broker_fill_new_client(conn_client_t *new_client, const conn_pck_t * conn_p
 	}
 }
 
+
+
 // https://www.bevywise.com/developing-mqtt-clients/
 // https://morphuslabs.com/hacking-the-iot-with-mqtt-8edaf0d07b9b ack codes
 
@@ -254,7 +255,7 @@ void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_pck_t * con
 
 }
 
-void broker_mantain_new_connect (broker_t *broker, conn_pck_t *conn_pck, conn_ack_stat_t * stat){
+void broker_mantain_new_connect (broker_t *broker, conn_pck_t *conn_pck, conn_ack_stat_t * stat, uint8_t* net_add){
 
 	if  (*conn_pck->head->proto_level != PROTO_LEVEL_MQTT311){
 		stat->session_present = false;
@@ -276,7 +277,7 @@ void broker_mantain_new_connect (broker_t *broker, conn_pck_t *conn_pck, conn_ac
 	if (can_broker_accept_next_client(broker))
 	{
 		conn_client_t new_client;
-		broker_fill_new_client(&new_client, conn_pck);
+		broker_fill_new_client(&new_client, conn_pck, net_add);
 
 		if (is_client_authorised(new_client.username, new_client.password)){
 			add_client(broker, &new_client);
@@ -335,11 +336,11 @@ static inline void broker_decode_publish(uint8_t* frame, pub_pck_t * pub_pck){
 
 void publish_msg_to_subscribers(broker_t * broker, pub_pck_t * pub_pck){
 	for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
-		if ((broker->clients->id)){
+		if ((broker->clients[i].active)){
 			for (uint8_t j =0; j < MAX_SUBS_TOPIC; j++){
 				uint16_t len = *pub_pck->var_head->topic_name_len;
 				unsigned char* topic = pub_pck->var_head->topic_name;
-				if (memcmp (broker->clients[i].subs_topic[j], topic, len)){
+				if (memcmp (&broker->clients[i].subs_topic[j].topic_name, topic, len)){
 					broker->net->write(broker->clients[i].net_address, topic, len, BROKER_TIMEOUT);
 					break;
 				}
@@ -352,7 +353,7 @@ void publish_msg_to_subscribers(broker_t * broker, pub_pck_t * pub_pck){
 
 
 
-
+/*-------------------------------SUBSCRIBE-----------------------------------------*/
 
 static inline void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck){
 	uint8_t pos = 0;
@@ -374,8 +375,6 @@ static inline void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck){
 		sub_pck->pld_topics->qos = (uint8_t*) &frame[pos];
 		pos += 1;
 	}
-
-
 }
 
 
