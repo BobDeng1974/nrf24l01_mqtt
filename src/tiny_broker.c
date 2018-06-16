@@ -46,7 +46,7 @@ void * m_malloc(size_t size){
 
 bool is_client_connected(broker_t * broker, char* client_id){
 	for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
-		if (strstr(broker->clients[i].username, client_id)){
+		if (broker->clients[i].active){
 			return true;
 		}
 	}
@@ -56,12 +56,11 @@ bool is_client_connected(broker_t * broker, char* client_id){
 static inline void read_connection_flags(conn_flags_t ** conn_flags, uint8_t * frame){
 	uint8_t * flag_byte = &frame[9];
 	*conn_flags =  (conn_flags_t*) flag_byte;
-	//zwracac wskaznik
 }
 
 
 
-static bool can_broker_accept_next_client(broker_t * broker){
+static inline bool can_broker_accept_next_client(broker_t * broker){
 	for (uint8_t i = 0; i < MAX_CONN_CLIENTS; i++){
 		if (!(broker->clients[i].active)){
 			return true;
@@ -249,11 +248,12 @@ void broker_fill_new_client(conn_client_t *new_client, const conn_pck_t * conn_p
 
 
 
-void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_pck_t * conn_pck ){
-	read_header(conn_pck->head, frame);
+void broker_decode_connect_frame (broker_t * broker, uint8_t * frame, conn_pck_t * conn_pck ){
+	read_conn_header(conn_pck->head, frame);
 	read_conn_payload(conn_pck->pld, conn_pck->head, frame);
-
 }
+
+
 
 void broker_mantain_new_connect (broker_t *broker, conn_pck_t *conn_pck, conn_ack_stat_t * stat, uint8_t* net_add){
 
@@ -310,22 +310,23 @@ void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat){
 
 /*-------------------------------PUBLIHS-----------------------------------------*/
 
-static inline void broker_decode_publish(uint8_t* frame, pub_pck_t * pub_pck){
+ void broker_decode_publish(uint8_t* frame, pub_pck_t * pub_pck){
 	uint8_t pos = 0;
 
 	pub_pck->fix_head = (pub_fix_head_t *) frame;
 	pos += sizeof (pub_fix_head_t);
 
-	pub_pck->var_head->topic_name_len  = (uint16_t*) &frame[pos];
-	*pub_pck->var_head->topic_name_len = X_HTONS(*pub_pck->var_head->topic_name_len);
+	uint16_t * ptr = (uint16_t*) &frame[pos];
+	pub_pck->var_head.topic_name_len  = (uint16_t*) &frame[pos];
+	*pub_pck->var_head.topic_name_len = X_HTONS(*pub_pck->var_head.topic_name_len);
 	pos += 2;
 
-	pub_pck->var_head->topic_name = (unsigned char*)  &frame[pos];
-	pos += *pub_pck->var_head->topic_name_len;
+	pub_pck->var_head.topic_name = (unsigned char*)  &frame[pos];
+	pos += *pub_pck->var_head.topic_name_len;
 
 	if (pub_pck->fix_head->QoS > 0){
-		pub_pck->var_head->packet_id  = (uint16_t*) &frame[pos];
-		*pub_pck->var_head->packet_id = X_HTONS(*pub_pck->var_head->packet_id);
+		pub_pck->var_head.packet_id  = (uint16_t*) &frame[pos];
+		*pub_pck->var_head.packet_id = X_HTONS(*pub_pck->var_head.packet_id);
 		pos += 2;
 	}
 	pub_pck->pld = &frame[pos];
@@ -338,8 +339,8 @@ void publish_msg_to_subscribers(broker_t * broker, pub_pck_t * pub_pck){
 	for (uint8_t i =0; i < MAX_CONN_CLIENTS; i++){
 		if ((broker->clients[i].active)){
 			for (uint8_t j =0; j < MAX_SUBS_TOPIC; j++){
-				uint16_t len = *pub_pck->var_head->topic_name_len;
-				unsigned char* topic = pub_pck->var_head->topic_name;
+				uint16_t len = *pub_pck->var_head.topic_name_len;
+				unsigned char* topic = pub_pck->var_head.topic_name;
 				if (memcmp (&broker->clients[i].subs_topic[j].topic_name, topic, len)){
 					broker->net->write(broker->clients[i].net_address, topic, len, BROKER_TIMEOUT);
 					break;
@@ -355,25 +356,30 @@ void publish_msg_to_subscribers(broker_t * broker, pub_pck_t * pub_pck){
 
 /*-------------------------------SUBSCRIBE-----------------------------------------*/
 
-static inline void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck){
+void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck){
 	uint8_t pos = 0;
 
-	sub_pck->fix_head = (sub_fix_head_t *) frame;
-	*sub_pck->fix_head->len =  X_HTONS(*sub_pck->fix_head->len);
-	pos += sizeof (sub_fix_head_t);
+	sub_pck->fix_head.subs_ctr_byte = (subs_ctr_byte_t *) frame;
+	pos++;
+	sub_pck->fix_head.rem_len = (uint8_t*) &frame[pos]; /*no handling for  packet bigger than 128bytes*/
+	//*sub_pck->fix_head.len =  X_HTONS(*sub_pck->fix_head.len);
+	pos ++;
 
-	sub_pck->var_head->packet_id  = (uint16_t*) &frame[pos];
-	*sub_pck->var_head->packet_id = X_HTONS(*sub_pck->var_head->packet_id);
+	sub_pck->var_head.packet_id  = (uint16_t*) &frame[pos];
+	*sub_pck->var_head.packet_id = X_HTONS(*sub_pck->var_head.packet_id);
 	pos += 2;
 
-	while (pos <= *sub_pck->fix_head->len){
-		sub_pck->pld_topics->topic_name_len = (uint16_t *)  &frame[pos];
-		*sub_pck->pld_topics->topic_name_len  = X_HTONS(*sub_pck->pld_topics->topic_name_len );
+	const uint8_t fix_head_size = 2;
+	uint8_t topic_nb =0;
+	while (pos < (*sub_pck->fix_head.rem_len + fix_head_size)){
+		sub_pck->pld_topics[topic_nb].topic_name_len = (uint16_t *)  &frame[pos];
+		*sub_pck->pld_topics[topic_nb].topic_name_len  = X_HTONS(*sub_pck->pld_topics->topic_name_len );
 		pos += 2;
-		sub_pck->pld_topics->topic_name =  (unsigned char*)  &frame[pos];
-		pos += (*sub_pck->pld_topics->topic_name_len);
-		sub_pck->pld_topics->qos = (uint8_t*) &frame[pos];
+		sub_pck->pld_topics[topic_nb].topic_name =  (unsigned char*)  &frame[pos];
+		pos += (*sub_pck->pld_topics[topic_nb].topic_name_len);
+		sub_pck->pld_topics[topic_nb].qos = (uint8_t*) &frame[pos];
 		pos += 1;
+		topic_nb++;
 	}
 }
 

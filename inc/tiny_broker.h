@@ -62,196 +62,6 @@
 
 #define CONTR_TYPE_CONNACK 			(2)
 
-//
-//Reserved
-//
-//
-//0
-//
-//
-//Forbidden
-//
-//
-//Reserved
-//
-//CONNECT
-//
-//
-//1
-//
-//
-//Client to Server
-//
-//
-//Client request to connect to Server
-//
-//#define CONNACK 	(2)
-//
-//
-//Server to Client
-//
-//
-//Connect acknowledgment
-//
-//PUBLISH
-//
-//
-//3
-//
-//
-//Client to Server
-//
-//          or
-//
-//Server to Client
-//
-//
-//Publish message
-//
-//PUBACK
-//
-//
-//4
-//
-//
-//Client to Server
-//
-//          or
-//
-//Server to Client
-//
-//
-//Publish acknowledgment
-//
-//PUBREC
-//
-//
-//5
-//
-//
-//Client to Server
-//
-//          or
-//
-//Server to Client
-//
-//
-//Publish received (assured delivery part 1)
-//
-//PUBREL
-//
-//
-//6
-//
-//
-//Client to Server
-//
-//          or
-//
-//Server to Client
-//
-//
-//Publish release (assured delivery part 2)
-//
-//PUBCOMP
-//
-//
-//7
-//
-//
-//Client to Server
-//
-//          or
-//
-//Server to Client
-//
-//
-//Publish complete (assured delivery part 3)
-//
-//SUBSCRIBE
-//
-//
-//8
-//
-//
-//Client to Server
-//
-//
-//Client subscribe request
-//
-//SUBACK
-//
-//
-//9
-//
-//
-//Server to Client
-//
-//
-//Subscribe acknowledgment
-//
-//UNSUBSCRIBE
-//
-//
-//10
-//
-//
-//Client to Server
-//
-//
-//Unsubscribe request
-//
-//UNSUBACK
-//
-//
-//11
-//
-//
-//Server to Client
-//
-//
-//Unsubscribe acknowledgment
-//
-//PINGREQ
-//
-//
-//12
-//
-//
-//Client to Server
-//
-//
-//PING request
-//
-//PINGRESP
-//
-//
-//13
-//
-//
-//Server to Client
-//
-//
-//PING response
-//
-//DISCONNECT
-//
-//
-//14
-//
-//
-//Client to Server
-//
-//
-//Client is disconnecting
-//
-//Reserved
-//
-//
-//15
-//
-//
-
 
 typedef struct{
 uint8_t data[256];
@@ -279,7 +89,6 @@ typedef struct{
 	uint8_t user_name      :1;
 }conn_flags_t;
 
-;
 
 
 typedef struct{
@@ -364,7 +173,7 @@ typedef struct{
 
 typedef struct{
 	pub_fix_head_t * fix_head;
-	pub_var_head_t * var_head;
+	pub_var_head_t var_head;
 	uint8_t * pld;
 }pub_pck_t;
 
@@ -375,11 +184,16 @@ typedef struct{
 }pub_ack_stat_t;
 
 
+
+typedef struct{
+	uint8_t reserved :4;
+	uint8_t type :4;
+}subs_ctr_byte_t;
+
 /*---------subscribe-------------------*/
 typedef struct {
-	uint8_t type :4;
-	uint8_t reserved :4;
-	uint16_t *len;
+	subs_ctr_byte_t * subs_ctr_byte;
+	uint8_t *rem_len;
 }sub_fix_head_t;
 
 
@@ -398,8 +212,8 @@ typedef struct{
 
 
 typedef struct{
-	sub_fix_head_t * fix_head;
-	sub_var_head_t * var_head;
+	sub_fix_head_t fix_head;
+	sub_var_head_t var_head;
 	sub_topic_t pld_topics[MAX_SUB_PLDT];
 }sub_pck_t;
 
@@ -426,11 +240,14 @@ typedef struct{
 	MqttNet * net;
 }broker_t;
 
+
+
 void broker_init (broker_t * broker, MqttNet* net);
-void broker_decode_connect (broker_t * broker, uint8_t * frame, conn_pck_t * conn_pck );
+void broker_decode_connect_frame (broker_t * broker, uint8_t * frame, conn_pck_t * conn_pck );
 void * m_malloc(size_t size);
 void broker_fill_new_client(conn_client_t *new_client, const conn_pck_t * conn_pck, uint8_t* net_address);
 void broker_mantain_conn_frame (broker_t * broker, uint8_t * frame, conn_ack_stat_t * stat);
 void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat);
-
+void broker_decode_publish(uint8_t* frame, pub_pck_t * pub_pck);
+void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck);
 #endif /* INC_TINY_BROKER_H_ */

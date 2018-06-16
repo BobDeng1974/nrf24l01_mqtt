@@ -508,7 +508,7 @@ int MqttEncode_Subscribe(byte *tx_buf, int tx_buf_len,
     /* Determine packet length */
     remain_len = MQTT_DATA_LEN_SIZE; /* For packet_id */
     for (i = 0; i < subscribe->topic_count; i++) {
-        topic = &subscribe->topics[i];
+                                topic = &subscribe->topics[i];
         remain_len += (int)XSTRLEN(topic->topic_filter) + MQTT_DATA_LEN_SIZE;
         remain_len++; /* For QoS */
     }

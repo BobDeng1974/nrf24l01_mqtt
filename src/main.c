@@ -70,7 +70,7 @@ void packet_send_localhost(uint8_t * data, uint8_t size){
 	MqttNet net;
 int main()
 {
-  
+
 
 	memset(&local_host, 0, 256);
 
@@ -144,24 +144,34 @@ int main()
 	publish.packet_id = pck_id;
 	publish.qos = 1;
 	publish.retain = (byte) true;
+	publish.stat = 0;
+
+	MqttEncode_Publish(client.tx_buf, client.tx_buf_len, &publish);
+	pub_pck_t  pub_pck;
+	broker_decode_publish(local_host.data, &pub_pck);
 
 
-    MqttTopic * topics[2];
-    topics[0]->qos =1;
-    topics[0]->topic_filter = test_topic1;
+    MqttTopic topics[2];
+    topics[0].qos =1;
+    topics[0].topic_filter = test_topic1;
 
-    topics[1]->qos =1;
-    topics[1]->topic_filter = test_topic2;
+    topics[1].qos =1;
+    topics[1].topic_filter = test_topic2;
 
 
 
-	MqttSubscribe *subscribe;
-	subscribe->packet_id = pck_id;
+	MqttSubscribe subscribe;
+	subscribe.packet_id = pck_id;
 	uint8_t topic_count = 2;
-	subscribe->topic_count = topic_count;
-	subscribe->topics = topics;
-	MqttClient_Subscribe(&client, &subscribe);
-	MqttClient_Publish(&client, &publish);
+	subscribe.topic_count = topic_count;
+	subscribe.topics = topics;
+
+	memset(client.tx_buf, 0, 100);
+	MqttEncode_Subscribe(client.tx_buf, client.tx_buf_len, &subscribe);
+	sub_pck_t sub_pck;
+	broker_decode_subscribe(client.tx_buf, &sub_pck);
+	//MqttClient_Subscribe(&client, &subscribe);
+
 
 
 //

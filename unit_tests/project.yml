@@ -33,6 +33,7 @@
     - ../src
     - ../inc
     - /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/arm-atollic-eabi/include/sys
+    - /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/arm-atollic-eabi/include
   :support:
     - test/support
 
