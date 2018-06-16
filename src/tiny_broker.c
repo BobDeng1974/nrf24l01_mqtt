@@ -316,7 +316,7 @@ void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat){
 	pub_pck->fix_head = (pub_fix_head_t *) frame;
 	pos += sizeof (pub_fix_head_t);
 
-	uint16_t * ptr = (uint16_t*) &frame[pos];
+
 	pub_pck->var_head.topic_name_len  = (uint16_t*) &frame[pos];
 	*pub_pck->var_head.topic_name_len = X_HTONS(*pub_pck->var_head.topic_name_len);
 	pos += 2;
@@ -352,6 +352,25 @@ void publish_msg_to_subscribers(broker_t * broker, pub_pck_t * pub_pck){
 
 
 
+uint32_t decode_pck_len (uint8_t * frame){
+	uint8_t multiplier = 1;
+	uint32_t value = 0;
+	uint8_t i=0;
+	uint8_t  encodedByte;
+	const uint8_t max_nb_bytes_rl = 4;
+	do{
+		encodedByte = frame[i];
+		value += (encodedByte & 127) * multiplier;
+		multiplier *= 128;
+		i++;
+		if (i == max_nb_bytes_rl){
+			break;
+		}
+	}while ((encodedByte & 128) != 0);
+	return value;
+}
+
+
 
 
 /*-------------------------------SUBSCRIBE-----------------------------------------*/
@@ -361,8 +380,9 @@ void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck){
 
 	sub_pck->fix_head.subs_ctr_byte = (subs_ctr_byte_t *) frame;
 	pos++;
-	sub_pck->fix_head.rem_len = (uint8_t*) &frame[pos]; /*no handling for  packet bigger than 128bytes*/
-	//*sub_pck->fix_head.len =  X_HTONS(*sub_pck->fix_head.len);
+	frame[pos] =193;
+			(frame[pos+1]) = 2;
+	sub_pck->fix_head.rem_len = decode_pck_len(&frame[pos]);
 	pos ++;
 
 	sub_pck->var_head.packet_id  = (uint16_t*) &frame[pos];
@@ -371,7 +391,7 @@ void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck){
 
 	const uint8_t fix_head_size = 2;
 	uint8_t topic_nb =0;
-	while (pos < (*sub_pck->fix_head.rem_len + fix_head_size)){
+	while (pos < (sub_pck->fix_head.rem_len + fix_head_size)){
 		sub_pck->pld_topics[topic_nb].topic_name_len = (uint16_t *)  &frame[pos];
 		*sub_pck->pld_topics[topic_nb].topic_name_len  = X_HTONS(*sub_pck->pld_topics[topic_nb].topic_name_len );
 		pos += 2;

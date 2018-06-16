@@ -5,39 +5,39 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .isr_vector   0000010c  08000000  08000000  00010000  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  1 .text         000026cc  0800010c  0800010c  0001010c  2**2
+  1 .text         0000273c  0800010c  0800010c  0001010c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000058  080027d8  080027d8  000127d8  2**2
+  2 .rodata       00000058  08002848  08002848  00012848  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .init_array   00000004  08002830  08002830  00012830  2**2
+  3 .init_array   00000004  080028a0  080028a0  000128a0  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  4 .fini_array   00000004  08002834  08002834  00012834  2**2
+  4 .fini_array   00000004  080028a4  080028a4  000128a4  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  5 .data         00000010  20000000  08002838  00020000  2**2
+  5 .data         00000010  20000000  080028a8  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .bss          00000818  20000010  08002848  00020010  2**2
+  6 .bss          00000818  20000010  080028b8  00020010  2**2
                   ALLOC
-  7 ._user_heap_stack 00000100  20000828  08002848  00020828  2**0
+  7 ._user_heap_stack 00000100  20000828  080028b8  00020828  2**0
                   ALLOC
   8 .ARM.attributes 00000029  00000000  00000000  00020010  2**0
                   CONTENTS, READONLY
-  9 .debug_info   0000a032  00000000  00000000  00020039  2**0
+  9 .debug_info   0000a0ac  00000000  00000000  00020039  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_abbrev 00001946  00000000  00000000  0002a06b  2**0
+ 10 .debug_abbrev 00001962  00000000  00000000  0002a0e5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_aranges 00000748  00000000  00000000  0002b9b8  2**3
+ 11 .debug_aranges 00000750  00000000  00000000  0002ba48  2**3
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000006a0  00000000  00000000  0002c100  2**3
+ 12 .debug_ranges 000006a8  00000000  00000000  0002c198  2**3
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_line   00002fee  00000000  00000000  0002c7a0  2**0
+ 13 .debug_line   0000300c  00000000  00000000  0002c840  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    00002887  00000000  00000000  0002f78e  2**0
+ 14 .debug_str    000028b2  00000000  00000000  0002f84c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .comment      0000007c  00000000  00000000  00032015  2**0
+ 15 .comment      0000007c  00000000  00000000  000320fe  2**0
                   CONTENTS, READONLY
- 16 .debug_frame  00001cec  00000000  00000000  00032094  2**2
+ 16 .debug_frame  00001d10  00000000  00000000  0003217c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 17 .stabstr      0000003f  00000000  00000000  00033d80  2**0
+ 17 .stabstr      0000003f  00000000  00000000  00033e8c  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -56,7 +56,7 @@ Disassembly of section .text:
  8000122:	bd10      	pop	{r4, pc}
  8000124:	20000010 	.word	0x20000010
  8000128:	00000000 	.word	0x00000000
- 800012c:	080027c0 	.word	0x080027c0
+ 800012c:	08002830 	.word	0x08002830
 
 08000130 <frame_dummy>:
  8000130:	b508      	push	{r3, lr}
@@ -68,7 +68,7 @@ Disassembly of section .text:
  800013e:	bd08      	pop	{r3, pc}
  8000140:	00000000 	.word	0x00000000
  8000144:	20000014 	.word	0x20000014
- 8000148:	080027c0 	.word	0x080027c0
+ 8000148:	08002830 	.word	0x08002830
 
 0800014c <strlen>:
  800014c:	4603      	mov	r3, r0
@@ -798,7 +798,7 @@ void packet_send_localhost(uint8_t * data, uint8_t size){
  80004c2:	461a      	mov	r2, r3
  80004c4:	6879      	ldr	r1, [r7, #4]
  80004c6:	4805      	ldr	r0, [pc, #20]	; (80004dc <packet_send_localhost+0x28>)
- 80004c8:	f002 f966 	bl	8002798 <memcpy>
+ 80004c8:	f002 f99e 	bl	8002808 <memcpy>
 	local_host.len = size;
  80004cc:	4a03      	ldr	r2, [pc, #12]	; (80004dc <packet_send_localhost+0x28>)
  80004ce:	78fb      	ldrb	r3, [r7, #3]
@@ -878,7 +878,7 @@ void packet_send_localhost(uint8_t * data, uint8_t size){
  800053a:	687a      	ldr	r2, [r7, #4]
  800053c:	4619      	mov	r1, r3
  800053e:	68b8      	ldr	r0, [r7, #8]
- 8000540:	f002 f92a 	bl	8002798 <memcpy>
+ 8000540:	f002 f962 	bl	8002808 <memcpy>
 		local_host.pos += buf_len;
  8000544:	4b07      	ldr	r3, [pc, #28]	; (8000564 <mqtt_net_read_cb+0x44>)
  8000546:	f893 2101 	ldrb.w	r2, [r3, #257]	; 0x101
@@ -958,7 +958,7 @@ int main()
  80005a6:	f44f 7280 	mov.w	r2, #256	; 0x100
  80005aa:	2100      	movs	r1, #0
  80005ac:	4893      	ldr	r0, [pc, #588]	; (80007fc <main+0x25c>)
- 80005ae:	f002 f8fe 	bl	80027ae <memset>
+ 80005ae:	f002 f936 	bl	800281e <memset>
 
     nrf24_init();
  80005b2:	f001 fba2 	bl	8001cfa <nrf24_init>
@@ -1060,7 +1060,7 @@ int main()
  800064c:	2240      	movs	r2, #64	; 0x40
  800064e:	2100      	movs	r1, #0
  8000650:	f8d7 0174 	ldr.w	r0, [r7, #372]	; 0x174
- 8000654:	f002 f8ab 	bl	80027ae <memset>
+ 8000654:	f002 f8e3 	bl	800281e <memset>
 	uint8_t tx_buf_len = 64;
  8000658:	2340      	movs	r3, #64	; 0x40
  800065a:	f887 3173 	strb.w	r3, [r7, #371]	; 0x173
@@ -1216,7 +1216,7 @@ int main()
  8000796:	2264      	movs	r2, #100	; 0x64
  8000798:	2100      	movs	r1, #0
  800079a:	4618      	mov	r0, r3
- 800079c:	f002 f807 	bl	80027ae <memset>
+ 800079c:	f002 f83f 	bl	800281e <memset>
 	MqttEncode_Subscribe(client.tx_buf, client.tx_buf_len, &subscribe);
  80007a0:	f8d7 30f0 	ldr.w	r3, [r7, #240]	; 0xf0
  80007a4:	f8d7 10f4 	ldr.w	r1, [r7, #244]	; 0xf4
@@ -1229,7 +1229,7 @@ int main()
  80007b6:	463a      	mov	r2, r7
  80007b8:	4611      	mov	r1, r2
  80007ba:	4618      	mov	r0, r3
- 80007bc:	f001 ff25 	bl	800260a <broker_decode_subscribe>
+ 80007bc:	f001 ff52 	bl	8002664 <broker_decode_subscribe>
 //    		// nrf24_powerDown();
 //
 //       }
@@ -1283,11 +1283,11 @@ int main()
  800081c:	08000569 	.word	0x08000569
  8000820:	0800058d 	.word	0x0800058d
  8000824:	080004e1 	.word	0x080004e1
- 8000828:	080027d8 	.word	0x080027d8
- 800082c:	080027dc 	.word	0x080027dc
- 8000830:	080027e8 	.word	0x080027e8
- 8000834:	080027f4 	.word	0x080027f4
- 8000838:	0800280c 	.word	0x0800280c
+ 8000828:	08002848 	.word	0x08002848
+ 800082c:	0800284c 	.word	0x0800284c
+ 8000830:	08002858 	.word	0x08002858
+ 8000834:	08002864 	.word	0x08002864
+ 8000838:	0800287c 	.word	0x0800287c
  800083c:	20000144 	.word	0x20000144
  8000840:	20000740 	.word	0x20000740
 
@@ -2107,7 +2107,7 @@ int MqttClient_Init(MqttClient *client, MqttNet* net,
  8000c9e:	226c      	movs	r2, #108	; 0x6c
  8000ca0:	2100      	movs	r1, #0
  8000ca2:	68f8      	ldr	r0, [r7, #12]
- 8000ca4:	f001 fd83 	bl	80027ae <memset>
+ 8000ca4:	f001 fdbb 	bl	800281e <memset>
 
     /* Setup client structure */
     client->msg_cb = msg_cb;
@@ -2820,7 +2820,7 @@ int MqttEncode_String(byte *buf, const char *str)
  8001092:	461a      	mov	r2, r3
  8001094:	6839      	ldr	r1, [r7, #0]
  8001096:	6878      	ldr	r0, [r7, #4]
- 8001098:	f001 fb7e 	bl	8002798 <memcpy>
+ 8001098:	f001 fbb6 	bl	8002808 <memcpy>
     return len + str_len;
  800109c:	68ba      	ldr	r2, [r7, #8]
  800109e:	68fb      	ldr	r3, [r7, #12]
@@ -2859,7 +2859,7 @@ int MqttEncode_Data(byte *buf, const byte *data, word16 data_len)
  80010ce:	461a      	mov	r2, r3
  80010d0:	68b9      	ldr	r1, [r7, #8]
  80010d2:	68f8      	ldr	r0, [r7, #12]
- 80010d4:	f001 fb60 	bl	8002798 <memcpy>
+ 80010d4:	f001 fb98 	bl	8002808 <memcpy>
     return len + data_len;
  80010d8:	88fa      	ldrh	r2, [r7, #6]
  80010da:	697b      	ldr	r3, [r7, #20]
@@ -3249,7 +3249,7 @@ int MqttEncode_Connect(byte *tx_buf, int tx_buf_len, MqttConnect *connect)
  800133e:	3728      	adds	r7, #40	; 0x28
  8001340:	46bd      	mov	sp, r7
  8001342:	bd80      	pop	{r7, pc}
- 8001344:	08002824 	.word	0x08002824
+ 8001344:	08002894 	.word	0x08002894
 
 08001348 <MqttDecode_ConnectAck>:
 
@@ -3503,7 +3503,7 @@ int MqttEncode_Publish(byte *tx_buf, int tx_buf_len, MqttPublish *publish)
  80014ae:	69ba      	ldr	r2, [r7, #24]
  80014b0:	4619      	mov	r1, r3
  80014b2:	6978      	ldr	r0, [r7, #20]
- 80014b4:	f001 f970 	bl	8002798 <memcpy>
+ 80014b4:	f001 f9a8 	bl	8002808 <memcpy>
     }
     publish->buffer_pos = 0;
  80014b8:	687b      	ldr	r3, [r7, #4]
@@ -5029,7 +5029,7 @@ bool l3_receive_packet(uint8_t *data, uint8_t * packet_buff){
  8001cd2:	3302      	adds	r3, #2
  8001cd4:	221e      	movs	r2, #30
  8001cd6:	4619      	mov	r1, r3
- 8001cd8:	f000 fd5e 	bl	8002798 <memcpy>
+ 8001cd8:	f000 fd96 	bl	8002808 <memcpy>
 		if ((data[H_FRM]+1) == data[H_TOTAL]){
  8001cdc:	687b      	ldr	r3, [r7, #4]
  8001cde:	781b      	ldrb	r3, [r3, #0]
@@ -6240,7 +6240,7 @@ LoopFillZerobss:
  8002356:	f000 f83d 	bl	80023d4 <SystemInit>
 /* Call static constructors */
     bl __libc_init_array
- 800235a:	f000 f9f9 	bl	8002750 <__libc_init_array>
+ 800235a:	f000 fa31 	bl	80027c0 <__libc_init_array>
 /* Call the application's entry point.*/
 	bl	main
  800235e:	f7fe f91f 	bl	80005a0 <main>
@@ -6249,7 +6249,7 @@ LoopFillZerobss:
   ldr   sp, =_estack    /* Atollic update: set stack pointer */
  8002364:	20005000 	.word	0x20005000
 	ldr	r3, =_sidata
- 8002368:	08002838 	.word	0x08002838
+ 8002368:	080028a8 	.word	0x080028a8
 	ldr	r0, =_sdata
  800236c:	20000000 	.word	0x20000000
 	ldr	r3, =_edata
@@ -6721,366 +6721,444 @@ static void SetSysClockTo72(void)
  800255e:	3302      	adds	r3, #2
  8002560:	73fb      	strb	r3, [r7, #15]
 
-	uint16_t * ptr = (uint16_t*) &frame[pos];
+
+	pub_pck->var_head.topic_name_len  = (uint16_t*) &frame[pos];
  8002562:	7bfb      	ldrb	r3, [r7, #15]
  8002564:	687a      	ldr	r2, [r7, #4]
- 8002566:	4413      	add	r3, r2
- 8002568:	60bb      	str	r3, [r7, #8]
-	pub_pck->var_head.topic_name_len  = (uint16_t*) &frame[pos];
- 800256a:	7bfb      	ldrb	r3, [r7, #15]
- 800256c:	687a      	ldr	r2, [r7, #4]
- 800256e:	441a      	add	r2, r3
- 8002570:	683b      	ldr	r3, [r7, #0]
- 8002572:	605a      	str	r2, [r3, #4]
+ 8002566:	441a      	add	r2, r3
+ 8002568:	683b      	ldr	r3, [r7, #0]
+ 800256a:	605a      	str	r2, [r3, #4]
 	*pub_pck->var_head.topic_name_len = X_HTONS(*pub_pck->var_head.topic_name_len);
- 8002574:	683b      	ldr	r3, [r7, #0]
- 8002576:	685b      	ldr	r3, [r3, #4]
- 8002578:	683a      	ldr	r2, [r7, #0]
- 800257a:	6852      	ldr	r2, [r2, #4]
- 800257c:	8812      	ldrh	r2, [r2, #0]
- 800257e:	0a12      	lsrs	r2, r2, #8
- 8002580:	b292      	uxth	r2, r2
- 8002582:	b211      	sxth	r1, r2
- 8002584:	683a      	ldr	r2, [r7, #0]
- 8002586:	6852      	ldr	r2, [r2, #4]
- 8002588:	8812      	ldrh	r2, [r2, #0]
- 800258a:	0212      	lsls	r2, r2, #8
- 800258c:	b212      	sxth	r2, r2
- 800258e:	430a      	orrs	r2, r1
- 8002590:	b212      	sxth	r2, r2
- 8002592:	b292      	uxth	r2, r2
- 8002594:	801a      	strh	r2, [r3, #0]
+ 800256c:	683b      	ldr	r3, [r7, #0]
+ 800256e:	685b      	ldr	r3, [r3, #4]
+ 8002570:	683a      	ldr	r2, [r7, #0]
+ 8002572:	6852      	ldr	r2, [r2, #4]
+ 8002574:	8812      	ldrh	r2, [r2, #0]
+ 8002576:	0a12      	lsrs	r2, r2, #8
+ 8002578:	b292      	uxth	r2, r2
+ 800257a:	b211      	sxth	r1, r2
+ 800257c:	683a      	ldr	r2, [r7, #0]
+ 800257e:	6852      	ldr	r2, [r2, #4]
+ 8002580:	8812      	ldrh	r2, [r2, #0]
+ 8002582:	0212      	lsls	r2, r2, #8
+ 8002584:	b212      	sxth	r2, r2
+ 8002586:	430a      	orrs	r2, r1
+ 8002588:	b212      	sxth	r2, r2
+ 800258a:	b292      	uxth	r2, r2
+ 800258c:	801a      	strh	r2, [r3, #0]
 	pos += 2;
- 8002596:	7bfb      	ldrb	r3, [r7, #15]
- 8002598:	3302      	adds	r3, #2
- 800259a:	73fb      	strb	r3, [r7, #15]
+ 800258e:	7bfb      	ldrb	r3, [r7, #15]
+ 8002590:	3302      	adds	r3, #2
+ 8002592:	73fb      	strb	r3, [r7, #15]
 
 	pub_pck->var_head.topic_name = (unsigned char*)  &frame[pos];
- 800259c:	7bfb      	ldrb	r3, [r7, #15]
- 800259e:	687a      	ldr	r2, [r7, #4]
- 80025a0:	441a      	add	r2, r3
- 80025a2:	683b      	ldr	r3, [r7, #0]
- 80025a4:	609a      	str	r2, [r3, #8]
+ 8002594:	7bfb      	ldrb	r3, [r7, #15]
+ 8002596:	687a      	ldr	r2, [r7, #4]
+ 8002598:	441a      	add	r2, r3
+ 800259a:	683b      	ldr	r3, [r7, #0]
+ 800259c:	609a      	str	r2, [r3, #8]
 	pos += *pub_pck->var_head.topic_name_len;
- 80025a6:	683b      	ldr	r3, [r7, #0]
- 80025a8:	685b      	ldr	r3, [r3, #4]
- 80025aa:	881b      	ldrh	r3, [r3, #0]
- 80025ac:	b2da      	uxtb	r2, r3
- 80025ae:	7bfb      	ldrb	r3, [r7, #15]
- 80025b0:	4413      	add	r3, r2
- 80025b2:	73fb      	strb	r3, [r7, #15]
+ 800259e:	683b      	ldr	r3, [r7, #0]
+ 80025a0:	685b      	ldr	r3, [r3, #4]
+ 80025a2:	881b      	ldrh	r3, [r3, #0]
+ 80025a4:	b2da      	uxtb	r2, r3
+ 80025a6:	7bfb      	ldrb	r3, [r7, #15]
+ 80025a8:	4413      	add	r3, r2
+ 80025aa:	73fb      	strb	r3, [r7, #15]
 
 	if (pub_pck->fix_head->QoS > 0){
- 80025b4:	683b      	ldr	r3, [r7, #0]
- 80025b6:	681b      	ldr	r3, [r3, #0]
- 80025b8:	781b      	ldrb	r3, [r3, #0]
- 80025ba:	f3c3 0341 	ubfx	r3, r3, #1, #2
- 80025be:	b2db      	uxtb	r3, r3
- 80025c0:	2b00      	cmp	r3, #0
- 80025c2:	dd18      	ble.n	80025f6 <broker_decode_publish+0xae>
+ 80025ac:	683b      	ldr	r3, [r7, #0]
+ 80025ae:	681b      	ldr	r3, [r3, #0]
+ 80025b0:	781b      	ldrb	r3, [r3, #0]
+ 80025b2:	f3c3 0341 	ubfx	r3, r3, #1, #2
+ 80025b6:	b2db      	uxtb	r3, r3
+ 80025b8:	2b00      	cmp	r3, #0
+ 80025ba:	dd18      	ble.n	80025ee <broker_decode_publish+0xa6>
 		pub_pck->var_head.packet_id  = (uint16_t*) &frame[pos];
- 80025c4:	7bfb      	ldrb	r3, [r7, #15]
- 80025c6:	687a      	ldr	r2, [r7, #4]
- 80025c8:	441a      	add	r2, r3
- 80025ca:	683b      	ldr	r3, [r7, #0]
- 80025cc:	60da      	str	r2, [r3, #12]
+ 80025bc:	7bfb      	ldrb	r3, [r7, #15]
+ 80025be:	687a      	ldr	r2, [r7, #4]
+ 80025c0:	441a      	add	r2, r3
+ 80025c2:	683b      	ldr	r3, [r7, #0]
+ 80025c4:	60da      	str	r2, [r3, #12]
 		*pub_pck->var_head.packet_id = X_HTONS(*pub_pck->var_head.packet_id);
- 80025ce:	683b      	ldr	r3, [r7, #0]
- 80025d0:	68db      	ldr	r3, [r3, #12]
- 80025d2:	683a      	ldr	r2, [r7, #0]
- 80025d4:	68d2      	ldr	r2, [r2, #12]
- 80025d6:	8812      	ldrh	r2, [r2, #0]
- 80025d8:	0a12      	lsrs	r2, r2, #8
- 80025da:	b292      	uxth	r2, r2
- 80025dc:	b211      	sxth	r1, r2
- 80025de:	683a      	ldr	r2, [r7, #0]
- 80025e0:	68d2      	ldr	r2, [r2, #12]
- 80025e2:	8812      	ldrh	r2, [r2, #0]
- 80025e4:	0212      	lsls	r2, r2, #8
- 80025e6:	b212      	sxth	r2, r2
- 80025e8:	430a      	orrs	r2, r1
- 80025ea:	b212      	sxth	r2, r2
- 80025ec:	b292      	uxth	r2, r2
- 80025ee:	801a      	strh	r2, [r3, #0]
+ 80025c6:	683b      	ldr	r3, [r7, #0]
+ 80025c8:	68db      	ldr	r3, [r3, #12]
+ 80025ca:	683a      	ldr	r2, [r7, #0]
+ 80025cc:	68d2      	ldr	r2, [r2, #12]
+ 80025ce:	8812      	ldrh	r2, [r2, #0]
+ 80025d0:	0a12      	lsrs	r2, r2, #8
+ 80025d2:	b292      	uxth	r2, r2
+ 80025d4:	b211      	sxth	r1, r2
+ 80025d6:	683a      	ldr	r2, [r7, #0]
+ 80025d8:	68d2      	ldr	r2, [r2, #12]
+ 80025da:	8812      	ldrh	r2, [r2, #0]
+ 80025dc:	0212      	lsls	r2, r2, #8
+ 80025de:	b212      	sxth	r2, r2
+ 80025e0:	430a      	orrs	r2, r1
+ 80025e2:	b212      	sxth	r2, r2
+ 80025e4:	b292      	uxth	r2, r2
+ 80025e6:	801a      	strh	r2, [r3, #0]
 		pos += 2;
- 80025f0:	7bfb      	ldrb	r3, [r7, #15]
- 80025f2:	3302      	adds	r3, #2
- 80025f4:	73fb      	strb	r3, [r7, #15]
+ 80025e8:	7bfb      	ldrb	r3, [r7, #15]
+ 80025ea:	3302      	adds	r3, #2
+ 80025ec:	73fb      	strb	r3, [r7, #15]
 	}
 	pub_pck->pld = &frame[pos];
- 80025f6:	7bfb      	ldrb	r3, [r7, #15]
- 80025f8:	687a      	ldr	r2, [r7, #4]
- 80025fa:	441a      	add	r2, r3
- 80025fc:	683b      	ldr	r3, [r7, #0]
- 80025fe:	611a      	str	r2, [r3, #16]
+ 80025ee:	7bfb      	ldrb	r3, [r7, #15]
+ 80025f0:	687a      	ldr	r2, [r7, #4]
+ 80025f2:	441a      	add	r2, r3
+ 80025f4:	683b      	ldr	r3, [r7, #0]
+ 80025f6:	611a      	str	r2, [r3, #16]
 }
- 8002600:	bf00      	nop
- 8002602:	3714      	adds	r7, #20
- 8002604:	46bd      	mov	sp, r7
- 8002606:	bc80      	pop	{r7}
- 8002608:	4770      	bx	lr
+ 80025f8:	bf00      	nop
+ 80025fa:	3714      	adds	r7, #20
+ 80025fc:	46bd      	mov	sp, r7
+ 80025fe:	bc80      	pop	{r7}
+ 8002600:	4770      	bx	lr
 
-0800260a <broker_decode_subscribe>:
+08002602 <decode_pck_len>:
+	}
+}
+
+
+
+uint32_t decode_pck_len (uint8_t * frame){
+ 8002602:	b480      	push	{r7}
+ 8002604:	b087      	sub	sp, #28
+ 8002606:	af00      	add	r7, sp, #0
+ 8002608:	6078      	str	r0, [r7, #4]
+	uint8_t multiplier = 1;
+ 800260a:	2301      	movs	r3, #1
+ 800260c:	75fb      	strb	r3, [r7, #23]
+	uint32_t value = 0;
+ 800260e:	2300      	movs	r3, #0
+ 8002610:	613b      	str	r3, [r7, #16]
+	uint8_t i=0;
+ 8002612:	2300      	movs	r3, #0
+ 8002614:	73fb      	strb	r3, [r7, #15]
+	uint8_t  encodedByte;
+	const uint8_t max_nb_bytes_rl = 4;
+ 8002616:	2304      	movs	r3, #4
+ 8002618:	73bb      	strb	r3, [r7, #14]
+	do{
+		encodedByte = frame[i];
+ 800261a:	7bfb      	ldrb	r3, [r7, #15]
+ 800261c:	687a      	ldr	r2, [r7, #4]
+ 800261e:	4413      	add	r3, r2
+ 8002620:	781b      	ldrb	r3, [r3, #0]
+ 8002622:	737b      	strb	r3, [r7, #13]
+		value += (encodedByte & 127) * multiplier;
+ 8002624:	7b7b      	ldrb	r3, [r7, #13]
+ 8002626:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+ 800262a:	7dfa      	ldrb	r2, [r7, #23]
+ 800262c:	fb02 f303 	mul.w	r3, r2, r3
+ 8002630:	461a      	mov	r2, r3
+ 8002632:	693b      	ldr	r3, [r7, #16]
+ 8002634:	4413      	add	r3, r2
+ 8002636:	613b      	str	r3, [r7, #16]
+		multiplier *= 128;
+ 8002638:	7dfb      	ldrb	r3, [r7, #23]
+ 800263a:	01db      	lsls	r3, r3, #7
+ 800263c:	75fb      	strb	r3, [r7, #23]
+		i++;
+ 800263e:	7bfb      	ldrb	r3, [r7, #15]
+ 8002640:	3301      	adds	r3, #1
+ 8002642:	73fb      	strb	r3, [r7, #15]
+		if (i == max_nb_bytes_rl){
+ 8002644:	7bfa      	ldrb	r2, [r7, #15]
+ 8002646:	7bbb      	ldrb	r3, [r7, #14]
+ 8002648:	429a      	cmp	r2, r3
+ 800264a:	d004      	beq.n	8002656 <decode_pck_len+0x54>
+			break;
+		}
+	}while ((encodedByte & 128) != 0);
+ 800264c:	f997 300d 	ldrsb.w	r3, [r7, #13]
+ 8002650:	2b00      	cmp	r3, #0
+ 8002652:	dbe2      	blt.n	800261a <decode_pck_len+0x18>
+ 8002654:	e000      	b.n	8002658 <decode_pck_len+0x56>
+			break;
+ 8002656:	bf00      	nop
+	return value;
+ 8002658:	693b      	ldr	r3, [r7, #16]
+}
+ 800265a:	4618      	mov	r0, r3
+ 800265c:	371c      	adds	r7, #28
+ 800265e:	46bd      	mov	sp, r7
+ 8002660:	bc80      	pop	{r7}
+ 8002662:	4770      	bx	lr
+
+08002664 <broker_decode_subscribe>:
 
 
 
 /*-------------------------------SUBSCRIBE-----------------------------------------*/
 
 void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck){
- 800260a:	b490      	push	{r4, r7}
- 800260c:	b084      	sub	sp, #16
- 800260e:	af00      	add	r7, sp, #0
- 8002610:	6078      	str	r0, [r7, #4]
- 8002612:	6039      	str	r1, [r7, #0]
+ 8002664:	b590      	push	{r4, r7, lr}
+ 8002666:	b085      	sub	sp, #20
+ 8002668:	af00      	add	r7, sp, #0
+ 800266a:	6078      	str	r0, [r7, #4]
+ 800266c:	6039      	str	r1, [r7, #0]
 	uint8_t pos = 0;
- 8002614:	2300      	movs	r3, #0
- 8002616:	73fb      	strb	r3, [r7, #15]
+ 800266e:	2300      	movs	r3, #0
+ 8002670:	73fb      	strb	r3, [r7, #15]
 
 	sub_pck->fix_head.subs_ctr_byte = (subs_ctr_byte_t *) frame;
- 8002618:	683b      	ldr	r3, [r7, #0]
- 800261a:	687a      	ldr	r2, [r7, #4]
- 800261c:	601a      	str	r2, [r3, #0]
+ 8002672:	683b      	ldr	r3, [r7, #0]
+ 8002674:	687a      	ldr	r2, [r7, #4]
+ 8002676:	601a      	str	r2, [r3, #0]
 	pos++;
- 800261e:	7bfb      	ldrb	r3, [r7, #15]
- 8002620:	3301      	adds	r3, #1
- 8002622:	73fb      	strb	r3, [r7, #15]
-	sub_pck->fix_head.rem_len = (uint8_t*) &frame[pos]; /*no handling for  packet bigger than 128bytes*/
- 8002624:	7bfb      	ldrb	r3, [r7, #15]
- 8002626:	687a      	ldr	r2, [r7, #4]
- 8002628:	441a      	add	r2, r3
- 800262a:	683b      	ldr	r3, [r7, #0]
- 800262c:	605a      	str	r2, [r3, #4]
-	//*sub_pck->fix_head.len =  X_HTONS(*sub_pck->fix_head.len);
+ 8002678:	7bfb      	ldrb	r3, [r7, #15]
+ 800267a:	3301      	adds	r3, #1
+ 800267c:	73fb      	strb	r3, [r7, #15]
+	frame[pos] =193;
+ 800267e:	7bfb      	ldrb	r3, [r7, #15]
+ 8002680:	687a      	ldr	r2, [r7, #4]
+ 8002682:	4413      	add	r3, r2
+ 8002684:	22c1      	movs	r2, #193	; 0xc1
+ 8002686:	701a      	strb	r2, [r3, #0]
+			(frame[pos+1]) = 2;
+ 8002688:	7bfb      	ldrb	r3, [r7, #15]
+ 800268a:	3301      	adds	r3, #1
+ 800268c:	687a      	ldr	r2, [r7, #4]
+ 800268e:	4413      	add	r3, r2
+ 8002690:	2202      	movs	r2, #2
+ 8002692:	701a      	strb	r2, [r3, #0]
+	sub_pck->fix_head.rem_len = decode_pck_len(&frame[pos]);
+ 8002694:	7bfb      	ldrb	r3, [r7, #15]
+ 8002696:	687a      	ldr	r2, [r7, #4]
+ 8002698:	4413      	add	r3, r2
+ 800269a:	4618      	mov	r0, r3
+ 800269c:	f7ff ffb1 	bl	8002602 <decode_pck_len>
+ 80026a0:	4602      	mov	r2, r0
+ 80026a2:	683b      	ldr	r3, [r7, #0]
+ 80026a4:	605a      	str	r2, [r3, #4]
 	pos ++;
- 800262e:	7bfb      	ldrb	r3, [r7, #15]
- 8002630:	3301      	adds	r3, #1
- 8002632:	73fb      	strb	r3, [r7, #15]
+ 80026a6:	7bfb      	ldrb	r3, [r7, #15]
+ 80026a8:	3301      	adds	r3, #1
+ 80026aa:	73fb      	strb	r3, [r7, #15]
 
 	sub_pck->var_head.packet_id  = (uint16_t*) &frame[pos];
- 8002634:	7bfb      	ldrb	r3, [r7, #15]
- 8002636:	687a      	ldr	r2, [r7, #4]
- 8002638:	441a      	add	r2, r3
- 800263a:	683b      	ldr	r3, [r7, #0]
- 800263c:	609a      	str	r2, [r3, #8]
+ 80026ac:	7bfb      	ldrb	r3, [r7, #15]
+ 80026ae:	687a      	ldr	r2, [r7, #4]
+ 80026b0:	441a      	add	r2, r3
+ 80026b2:	683b      	ldr	r3, [r7, #0]
+ 80026b4:	609a      	str	r2, [r3, #8]
 	*sub_pck->var_head.packet_id = X_HTONS(*sub_pck->var_head.packet_id);
- 800263e:	683b      	ldr	r3, [r7, #0]
- 8002640:	689b      	ldr	r3, [r3, #8]
- 8002642:	683a      	ldr	r2, [r7, #0]
- 8002644:	6892      	ldr	r2, [r2, #8]
- 8002646:	8812      	ldrh	r2, [r2, #0]
- 8002648:	0a12      	lsrs	r2, r2, #8
- 800264a:	b292      	uxth	r2, r2
- 800264c:	b211      	sxth	r1, r2
- 800264e:	683a      	ldr	r2, [r7, #0]
- 8002650:	6892      	ldr	r2, [r2, #8]
- 8002652:	8812      	ldrh	r2, [r2, #0]
- 8002654:	0212      	lsls	r2, r2, #8
- 8002656:	b212      	sxth	r2, r2
- 8002658:	430a      	orrs	r2, r1
- 800265a:	b212      	sxth	r2, r2
- 800265c:	b292      	uxth	r2, r2
- 800265e:	801a      	strh	r2, [r3, #0]
+ 80026b6:	683b      	ldr	r3, [r7, #0]
+ 80026b8:	689b      	ldr	r3, [r3, #8]
+ 80026ba:	683a      	ldr	r2, [r7, #0]
+ 80026bc:	6892      	ldr	r2, [r2, #8]
+ 80026be:	8812      	ldrh	r2, [r2, #0]
+ 80026c0:	0a12      	lsrs	r2, r2, #8
+ 80026c2:	b292      	uxth	r2, r2
+ 80026c4:	b211      	sxth	r1, r2
+ 80026c6:	683a      	ldr	r2, [r7, #0]
+ 80026c8:	6892      	ldr	r2, [r2, #8]
+ 80026ca:	8812      	ldrh	r2, [r2, #0]
+ 80026cc:	0212      	lsls	r2, r2, #8
+ 80026ce:	b212      	sxth	r2, r2
+ 80026d0:	430a      	orrs	r2, r1
+ 80026d2:	b212      	sxth	r2, r2
+ 80026d4:	b292      	uxth	r2, r2
+ 80026d6:	801a      	strh	r2, [r3, #0]
 	pos += 2;
- 8002660:	7bfb      	ldrb	r3, [r7, #15]
- 8002662:	3302      	adds	r3, #2
- 8002664:	73fb      	strb	r3, [r7, #15]
+ 80026d8:	7bfb      	ldrb	r3, [r7, #15]
+ 80026da:	3302      	adds	r3, #2
+ 80026dc:	73fb      	strb	r3, [r7, #15]
 
 	const uint8_t fix_head_size = 2;
- 8002666:	2302      	movs	r3, #2
- 8002668:	737b      	strb	r3, [r7, #13]
+ 80026de:	2302      	movs	r3, #2
+ 80026e0:	737b      	strb	r3, [r7, #13]
 	uint8_t topic_nb =0;
- 800266a:	2300      	movs	r3, #0
- 800266c:	73bb      	strb	r3, [r7, #14]
-	while (pos < (*sub_pck->fix_head.rem_len + fix_head_size)){
- 800266e:	e060      	b.n	8002732 <broker_decode_subscribe+0x128>
+ 80026e2:	2300      	movs	r3, #0
+ 80026e4:	73bb      	strb	r3, [r7, #14]
+	while (pos < (sub_pck->fix_head.rem_len + fix_head_size)){
+ 80026e6:	e060      	b.n	80027aa <broker_decode_subscribe+0x146>
 		sub_pck->pld_topics[topic_nb].topic_name_len = (uint16_t *)  &frame[pos];
- 8002670:	7bba      	ldrb	r2, [r7, #14]
- 8002672:	7bfb      	ldrb	r3, [r7, #15]
- 8002674:	6879      	ldr	r1, [r7, #4]
- 8002676:	4419      	add	r1, r3
- 8002678:	6838      	ldr	r0, [r7, #0]
- 800267a:	4613      	mov	r3, r2
- 800267c:	005b      	lsls	r3, r3, #1
- 800267e:	4413      	add	r3, r2
- 8002680:	009b      	lsls	r3, r3, #2
- 8002682:	4403      	add	r3, r0
- 8002684:	330c      	adds	r3, #12
- 8002686:	6019      	str	r1, [r3, #0]
+ 80026e8:	7bba      	ldrb	r2, [r7, #14]
+ 80026ea:	7bfb      	ldrb	r3, [r7, #15]
+ 80026ec:	6879      	ldr	r1, [r7, #4]
+ 80026ee:	4419      	add	r1, r3
+ 80026f0:	6838      	ldr	r0, [r7, #0]
+ 80026f2:	4613      	mov	r3, r2
+ 80026f4:	005b      	lsls	r3, r3, #1
+ 80026f6:	4413      	add	r3, r2
+ 80026f8:	009b      	lsls	r3, r3, #2
+ 80026fa:	4403      	add	r3, r0
+ 80026fc:	330c      	adds	r3, #12
+ 80026fe:	6019      	str	r1, [r3, #0]
 		*sub_pck->pld_topics[topic_nb].topic_name_len  = X_HTONS(*sub_pck->pld_topics[topic_nb].topic_name_len );
- 8002688:	7bba      	ldrb	r2, [r7, #14]
- 800268a:	6839      	ldr	r1, [r7, #0]
- 800268c:	4613      	mov	r3, r2
- 800268e:	005b      	lsls	r3, r3, #1
- 8002690:	4413      	add	r3, r2
- 8002692:	009b      	lsls	r3, r3, #2
- 8002694:	440b      	add	r3, r1
- 8002696:	330c      	adds	r3, #12
- 8002698:	6819      	ldr	r1, [r3, #0]
- 800269a:	7bba      	ldrb	r2, [r7, #14]
- 800269c:	6838      	ldr	r0, [r7, #0]
- 800269e:	4613      	mov	r3, r2
- 80026a0:	005b      	lsls	r3, r3, #1
- 80026a2:	4413      	add	r3, r2
- 80026a4:	009b      	lsls	r3, r3, #2
- 80026a6:	4403      	add	r3, r0
- 80026a8:	330c      	adds	r3, #12
- 80026aa:	681b      	ldr	r3, [r3, #0]
- 80026ac:	881b      	ldrh	r3, [r3, #0]
- 80026ae:	0a1b      	lsrs	r3, r3, #8
- 80026b0:	b29b      	uxth	r3, r3
- 80026b2:	b218      	sxth	r0, r3
- 80026b4:	7bba      	ldrb	r2, [r7, #14]
- 80026b6:	683c      	ldr	r4, [r7, #0]
- 80026b8:	4613      	mov	r3, r2
- 80026ba:	005b      	lsls	r3, r3, #1
- 80026bc:	4413      	add	r3, r2
- 80026be:	009b      	lsls	r3, r3, #2
- 80026c0:	4423      	add	r3, r4
- 80026c2:	330c      	adds	r3, #12
- 80026c4:	681b      	ldr	r3, [r3, #0]
- 80026c6:	881b      	ldrh	r3, [r3, #0]
- 80026c8:	021b      	lsls	r3, r3, #8
- 80026ca:	b21b      	sxth	r3, r3
- 80026cc:	4303      	orrs	r3, r0
- 80026ce:	b21b      	sxth	r3, r3
- 80026d0:	b29b      	uxth	r3, r3
- 80026d2:	800b      	strh	r3, [r1, #0]
+ 8002700:	7bba      	ldrb	r2, [r7, #14]
+ 8002702:	6839      	ldr	r1, [r7, #0]
+ 8002704:	4613      	mov	r3, r2
+ 8002706:	005b      	lsls	r3, r3, #1
+ 8002708:	4413      	add	r3, r2
+ 800270a:	009b      	lsls	r3, r3, #2
+ 800270c:	440b      	add	r3, r1
+ 800270e:	330c      	adds	r3, #12
+ 8002710:	6819      	ldr	r1, [r3, #0]
+ 8002712:	7bba      	ldrb	r2, [r7, #14]
+ 8002714:	6838      	ldr	r0, [r7, #0]
+ 8002716:	4613      	mov	r3, r2
+ 8002718:	005b      	lsls	r3, r3, #1
+ 800271a:	4413      	add	r3, r2
+ 800271c:	009b      	lsls	r3, r3, #2
+ 800271e:	4403      	add	r3, r0
+ 8002720:	330c      	adds	r3, #12
+ 8002722:	681b      	ldr	r3, [r3, #0]
+ 8002724:	881b      	ldrh	r3, [r3, #0]
+ 8002726:	0a1b      	lsrs	r3, r3, #8
+ 8002728:	b29b      	uxth	r3, r3
+ 800272a:	b218      	sxth	r0, r3
+ 800272c:	7bba      	ldrb	r2, [r7, #14]
+ 800272e:	683c      	ldr	r4, [r7, #0]
+ 8002730:	4613      	mov	r3, r2
+ 8002732:	005b      	lsls	r3, r3, #1
+ 8002734:	4413      	add	r3, r2
+ 8002736:	009b      	lsls	r3, r3, #2
+ 8002738:	4423      	add	r3, r4
+ 800273a:	330c      	adds	r3, #12
+ 800273c:	681b      	ldr	r3, [r3, #0]
+ 800273e:	881b      	ldrh	r3, [r3, #0]
+ 8002740:	021b      	lsls	r3, r3, #8
+ 8002742:	b21b      	sxth	r3, r3
+ 8002744:	4303      	orrs	r3, r0
+ 8002746:	b21b      	sxth	r3, r3
+ 8002748:	b29b      	uxth	r3, r3
+ 800274a:	800b      	strh	r3, [r1, #0]
 		pos += 2;
- 80026d4:	7bfb      	ldrb	r3, [r7, #15]
- 80026d6:	3302      	adds	r3, #2
- 80026d8:	73fb      	strb	r3, [r7, #15]
+ 800274c:	7bfb      	ldrb	r3, [r7, #15]
+ 800274e:	3302      	adds	r3, #2
+ 8002750:	73fb      	strb	r3, [r7, #15]
 		sub_pck->pld_topics[topic_nb].topic_name =  (unsigned char*)  &frame[pos];
- 80026da:	7bba      	ldrb	r2, [r7, #14]
- 80026dc:	7bfb      	ldrb	r3, [r7, #15]
- 80026de:	6879      	ldr	r1, [r7, #4]
- 80026e0:	4419      	add	r1, r3
- 80026e2:	6838      	ldr	r0, [r7, #0]
- 80026e4:	4613      	mov	r3, r2
- 80026e6:	005b      	lsls	r3, r3, #1
- 80026e8:	4413      	add	r3, r2
- 80026ea:	009b      	lsls	r3, r3, #2
- 80026ec:	4403      	add	r3, r0
- 80026ee:	3310      	adds	r3, #16
- 80026f0:	6019      	str	r1, [r3, #0]
+ 8002752:	7bba      	ldrb	r2, [r7, #14]
+ 8002754:	7bfb      	ldrb	r3, [r7, #15]
+ 8002756:	6879      	ldr	r1, [r7, #4]
+ 8002758:	4419      	add	r1, r3
+ 800275a:	6838      	ldr	r0, [r7, #0]
+ 800275c:	4613      	mov	r3, r2
+ 800275e:	005b      	lsls	r3, r3, #1
+ 8002760:	4413      	add	r3, r2
+ 8002762:	009b      	lsls	r3, r3, #2
+ 8002764:	4403      	add	r3, r0
+ 8002766:	3310      	adds	r3, #16
+ 8002768:	6019      	str	r1, [r3, #0]
 		pos += (*sub_pck->pld_topics[topic_nb].topic_name_len);
- 80026f2:	7bba      	ldrb	r2, [r7, #14]
- 80026f4:	6839      	ldr	r1, [r7, #0]
- 80026f6:	4613      	mov	r3, r2
- 80026f8:	005b      	lsls	r3, r3, #1
- 80026fa:	4413      	add	r3, r2
- 80026fc:	009b      	lsls	r3, r3, #2
- 80026fe:	440b      	add	r3, r1
- 8002700:	330c      	adds	r3, #12
- 8002702:	681b      	ldr	r3, [r3, #0]
- 8002704:	881b      	ldrh	r3, [r3, #0]
- 8002706:	b2da      	uxtb	r2, r3
- 8002708:	7bfb      	ldrb	r3, [r7, #15]
- 800270a:	4413      	add	r3, r2
- 800270c:	73fb      	strb	r3, [r7, #15]
+ 800276a:	7bba      	ldrb	r2, [r7, #14]
+ 800276c:	6839      	ldr	r1, [r7, #0]
+ 800276e:	4613      	mov	r3, r2
+ 8002770:	005b      	lsls	r3, r3, #1
+ 8002772:	4413      	add	r3, r2
+ 8002774:	009b      	lsls	r3, r3, #2
+ 8002776:	440b      	add	r3, r1
+ 8002778:	330c      	adds	r3, #12
+ 800277a:	681b      	ldr	r3, [r3, #0]
+ 800277c:	881b      	ldrh	r3, [r3, #0]
+ 800277e:	b2da      	uxtb	r2, r3
+ 8002780:	7bfb      	ldrb	r3, [r7, #15]
+ 8002782:	4413      	add	r3, r2
+ 8002784:	73fb      	strb	r3, [r7, #15]
 		sub_pck->pld_topics[topic_nb].qos = (uint8_t*) &frame[pos];
- 800270e:	7bba      	ldrb	r2, [r7, #14]
- 8002710:	7bfb      	ldrb	r3, [r7, #15]
- 8002712:	6879      	ldr	r1, [r7, #4]
- 8002714:	4419      	add	r1, r3
- 8002716:	6838      	ldr	r0, [r7, #0]
- 8002718:	4613      	mov	r3, r2
- 800271a:	005b      	lsls	r3, r3, #1
- 800271c:	4413      	add	r3, r2
- 800271e:	009b      	lsls	r3, r3, #2
- 8002720:	4403      	add	r3, r0
- 8002722:	3314      	adds	r3, #20
- 8002724:	6019      	str	r1, [r3, #0]
+ 8002786:	7bba      	ldrb	r2, [r7, #14]
+ 8002788:	7bfb      	ldrb	r3, [r7, #15]
+ 800278a:	6879      	ldr	r1, [r7, #4]
+ 800278c:	4419      	add	r1, r3
+ 800278e:	6838      	ldr	r0, [r7, #0]
+ 8002790:	4613      	mov	r3, r2
+ 8002792:	005b      	lsls	r3, r3, #1
+ 8002794:	4413      	add	r3, r2
+ 8002796:	009b      	lsls	r3, r3, #2
+ 8002798:	4403      	add	r3, r0
+ 800279a:	3314      	adds	r3, #20
+ 800279c:	6019      	str	r1, [r3, #0]
 		pos += 1;
- 8002726:	7bfb      	ldrb	r3, [r7, #15]
- 8002728:	3301      	adds	r3, #1
- 800272a:	73fb      	strb	r3, [r7, #15]
+ 800279e:	7bfb      	ldrb	r3, [r7, #15]
+ 80027a0:	3301      	adds	r3, #1
+ 80027a2:	73fb      	strb	r3, [r7, #15]
 		topic_nb++;
- 800272c:	7bbb      	ldrb	r3, [r7, #14]
- 800272e:	3301      	adds	r3, #1
- 8002730:	73bb      	strb	r3, [r7, #14]
-	while (pos < (*sub_pck->fix_head.rem_len + fix_head_size)){
- 8002732:	7bfa      	ldrb	r2, [r7, #15]
- 8002734:	683b      	ldr	r3, [r7, #0]
- 8002736:	685b      	ldr	r3, [r3, #4]
- 8002738:	781b      	ldrb	r3, [r3, #0]
- 800273a:	4619      	mov	r1, r3
- 800273c:	7b7b      	ldrb	r3, [r7, #13]
- 800273e:	440b      	add	r3, r1
- 8002740:	429a      	cmp	r2, r3
- 8002742:	db95      	blt.n	8002670 <broker_decode_subscribe+0x66>
+ 80027a4:	7bbb      	ldrb	r3, [r7, #14]
+ 80027a6:	3301      	adds	r3, #1
+ 80027a8:	73bb      	strb	r3, [r7, #14]
+	while (pos < (sub_pck->fix_head.rem_len + fix_head_size)){
+ 80027aa:	7bfa      	ldrb	r2, [r7, #15]
+ 80027ac:	683b      	ldr	r3, [r7, #0]
+ 80027ae:	6859      	ldr	r1, [r3, #4]
+ 80027b0:	7b7b      	ldrb	r3, [r7, #13]
+ 80027b2:	440b      	add	r3, r1
+ 80027b4:	429a      	cmp	r2, r3
+ 80027b6:	d397      	bcc.n	80026e8 <broker_decode_subscribe+0x84>
 	}
 }
- 8002744:	bf00      	nop
- 8002746:	3710      	adds	r7, #16
- 8002748:	46bd      	mov	sp, r7
- 800274a:	bc90      	pop	{r4, r7}
- 800274c:	4770      	bx	lr
+ 80027b8:	bf00      	nop
+ 80027ba:	3714      	adds	r7, #20
+ 80027bc:	46bd      	mov	sp, r7
+ 80027be:	bd90      	pop	{r4, r7, pc}
+
+080027c0 <__libc_init_array>:
+ 80027c0:	b570      	push	{r4, r5, r6, lr}
+ 80027c2:	2500      	movs	r5, #0
+ 80027c4:	4e0c      	ldr	r6, [pc, #48]	; (80027f8 <__libc_init_array+0x38>)
+ 80027c6:	4c0d      	ldr	r4, [pc, #52]	; (80027fc <__libc_init_array+0x3c>)
+ 80027c8:	1ba4      	subs	r4, r4, r6
+ 80027ca:	10a4      	asrs	r4, r4, #2
+ 80027cc:	42a5      	cmp	r5, r4
+ 80027ce:	d109      	bne.n	80027e4 <__libc_init_array+0x24>
+ 80027d0:	f000 f82e 	bl	8002830 <_init>
+ 80027d4:	2500      	movs	r5, #0
+ 80027d6:	4e0a      	ldr	r6, [pc, #40]	; (8002800 <__libc_init_array+0x40>)
+ 80027d8:	4c0a      	ldr	r4, [pc, #40]	; (8002804 <__libc_init_array+0x44>)
+ 80027da:	1ba4      	subs	r4, r4, r6
+ 80027dc:	10a4      	asrs	r4, r4, #2
+ 80027de:	42a5      	cmp	r5, r4
+ 80027e0:	d105      	bne.n	80027ee <__libc_init_array+0x2e>
+ 80027e2:	bd70      	pop	{r4, r5, r6, pc}
+ 80027e4:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
+ 80027e8:	4798      	blx	r3
+ 80027ea:	3501      	adds	r5, #1
+ 80027ec:	e7ee      	b.n	80027cc <__libc_init_array+0xc>
+ 80027ee:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
+ 80027f2:	4798      	blx	r3
+ 80027f4:	3501      	adds	r5, #1
+ 80027f6:	e7f2      	b.n	80027de <__libc_init_array+0x1e>
+ 80027f8:	080028a0 	.word	0x080028a0
+ 80027fc:	080028a0 	.word	0x080028a0
+ 8002800:	080028a0 	.word	0x080028a0
+ 8002804:	080028a4 	.word	0x080028a4
+
+08002808 <memcpy>:
+ 8002808:	b510      	push	{r4, lr}
+ 800280a:	1e43      	subs	r3, r0, #1
+ 800280c:	440a      	add	r2, r1
+ 800280e:	4291      	cmp	r1, r2
+ 8002810:	d100      	bne.n	8002814 <memcpy+0xc>
+ 8002812:	bd10      	pop	{r4, pc}
+ 8002814:	f811 4b01 	ldrb.w	r4, [r1], #1
+ 8002818:	f803 4f01 	strb.w	r4, [r3, #1]!
+ 800281c:	e7f7      	b.n	800280e <memcpy+0x6>
+
+0800281e <memset>:
+ 800281e:	4603      	mov	r3, r0
+ 8002820:	4402      	add	r2, r0
+ 8002822:	4293      	cmp	r3, r2
+ 8002824:	d100      	bne.n	8002828 <memset+0xa>
+ 8002826:	4770      	bx	lr
+ 8002828:	f803 1b01 	strb.w	r1, [r3], #1
+ 800282c:	e7f9      	b.n	8002822 <memset+0x4>
 	...
 
-08002750 <__libc_init_array>:
- 8002750:	b570      	push	{r4, r5, r6, lr}
- 8002752:	2500      	movs	r5, #0
- 8002754:	4e0c      	ldr	r6, [pc, #48]	; (8002788 <__libc_init_array+0x38>)
- 8002756:	4c0d      	ldr	r4, [pc, #52]	; (800278c <__libc_init_array+0x3c>)
- 8002758:	1ba4      	subs	r4, r4, r6
- 800275a:	10a4      	asrs	r4, r4, #2
- 800275c:	42a5      	cmp	r5, r4
- 800275e:	d109      	bne.n	8002774 <__libc_init_array+0x24>
- 8002760:	f000 f82e 	bl	80027c0 <_init>
- 8002764:	2500      	movs	r5, #0
- 8002766:	4e0a      	ldr	r6, [pc, #40]	; (8002790 <__libc_init_array+0x40>)
- 8002768:	4c0a      	ldr	r4, [pc, #40]	; (8002794 <__libc_init_array+0x44>)
- 800276a:	1ba4      	subs	r4, r4, r6
- 800276c:	10a4      	asrs	r4, r4, #2
- 800276e:	42a5      	cmp	r5, r4
- 8002770:	d105      	bne.n	800277e <__libc_init_array+0x2e>
- 8002772:	bd70      	pop	{r4, r5, r6, pc}
- 8002774:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
- 8002778:	4798      	blx	r3
- 800277a:	3501      	adds	r5, #1
- 800277c:	e7ee      	b.n	800275c <__libc_init_array+0xc>
- 800277e:	f856 3025 	ldr.w	r3, [r6, r5, lsl #2]
- 8002782:	4798      	blx	r3
- 8002784:	3501      	adds	r5, #1
- 8002786:	e7f2      	b.n	800276e <__libc_init_array+0x1e>
- 8002788:	08002830 	.word	0x08002830
- 800278c:	08002830 	.word	0x08002830
- 8002790:	08002830 	.word	0x08002830
- 8002794:	08002834 	.word	0x08002834
+08002830 <_init>:
+ 8002830:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8002832:	bf00      	nop
+ 8002834:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8002836:	bc08      	pop	{r3}
+ 8002838:	469e      	mov	lr, r3
+ 800283a:	4770      	bx	lr
 
-08002798 <memcpy>:
- 8002798:	b510      	push	{r4, lr}
- 800279a:	1e43      	subs	r3, r0, #1
- 800279c:	440a      	add	r2, r1
- 800279e:	4291      	cmp	r1, r2
- 80027a0:	d100      	bne.n	80027a4 <memcpy+0xc>
- 80027a2:	bd10      	pop	{r4, pc}
- 80027a4:	f811 4b01 	ldrb.w	r4, [r1], #1
- 80027a8:	f803 4f01 	strb.w	r4, [r3, #1]!
- 80027ac:	e7f7      	b.n	800279e <memcpy+0x6>
-
-080027ae <memset>:
- 80027ae:	4603      	mov	r3, r0
- 80027b0:	4402      	add	r2, r0
- 80027b2:	4293      	cmp	r3, r2
- 80027b4:	d100      	bne.n	80027b8 <memset+0xa>
- 80027b6:	4770      	bx	lr
- 80027b8:	f803 1b01 	strb.w	r1, [r3], #1
- 80027bc:	e7f9      	b.n	80027b2 <memset+0x4>
-	...
-
-080027c0 <_init>:
- 80027c0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 80027c2:	bf00      	nop
- 80027c4:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 80027c6:	bc08      	pop	{r3}
- 80027c8:	469e      	mov	lr, r3
- 80027ca:	4770      	bx	lr
-
-080027cc <_fini>:
- 80027cc:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 80027ce:	bf00      	nop
- 80027d0:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 80027d2:	bc08      	pop	{r3}
- 80027d4:	469e      	mov	lr, r3
- 80027d6:	4770      	bx	lr
+0800283c <_fini>:
+ 800283c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 800283e:	bf00      	nop
+ 8002840:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8002842:	bc08      	pop	{r3}
+ 8002844:	469e      	mov	lr, r3
+ 8002846:	4770      	bx	lr

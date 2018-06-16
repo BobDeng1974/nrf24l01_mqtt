@@ -169,7 +169,6 @@ int main()
 	memset(client.tx_buf, 0, 100);
 	MqttEncode_Subscribe(client.tx_buf, client.tx_buf_len, &subscribe);
 	sub_pck_t sub_pck;
-	TODO: add handling packet bigger than 128bytes
 	broker_decode_subscribe(client.tx_buf, &sub_pck);
 	//MqttClient_Subscribe(&client, &subscribe);
 

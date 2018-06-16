@@ -193,7 +193,7 @@ typedef struct{
 /*---------subscribe-------------------*/
 typedef struct {
 	subs_ctr_byte_t * subs_ctr_byte;
-	uint8_t *rem_len;
+	uint32_t rem_len;
 }sub_fix_head_t;
 
 
