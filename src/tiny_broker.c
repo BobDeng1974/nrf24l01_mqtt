@@ -373,7 +373,7 @@ void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck){
 	uint8_t topic_nb =0;
 	while (pos < (*sub_pck->fix_head.rem_len + fix_head_size)){
 		sub_pck->pld_topics[topic_nb].topic_name_len = (uint16_t *)  &frame[pos];
-		*sub_pck->pld_topics[topic_nb].topic_name_len  = X_HTONS(*sub_pck->pld_topics->topic_name_len );
+		*sub_pck->pld_topics[topic_nb].topic_name_len  = X_HTONS(*sub_pck->pld_topics[topic_nb].topic_name_len );
 		pos += 2;
 		sub_pck->pld_topics[topic_nb].topic_name =  (unsigned char*)  &frame[pos];
 		pos += (*sub_pck->pld_topics[topic_nb].topic_name_len);
