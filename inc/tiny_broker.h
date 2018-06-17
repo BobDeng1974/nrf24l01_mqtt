@@ -77,6 +77,11 @@ typedef struct{
 
 
 
+typedef struct{
+	uint32_t value;
+	uint8_t bytes_nb;
+}rem_length_t;
+
 
 
 typedef struct{
@@ -106,22 +111,36 @@ typedef struct{
 
 
 
-
+typedef struct{
+	uint8_t reserved :4;
+	uint8_t type :4;
+}conn_ctrl_byte_t;
 
 
 typedef struct{
-	uint8_t control_type;
-	uint8_t remainin_len;
+	conn_ctrl_byte_t* ctrl_byte;
+	uint32_t rem_len;
 }conn_fixed_header_t;
 
 
+
 typedef struct{
-	conn_fixed_header_t * fix_head;
 	uint16_t * len;
 	char * proto_name;
 	uint8_t * proto_level;
 	conn_flags_t * conn_flags;
 	uint16_t * keep_alive;
+}conn_var_head_t;
+
+
+typedef struct{
+	conn_fixed_header_t fix_head;
+	conn_var_head_t * conn_var_head;
+//	uint16_t * len;
+//	char * proto_name;
+//	uint8_t * proto_level;
+//	conn_flags_t * conn_flags;
+//	uint16_t * keep_alive;
 }conn_header_t;
 
 
@@ -152,7 +171,7 @@ typedef struct{
 
 
 
-/*-------________---------*/
+/*---------publish-------------------*/
 
 typedef struct{
 	uint8_t retain :1;
@@ -168,17 +187,6 @@ typedef struct{
 }pub_fix_head_t;
 
 
-
-
-/*---------publish-------------------*/
-//typedef struct {
-//	uint8_t retain :1;
-//	uint8_t QoS :2;
-//	uint8_t dup :1;
-//	uint8_t type :4;
-//	uint32_t rem_len; ////////!
-//}pub_fix_head_t;
-//
 
 typedef struct{
 	uint16_t * topic_name_len;
@@ -259,8 +267,8 @@ typedef struct{
 
 
 void broker_init (broker_t * broker, MqttNet* net);
-uint32_t decode_pck_len (uint8_t * frame);
-void broker_decode_connect_frame (broker_t * broker, uint8_t * frame, conn_pck_t * conn_pck );
+rem_length_t decode_pck_len (uint8_t * frame);
+void broker_decode_connect(uint8_t * frame, conn_pck_t * conn_pck );
 void * m_malloc(size_t size);
 void broker_fill_new_client(conn_client_t *new_client, const conn_pck_t * conn_pck, uint8_t* net_address);
 void broker_mantain_conn_frame (broker_t * broker, uint8_t * frame, conn_ack_stat_t * stat);

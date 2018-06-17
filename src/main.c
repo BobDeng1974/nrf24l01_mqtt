@@ -131,6 +131,11 @@ int main()
 	mqtt_con.password = "passw0rd";
 	MqttClient_Connect(&client, &mqtt_con);
 
+	MqttEncode_Connect(client.tx_buf, 100, &mqtt_con);
+	conn_pck_t conn_pck;
+	broker_decode_connect(client.tx_buf, &conn_pck);
+
+
 	MqttPublish publish;
 
 	const char* test_topic1 = "flat/livingroom/temp/1";

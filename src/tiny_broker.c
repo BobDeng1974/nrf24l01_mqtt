@@ -121,8 +121,11 @@ static void add_client (broker_t * broker, conn_client_t * new_client){
 
 static inline void read_conn_header(conn_header_t *header, uint8_t * frame){
 	uint8_t pos = 0;
-	header->fix_head =  (conn_fixed_header_t *) &frame[pos];
-	pos += 2;
+	header->fix_head.ctrl_byte =  (conn_ctrl_byte_t *) &frame[pos];
+	pos ++;
+	header->fix_head.rem_len =  decode_pck_len(&frame[pos]);
+	pos ++;
+	header->conn_var_head = (conn_var_head_t*) (&frame[pos]);
 
 	header->len = (uint16_t*) &frame[pos];
 	*header->len = X_HTONS(*header->len);
@@ -248,7 +251,7 @@ void broker_fill_new_client(conn_client_t *new_client, const conn_pck_t * conn_p
 
 
 
-void broker_decode_connect_frame (broker_t * broker, uint8_t * frame, conn_pck_t * conn_pck ){
+void broker_decode_connect(uint8_t * frame, conn_pck_t * conn_pck ){
 	read_conn_header(conn_pck->head, frame);
 	read_conn_payload(conn_pck->pld, conn_pck->head, frame);
 }
@@ -315,8 +318,10 @@ void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat){
 
 	pub_pck->fix_head.ctrl_byte = (pub_ctrl_byte_t *) frame;
 	pos ++;
-	pub_pck->fix_head.rem_len = decode_pck_len(&frame[pos]);
-	pos ++;
+	rem_length_t rem_length = decode_pck_len(&frame[pos]);
+	pub_pck->fix_head.rem_len = rem_length.value;
+	pos += rem_length.bytes_nb;
+
 
 
 	pub_pck->var_head.topic_name_len  = (uint16_t*) &frame[pos];
@@ -354,23 +359,24 @@ void publish_msg_to_subscribers(broker_t * broker, pub_pck_t * pub_pck){
 
 
 
-uint32_t decode_pck_len (uint8_t * frame){
+rem_length_t decode_pck_len (uint8_t * frame){
 	uint8_t multiplier = 1;
-	uint32_t value = 0;
-	uint8_t i=0;
 	uint8_t  encodedByte;
-	const uint8_t max_nb_bytes_rl = 4;
+	rem_length_t rem_length;
+	memset(&rem_length, 0, sizeof(rem_length_t));
+	const uint8_t max_nb_bytes = 4;
 	do{
-		encodedByte = frame[i];
-		value += (encodedByte & 127) * multiplier;
+		encodedByte = frame[rem_length.bytes_nb];
+		rem_length.value += (encodedByte & 127) * multiplier;
 		multiplier *= 128;
-		i++;
-		if (i == max_nb_bytes_rl){
+		rem_length.bytes_nb++;
+		if (rem_length.bytes_nb == max_nb_bytes){
 			break;
 		}
 	}while ((encodedByte & 128) != 0);
-	return value;
+	return rem_length;
 }
+
 
 
 
@@ -382,8 +388,10 @@ void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck){
 
 	sub_pck->fix_head.subs_ctrl_byte = (subs_ctrl_byte_t *) frame;
 	pos++;
-	sub_pck->fix_head.rem_len = decode_pck_len(&frame[pos]);
-	pos ++;
+	rem_length_t rem_length = decode_pck_len(&frame[pos]);
+	sub_pck->fix_head.rem_len = rem_length.value;
+	pos += rem_length.bytes_nb;
+
 
 	sub_pck->var_head.packet_id  = (uint16_t*) &frame[pos];
 	*sub_pck->var_head.packet_id = X_HTONS(*sub_pck->var_head.packet_id);
