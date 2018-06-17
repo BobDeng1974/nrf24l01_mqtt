@@ -313,8 +313,10 @@ void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat){
  void broker_decode_publish(uint8_t* frame, pub_pck_t * pub_pck){
 	uint8_t pos = 0;
 
-	pub_pck->fix_head = (pub_fix_head_t *) frame;
-	pos += sizeof (pub_fix_head_t);
+	pub_pck->fix_head.ctrl_byte = (pub_ctrl_byte_t *) frame;
+	pos ++;
+	pub_pck->fix_head.rem_len = decode_pck_len(&frame[pos]);
+	pos ++;
 
 
 	pub_pck->var_head.topic_name_len  = (uint16_t*) &frame[pos];
@@ -324,7 +326,7 @@ void broker_send_conn_ack(broker_t * broker,  conn_ack_stat_t * stat){
 	pub_pck->var_head.topic_name = (unsigned char*)  &frame[pos];
 	pos += *pub_pck->var_head.topic_name_len;
 
-	if (pub_pck->fix_head->QoS > 0){
+	if (pub_pck->fix_head.ctrl_byte->QoS > 0){
 		pub_pck->var_head.packet_id  = (uint16_t*) &frame[pos];
 		*pub_pck->var_head.packet_id = X_HTONS(*pub_pck->var_head.packet_id);
 		pos += 2;
@@ -378,10 +380,8 @@ uint32_t decode_pck_len (uint8_t * frame){
 void broker_decode_subscribe(uint8_t* frame, sub_pck_t * sub_pck){
 	uint8_t pos = 0;
 
-	sub_pck->fix_head.subs_ctr_byte = (subs_ctr_byte_t *) frame;
+	sub_pck->fix_head.subs_ctrl_byte = (subs_ctrl_byte_t *) frame;
 	pos++;
-	frame[pos] =193;
-			(frame[pos+1]) = 2;
 	sub_pck->fix_head.rem_len = decode_pck_len(&frame[pos]);
 	pos ++;
 

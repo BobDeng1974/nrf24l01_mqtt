@@ -1560,11 +1560,11 @@ Discarded input sections
                 0x0000000000000000       0xaa src/tiny_broker.o
  .text.add_subscribtion
                 0x0000000000000000      0x128 src/tiny_broker.o
- .bss.new_used_bytes_nb.5932
+ .bss.new_used_bytes_nb.5937
                 0x0000000000000000        0x2 src/tiny_broker.o
- .bss.prev_used_bytes_nb.5931
+ .bss.prev_used_bytes_nb.5936
                 0x0000000000000000        0x2 src/tiny_broker.o
- .bss.m_heap.5930
+ .bss.m_heap.5935
                 0x0000000000000000      0x200 src/tiny_broker.o
  .text          0x0000000000000000        0x0 src/tiny_printf.o
  .data          0x0000000000000000        0x0 src/tiny_printf.o
@@ -2181,14 +2181,14 @@ LOAD /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-
  .text.SetSysClockTo72
                 0x0000000008002448      0x100 src/system_stm32f10x.o
  .text.broker_decode_publish
-                0x0000000008002548       0xba src/tiny_broker.o
+                0x0000000008002548       0xd0 src/tiny_broker.o
                 0x0000000008002548                broker_decode_publish
  .text.decode_pck_len
-                0x0000000008002602       0x62 src/tiny_broker.o
-                0x0000000008002602                decode_pck_len
+                0x0000000008002618       0x62 src/tiny_broker.o
+                0x0000000008002618                decode_pck_len
  .text.broker_decode_subscribe
-                0x0000000008002664      0x15c src/tiny_broker.o
-                0x0000000008002664                broker_decode_subscribe
+                0x000000000800267a      0x146 src/tiny_broker.o
+                0x000000000800267a                broker_decode_subscribe
  .text.__libc_init_array
                 0x00000000080027c0       0x48 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-init.o)
                 0x00000000080027c0                __libc_init_array
@@ -2372,23 +2372,23 @@ LOAD /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-
                 0x00000000000003a0       0x1d /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/armv7-m/crtn.o
 OUTPUT(home_control_center.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000     0xa0ac
+.debug_info     0x0000000000000000     0xa0ee
  .debug_info    0x0000000000000000      0x701 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_info    0x0000000000000701      0x8b2 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_info    0x0000000000000fb3      0x906 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
- .debug_info    0x00000000000018b9     0x1599 src/main.o
- .debug_info    0x0000000000002e52     0x15ff src/mqtt_client.o
- .debug_info    0x0000000000004451     0x1b2a src/mqtt_packet.o
- .debug_info    0x0000000000005f7b      0xfac src/mqtt_socket.o
- .debug_info    0x0000000000006f27      0xde5 src/nrf24.o
- .debug_info    0x0000000000007d0c      0x4b9 src/nrf24_hal.o
- .debug_info    0x00000000000081c5      0x1b6 src/radioPinFunctions.o
- .debug_info    0x000000000000837b       0x85 src/startup_stm32f10x_md.o
- .debug_info    0x0000000000008400      0x154 src/stm32f1xx_it.o
- .debug_info    0x0000000000008554      0x4a7 src/system_stm32f10x.o
- .debug_info    0x00000000000089fb     0x16b1 src/tiny_broker.o
+ .debug_info    0x00000000000018b9     0x15b9 src/main.o
+ .debug_info    0x0000000000002e72     0x15ff src/mqtt_client.o
+ .debug_info    0x0000000000004471     0x1b2a src/mqtt_packet.o
+ .debug_info    0x0000000000005f9b      0xfac src/mqtt_socket.o
+ .debug_info    0x0000000000006f47      0xde5 src/nrf24.o
+ .debug_info    0x0000000000007d2c      0x4b9 src/nrf24_hal.o
+ .debug_info    0x00000000000081e5      0x1b6 src/radioPinFunctions.o
+ .debug_info    0x000000000000839b       0x85 src/startup_stm32f10x_md.o
+ .debug_info    0x0000000000008420      0x154 src/stm32f1xx_it.o
+ .debug_info    0x0000000000008574      0x4a7 src/system_stm32f10x.o
+ .debug_info    0x0000000000008a1b     0x16d3 src/tiny_broker.o
 
-.debug_abbrev   0x0000000000000000     0x1962
+.debug_abbrev   0x0000000000000000     0x1957
  .debug_abbrev  0x0000000000000000      0x1dd Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_abbrev  0x00000000000001dd      0x1cf Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_abbrev  0x00000000000003ac      0x1ab Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
@@ -2402,7 +2402,7 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_abbrev  0x0000000000001432       0x12 src/startup_stm32f10x_md.o
  .debug_abbrev  0x0000000000001444       0x78 src/stm32f1xx_it.o
  .debug_abbrev  0x00000000000014bc      0x16e src/system_stm32f10x.o
- .debug_abbrev  0x000000000000162a      0x338 src/tiny_broker.o
+ .debug_abbrev  0x000000000000162a      0x32d src/tiny_broker.o
 
 .debug_aranges  0x0000000000000000      0x750
  .debug_aranges
@@ -2466,33 +2466,33 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_line    0x00000000000028db      0x234 src/system_stm32f10x.o
  .debug_line    0x0000000000002b0f      0x4fd src/tiny_broker.o
 
-.debug_str      0x0000000000000000     0x28b2
+.debug_str      0x0000000000000000     0x28c4
  .debug_str     0x0000000000000000      0x537 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
                                         0x597 (size before relaxing)
  .debug_str     0x0000000000000537      0x440 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
                                         0x698 (size before relaxing)
  .debug_str     0x0000000000000977      0x3ce Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
                                         0x67b (size before relaxing)
- .debug_str     0x0000000000000d45      0x87c src/main.o
-                                        0xcfa (size before relaxing)
- .debug_str     0x00000000000015c1      0x5bc src/mqtt_client.o
+ .debug_str     0x0000000000000d45      0x88e src/main.o
+                                        0xd16 (size before relaxing)
+ .debug_str     0x00000000000015d3      0x5bc src/mqtt_client.o
                                         0xfd2 (size before relaxing)
- .debug_str     0x0000000000001b7d      0x3d0 src/mqtt_packet.o
+ .debug_str     0x0000000000001b8f      0x3d0 src/mqtt_packet.o
                                        0x11eb (size before relaxing)
- .debug_str     0x0000000000001f4d       0xda src/mqtt_socket.o
+ .debug_str     0x0000000000001f5f       0xda src/mqtt_socket.o
                                         0xab4 (size before relaxing)
- .debug_str     0x0000000000002027      0x25c src/nrf24.o
+ .debug_str     0x0000000000002039      0x25c src/nrf24.o
                                         0x839 (size before relaxing)
- .debug_str     0x0000000000002283       0x48 src/nrf24_hal.o
+ .debug_str     0x0000000000002295       0x48 src/nrf24_hal.o
                                         0x4b7 (size before relaxing)
- .debug_str     0x00000000000022cb       0x58 src/radioPinFunctions.o
+ .debug_str     0x00000000000022dd       0x58 src/radioPinFunctions.o
                                         0x252 (size before relaxing)
- .debug_str     0x0000000000002323       0xa6 src/stm32f1xx_it.o
+ .debug_str     0x0000000000002335       0xa6 src/stm32f1xx_it.o
                                         0x25d (size before relaxing)
- .debug_str     0x00000000000023c9       0xc6 src/system_stm32f10x.o
+ .debug_str     0x00000000000023db       0xc6 src/system_stm32f10x.o
                                         0x339 (size before relaxing)
- .debug_str     0x000000000000248f      0x423 src/tiny_broker.o
-                                        0xc14 (size before relaxing)
+ .debug_str     0x00000000000024a1      0x423 src/tiny_broker.o
+                                        0xc30 (size before relaxing)
 
 .comment        0x0000000000000000       0x7c
  .comment       0x0000000000000000       0x7c Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
@@ -2510,7 +2510,7 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .comment       0x000000000000007c       0x7d src/system_stm32f10x.o
  .comment       0x000000000000007c       0x7d src/tiny_broker.o
 
-.debug_frame    0x0000000000000000     0x1d10
+.debug_frame    0x0000000000000000     0x1d0c
  .debug_frame   0x0000000000000000      0x2d0 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o
  .debug_frame   0x00000000000002d0      0x4f4 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o
  .debug_frame   0x00000000000007c4      0x3a0 Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o
@@ -2523,10 +2523,10 @@ OUTPUT(home_control_center.elf elf32-littlearm)
  .debug_frame   0x0000000000001744       0x74 src/radioPinFunctions.o
  .debug_frame   0x00000000000017b8      0x110 src/stm32f1xx_it.o
  .debug_frame   0x00000000000018c8       0x98 src/system_stm32f10x.o
- .debug_frame   0x0000000000001960      0x33c src/tiny_broker.o
- .debug_frame   0x0000000000001c9c       0x2c /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-init.o)
- .debug_frame   0x0000000000001cc8       0x28 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memcpy-stub.o)
- .debug_frame   0x0000000000001cf0       0x20 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x0000000000001960      0x338 src/tiny_broker.o
+ .debug_frame   0x0000000000001c98       0x2c /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-init.o)
+ .debug_frame   0x0000000000001cc4       0x28 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x0000000000001cec       0x20 /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libc_nano.a(lib_a-memset.o)
 
 .stabstr        0x0000000000000000       0x3f
  .stabstr       0x0000000000000000       0x3f /opt/Atollic_TrueSTUDIO_for_STM32_x86_64_9.0.0/ARMTools/bin/../lib/gcc/arm-atollic-eabi/6.3.1/../../../../arm-atollic-eabi/lib/armv7-m/libnosys.a(write.o)
