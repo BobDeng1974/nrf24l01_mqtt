@@ -133,7 +133,9 @@ int main()
 
 	MqttEncode_Connect(client.tx_buf, 100, &mqtt_con);
 	conn_pck_t conn_pck;
-	broker_decode_connect(client.tx_buf, &conn_pck);
+
+
+	decode_connect(client.tx_buf, &conn_pck);
 
 
 	MqttPublish publish;

@@ -116,82 +116,66 @@ static void add_client (broker_t * broker, conn_client_t * new_client){
 //
 
 
-/*-------------------------------PUBLIHS-----------------------------------------*/
+/*-------------------------------CONNECT-----------------------------------------*/
 
 
-static inline void read_conn_header(conn_header_t *header, uint8_t * frame){
+uint8_t broker_decode_connect(conn_pck_t *conn_pck, uint8_t * frame){
 	uint8_t pos = 0;
-	header->fix_head.ctrl_byte =  (conn_ctrl_byte_t *) &frame[pos];
+	conn_pck->fix_head.ctrl_byte =  (conn_ctrl_byte_t *) &frame[pos];
 	pos ++;
-	header->fix_head.rem_len =  decode_pck_len(&frame[pos]);
-	pos ++;
-	header->conn_var_head = (conn_var_head_t*) (&frame[pos]);
-
-	header->len = (uint16_t*) &frame[pos];
-	*header->len = X_HTONS(*header->len);
+	rem_length_t rem_length = decode_pck_len(&frame[pos]);
+	conn_pck->fix_head.rem_len = rem_length.value;
+	pos += rem_length.bytes_nb;
+	conn_pck->var_head.len = (uint16_t*) &frame[pos];
+	*conn_pck->var_head.len  = X_HTONS(*conn_pck->var_head.len);
 	pos += 2;
 
-	header->proto_name = (char*) &frame[pos];
-	pos += *header->len;
-
-	header->proto_level = (uint8_t*) &frame[pos];
+	conn_pck->var_head.proto_name = (char*) &frame[pos];
+	pos += *conn_pck->var_head.len;
+	conn_pck->var_head.proto_level = (uint8_t*) &frame[pos];
 	pos += 1;
-
-	header->conn_flags = (conn_flags_t*) &frame[pos];
+	conn_pck->var_head.conn_flags = (conn_flags_t*) &frame[pos];
 	pos += 1;
+	conn_pck->var_head.keep_alive = (uint16_t*)  &frame[pos];
+	*conn_pck->var_head.keep_alive = X_HTONS(*conn_pck->var_head.keep_alive);
 
-	header->keep_alive = (uint16_t*)  &frame[pos];
-	*header->keep_alive = X_HTONS(*header->keep_alive);
+	conn_pck->pld.client_id_len  = (uint16_t*) &frame[pos];
+	*conn_pck->pld.client_id_len = X_HTONS(*conn_pck->pld.client_id_len);
+	pos += 2;
+	conn_pck->pld.client_id = (char*) &frame[pos];
+	pos += *conn_pck->pld.client_id_len;
 
+	if (conn_pck->var_head.conn_flags->last_will){
+		conn_pck->pld.will_topic_len = (uint16_t*)  &frame[pos];
+		*conn_pck->pld.will_topic_len = X_HTONS(* conn_pck->pld.will_topic_len);
+		pos += 2;
+		conn_pck->pld.will_topic = (char*)  &frame[pos];
+		pos += *conn_pck->pld.will_topic_len;
+
+		conn_pck->pld.will_msg_len = (uint16_t*)  &frame[pos];
+		*conn_pck->pld.will_msg_len = X_HTONS(* conn_pck->pld.will_msg_len);
+		pos += 2;
+		conn_pck->pld.will_msg = (char*)  &frame[pos];
+		pos += *conn_pck->pld.will_msg_len;
+	}
+	if (conn_pck->var_head.conn_flags->user_name){
+		conn_pck->pld.usr_name_len = (uint16_t*)  &frame[pos];
+		*conn_pck->pld.usr_name_len = X_HTONS(* conn_pck->pld.usr_name_len);
+		pos += 2;
+		conn_pck->pld.usr_name= (char*) &frame[pos];
+		pos += *conn_pck->pld.usr_name_len;
+	}
+	if (conn_pck->var_head.conn_flags->pswd){
+		conn_pck->pld.pswd_len = (uint16_t*)  &frame[pos];
+		*conn_pck->pld.pswd_len = X_HTONS(* conn_pck->pld.pswd_len);
+		pos += 2;
+		conn_pck->pld.pswd= (char*) &frame[pos];
+		pos += *conn_pck->pld.pswd_len;
+	}
 }
 
 
-
-
-
-static inline void read_conn_payload(conn_pld_t *payload, conn_header_t* header, uint8_t* frame ){
-	uint8_t pos = PLD_START;
-
-	payload->client_id_len  = (uint16_t*) &frame[pos];
-	*payload->client_id_len = X_HTONS(*payload->client_id_len);
-	pos += 2;
-	payload->client_id = (char*) &frame[pos];
-	pos += *payload->client_id_len;
-
-
-	if (header->conn_flags->last_will){
-
-		payload->will_topic_len = (uint16_t*)  &frame[pos];
-		*payload->will_topic_len = X_HTONS(* payload->will_topic_len);
-		pos += 2;
-		payload->will_topic = (char*)  &frame[pos];
-		pos += *payload->will_topic_len;
-
-		payload->will_msg_len = (uint16_t*)  &frame[pos];
-		*payload->will_msg_len = X_HTONS(* payload->will_msg_len);
-		pos += 2;
-		payload->will_msg = (char*)  &frame[pos];
-		pos += *payload->will_msg_len;
-	}
-	if (header->conn_flags->user_name){
-		payload->usr_name_len = (uint16_t*)  &frame[pos];
-		*payload->usr_name_len = X_HTONS(* payload->usr_name_len);
-		pos += 2;
-		payload->usr_name= (char*) &frame[pos];
-		pos += *payload->usr_name_len;
-	}
-	if (header->conn_flags->pswd){
-		payload->pswd_len = (uint16_t*)  &frame[pos];
-		*payload->pswd_len = X_HTONS(* payload->pswd_len);
-		pos += 2;
-		payload->pswd= (char*) &frame[pos];
-		pos += *payload->pswd_len;
-	}
-
-}
-
-
-bool is_client_authorised(char* usr_name, char* pswd){
+__attribute__( ( weak ) ) bool is_client_authorised (char* usr_name, char* pswd){
 	return true;
 }
 
@@ -208,39 +192,35 @@ uint8_t * format_conn_ack(header_conn_ack_t * header_ack, bool session_pres, uin
 
 
 void broker_fill_new_client(conn_client_t *new_client, const conn_pck_t * conn_pck, uint8_t* net_address){
-	conn_header_t * header = conn_pck->head;
-	conn_flags_t * flags = header->conn_flags;
-	conn_pld_t * payload = conn_pck->pld;
+	new_client->id = X_MALLOC((*conn_pck->pld.client_id_len)+1);
+	strncpy(new_client->id,  conn_pck->pld.client_id, *conn_pck->pld.client_id_len);
 
-	new_client->id = X_MALLOC((*payload->client_id_len)+1);
-	strncpy(new_client->id,  payload->client_id, *payload->client_id_len);
+	new_client->keepalive = *conn_pck->var_head.keep_alive;
 
-	new_client->keepalive = *header->keep_alive;
-
-	if (flags->will_retain){
+	if (conn_pck->var_head.conn_flags->will_retain){
 		new_client->will_retain = 1;
 	}
 
-	if (flags->last_will){
+	if (conn_pck->var_head.conn_flags->last_will){
 		new_client->will_retain = 1;
-		new_client->will_topic = X_MALLOC((*payload->will_topic_len)+1);
-		strncpy(new_client->will_topic,  payload->will_topic, *payload->will_topic_len );
+		new_client->will_topic = X_MALLOC((*conn_pck->pld.will_topic_len)+1);
+		strncpy(new_client->will_topic,  conn_pck->pld.will_topic, *conn_pck->pld.will_topic_len );
 
-		new_client->will_msg = X_MALLOC((*payload->will_msg_len)+1);
-		strncpy(new_client->will_msg,  payload->will_msg, *payload->will_msg_len);
+		new_client->will_msg = X_MALLOC((*conn_pck->pld.will_msg_len)+1);
+		strncpy(new_client->will_msg,  conn_pck->pld.will_msg, *conn_pck->pld.will_msg_len);
 
-		new_client->will_qos = flags->will_qos;
+		new_client->will_qos = conn_pck->var_head.conn_flags->will_qos;
 
 	}
 
-	if (flags->user_name){
-		new_client->username = X_MALLOC((*payload->usr_name_len)+1);
-		strncpy(new_client->username,  payload->usr_name, *payload->usr_name_len);
+	if (conn_pck->var_head.conn_flags->user_name){
+		new_client->username = X_MALLOC((*conn_pck->pld.usr_name_len)+1);
+		strncpy(new_client->username,  conn_pck->pld.usr_name, *conn_pck->pld.usr_name_len);
 	}
 
-	if (flags->pswd){
-		new_client->password = X_MALLOC((*payload->pswd_len)+1);
-		strncpy(new_client->password,  payload->pswd, *payload->pswd_len);
+	if (conn_pck->var_head.conn_flags->pswd){
+		new_client->password = X_MALLOC((*conn_pck->pld.pswd_len)+1);
+		strncpy(new_client->password,  conn_pck->pld.pswd, *conn_pck->pld.pswd_len);
 	}
 }
 
@@ -251,27 +231,22 @@ void broker_fill_new_client(conn_client_t *new_client, const conn_pck_t * conn_p
 
 
 
-void broker_decode_connect(uint8_t * frame, conn_pck_t * conn_pck ){
-	read_conn_header(conn_pck->head, frame);
-	read_conn_payload(conn_pck->pld, conn_pck->head, frame);
-}
 
 
+void broker_handle_new_connect (broker_t *broker, conn_pck_t *conn_pck, conn_ack_stat_t * stat, uint8_t* net_add){
 
-void broker_mantain_new_connect (broker_t *broker, conn_pck_t *conn_pck, conn_ack_stat_t * stat, uint8_t* net_add){
-
-	if  (*conn_pck->head->proto_level != PROTO_LEVEL_MQTT311){
+	if  (*conn_pck->var_head.proto_level != PROTO_LEVEL_MQTT311){
 		stat->session_present = false;
 		stat->code = CONN_ACK_BAD_PROTO;
 		return;
 	}
 
-	if (conn_pck->head->conn_flags->cleans_session){
-		if (broker_remove_client(broker, conn_pck->pld->client_id)){
+	if (conn_pck->var_head.conn_flags->cleans_session){
+		if (broker_remove_client(broker, conn_pck->pld.client_id)){
 		}
 	}
 
-	if (is_client_connected(broker, conn_pck->pld->client_id)){
+	if (is_client_connected(broker, conn_pck->pld.client_id)){
 		stat->session_present = true;
 		stat->code = CONN_ACK_OK;
 		return;
